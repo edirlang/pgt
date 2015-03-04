@@ -1,0 +1,4 @@
+<?php ob_start(); ?>
+  <p>Nombre: <?php echo $estudinate['nombre']." ".$estudinate['apellido'] ?></p>
+<?php $contenido = ob_get_clean(); ?>
+<?php include "plantilla_base.php"; ?>

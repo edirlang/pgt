@@ -1,0 +1,23 @@
+body{
+	background-color: #f2f2f2;
+	font-family:verdana;
+	color:black;
+	font-size: 14px;
+}
+.panel{
+	background-color: #fff;
+	font-family:verdana;
+	color:black;
+	font-size: 14px;
+	box-shadow: 3px 3px #c9c9c9;
+}
+
+footer
+{
+	background-color: #030303;
+	color: #F1F1F1;
+	font-size: 16px;
+	margin-top: 20px;
+	padding: 20px;
+	text-align: center;
+}
