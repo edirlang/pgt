@@ -54,6 +54,11 @@ function Estudiante_nuevo_Action(){
 }
 
 function ProyectosAction(){
+	$proyectos = proyectos();
+	require "plantillas/Proyectos.php";
+}
+
+function ProyectosNuevoAction(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$codigo= $_POST['cod_proyecto'];
 		$titulo = $_POST['titulo'];
@@ -62,10 +67,9 @@ function ProyectosAction(){
 		$fechaAprovado = $_POST['fechaAprovacion'];
 		$estado = $_POST['estado'];
 		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado);
-
+		header("Location: /pgt/index.php/Proyectos");
 	}
-	$proyectos = proyectos();
-	require "plantillas/Proyectos.php";
+	require "plantillas/ProyectosNuevo.php";
 }
 
 function SalirAction(){

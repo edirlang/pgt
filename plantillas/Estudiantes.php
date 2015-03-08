@@ -17,12 +17,12 @@
       </thead>
       <tbody id="Filas">
        <?php foreach($estudiantes as $row){ ?>
-       <tr id='<?php echo $row['codigo']; ?>'>
-         <td><?php echo $row['codigo']; ?></td>
-         <td id="1"><?php echo $row['nombre']; ?></td>
-         <td id="2"><?php echo $row['apellido']; ?></td>
+       <tr id='<?php echo $row['cod_estudiante']; ?>'>
+         <td><?php echo $row['cod_estudiante']; ?></td>
+         <td id="1"><?php echo $row['nom_estudiante']; ?></td>
+         <td id="2"><?php echo $row['ape_estudiante']; ?></td>
          <td>
-          <a class="btn btn-success" id="<?php echo $row['Cedula']; ?>" href="/pgt/index.php/Estudiante?<?php echo $row['Cedula']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles</a>
+          <a class="btn btn-success" id="<?php echo $row['cod_estudiante']; ?>" href="/pgt/index.php/Estudiante?<?php echo $row['cod_estudiante']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles</a>
 
         </td>
       </tr>

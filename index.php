@@ -27,6 +27,9 @@ $uri = $_SERVER['REQUEST_URI'];
 		
 		case "/pgt/index.php/Proyectos":
 		ProyectosAction();
+		break;
+		case "/pgt/index.php/Proyectos/nuevo":
+			ProyectosNuevoAction();
 		break;	
 		
 		case "/pgt/index.php/salir":

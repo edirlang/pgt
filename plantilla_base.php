@@ -44,15 +44,9 @@
           <li class="text-center">
             <img src="/pgt/assets/img/find_user.png" class="user-image img-responsive"/>
           </li>
-          <li>
-            <a class="active-menu"  href="Estudiantes"><i class="fa fa-dashboard fa-3x"></i>Estudiante</a>
-          </li>
-          <li>
-            <a  href="Proyectos"><i class="fa fa-desktop fa-3x"></i>Proyectos</a>
-          </li>
 
           <li>
-            <a href="#"><i class="fa fa-qrcode fa-3x"></i>Estudiantes<span class="fa arrow"></span></a>
+            <a href="#" class="active-menu"><i class="fa fa-qrcode fa-3x"></i>Estudiantes<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
                 <a href="/pgt/index.php/Estudiantes">Listado de Estudiantes</a>
@@ -64,13 +58,13 @@
             </ul>
           </li>
           <li>
-            <a href="factura"><i class="fa fa-sitemap fa-3x"></i>Factura<span class="fa arrow"></span></a>
+            <a href="/pgt/index.php/Proyectos"><i class="fa fa-sitemap fa-3x"></i>Proyectos<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-                <a href="factura">Factura</a>
+                <a href="/pgt/index.php/Proyectos">Listado</a>
               </li>
               <li>
-                <a href="#">Consutar Fatura</a>
+                <a href="/pgt/index.php/Proyectos/nuevo">Nuevo Proyecto</a>
               </li>
 
             </ul>
