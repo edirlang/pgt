@@ -4,7 +4,7 @@
     <div class="panel-heading">
       <h3 class="panel-title">Proyectos</h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" color="Black">
       <table class="table table-condensed table-hover">
         <thead>
          <tr>
@@ -36,4 +36,11 @@
 </div>
 
 <?php $contenido = ob_get_clean(); ?>
-<?php include "plantilla_base.php"; ?>
+<?php 
+
+if (isset($_SESSION['usuario'])) {
+  include "plantilla_base.php";  
+}else{
+  include "plantilla_base2.php"; 
+}
+ ?>

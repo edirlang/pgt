@@ -6,13 +6,12 @@ session_start();
 $uri = $_SERVER['REQUEST_URI'];
 
 	switch ($uri) {
-		case "/pgt/index.php/":
-		indexAction();
+		case "/pgt/index.php/": case "/pgt/index.php":
+			indexAction();
 		break;
 		case "/pgt/index.php/login":
 			loginAction();
 		break;
-
 		case "/pgt/index.php/Estudiantes":
 		EstudiantesAction();
 		break;
@@ -31,6 +30,14 @@ $uri = $_SERVER['REQUEST_URI'];
 		case "/pgt/index.php/Proyectos/nuevo":
 			ProyectosNuevoAction();
 		break;	
+
+		case "/pgt/index.php/Profesor/nuevo":
+			Profesor_nuevo_Action();
+		break;
+
+		case "/pgt/index.php/Profesores":
+			ProfesoresAction();
+		break;
 		
 		case "/pgt/index.php/salir":
 			SalirAction();

@@ -26,6 +26,12 @@
             <option value="Rechazado">Rechazado</option>
             <option value="Aplazado">Aplazado</option>
           </select>
+          <label for="">Seleccione Director</label>
+          <select class="form-control" id="director" name="director">
+            <?php foreach ($profesores as $profesor) { ?>
+              <option value="<?php echo $profesor['cedula'] ?>"><?php echo $profesor['nom_profesor']." ".$profesor['ape_profesor'] ; ?></option>    
+           <?php } ?>
+          </select>
         </div>
         <button id="Enviar" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
       </form>  

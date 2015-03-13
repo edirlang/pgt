@@ -20,7 +20,7 @@
 
 <body>
   <header >
-    <div id="wrapper">
+    <div id="wrapper response">
       <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -46,7 +46,33 @@
           </li>
 
           <li>
-            <a href="#" class="active-menu"><i class="fa fa-qrcode fa-3x"></i>Estudiantes<span class="fa arrow"></span></a>
+            <a href="#" class="active-menu"><i class="fa fa-qrcode"></i>Docentes<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+              <li>
+                <a href="/pgt/index.php/Profesores">Listado de Docentes</a>
+              </li>
+              <li>
+                <a href="/pgt/index.php/Profesor/nuevo">Nuevo Docente</a>
+              </li>
+
+            </ul>
+          </li>
+          
+          <li>
+            <a href="/pgt/index.php/Proyectos"><i class="fa fa-user"></i>Proyectos<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+              <li>
+                <a href="/pgt/index.php/Proyectos">Listado</a>
+              </li>
+              <li>
+                <a href="/pgt/index.php/Proyectos/nuevo">Nuevo Proyecto</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li>
+            <a href="#" class="active-menu"><i class="fa fa-qrcode"></i>Estudiantes<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
                 <a href="/pgt/index.php/Estudiantes">Listado de Estudiantes</a>
@@ -57,21 +83,7 @@
 
             </ul>
           </li>
-          <li>
-            <a href="/pgt/index.php/Proyectos"><i class="fa fa-sitemap fa-3x"></i>Proyectos<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
-              <li>
-                <a href="/pgt/index.php/Proyectos">Listado</a>
-              </li>
-              <li>
-                <a href="/pgt/index.php/Proyectos/nuevo">Nuevo Proyecto</a>
-              </li>
-
-            </ul>
-          </li>  
-          <li  >
-            <a  href="blank.html"><i class="fa fa-square-o fa-3x"></i>Mensajes</a>
-          </li>   
+            
         </ul>
 
       </div>

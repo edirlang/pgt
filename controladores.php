@@ -6,9 +6,17 @@ function loginAction(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$usuario= $_POST['usuario'];
 		$contrasena = $_POST['contrasena'];
-		header("Location: /pgt/index.php/Estudiantes");	
+		$usuario = ConsultarUsuario($usuario, $contrasena);
+		session_start();
+		$_SESSION['usuario']=$usuario['cedula'];
+		if (isset($usuario['cedula'])) {
+			header("Location: /pgt/index.php/Estudiantes");
+		}
+		else{
+			header("Location: /pgt/index.php/");
+		}
 	}else{
-		header("Location: /pgt/index.php/");
+		require "plantillas/login.php";
 	}
 }
 
@@ -19,7 +27,6 @@ function EstudiantesAction(){
 function EstudianteAction(){
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$codigo= $_GET['id'];
-		
 		$estudiante = consultar_Estudiante($codigo);
 		require "plantillas/Estudiante.php";
 	}else{
@@ -34,10 +41,10 @@ function Estudiante_nuevo_Action(){
 		$apellido = $_POST['Apellido'];
 		$codigo = $_POST['Codigo'];
 		$cod_proyecto = $_POST['cod_proyecto'];
-		
+
 		$telefonos = $_POST['Telefono'];
 		$emails = $_POST['Email'];
-		
+
 		crear_Estudiante($codigo, $cedula, $nombre, $apellido, $cod_proyecto);
 		foreach ($telefonos as $telefono) {
 			crear_Telefono_Estudiante($codigo, $telefono);
@@ -48,9 +55,38 @@ function Estudiante_nuevo_Action(){
 		header("Location: /pgt/index.php/Estudiantes");
 	}else{
 		$proyectos = proyectos();
-	require "plantillas/nuevo_estudiante.php";
+		require "plantillas/nuevo_estudiante.php";
 	}
 
+}
+
+function Profesor_nuevo_Action(){
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$cedula= $_POST['cedula'];
+		$nombre = $_POST['nombre'];
+		$apellido = $_POST['apellido'];
+		$cargo = $_POST['cargo'];
+		
+		$telefonos = $_POST['Telefono'];
+		$emails = $_POST['Email'];
+
+		crear_Profesor($cedula, $nombre, $apellido, $cargo);
+		foreach ($telefonos as $telefono) {
+			crear_Telefono_Profesor($cedula, $telefono);
+		}
+		foreach ($emails as $email) {
+			crear_Email_Profesor($cedula, $email);
+		}
+		header("Location: /pgt/index.php/Profesores");
+	}else{
+		require "plantillas/CrearProfesor.php";
+	}
+
+}
+
+function ProfesoresAction(){
+	$profesores = profesores();
+	require "plantillas/Profesores.php";
 }
 
 function ProyectosAction(){
@@ -66,13 +102,17 @@ function ProyectosNuevoAction(){
 		$fechaInicio = $_POST['fechaInicio'];
 		$fechaAprovado = $_POST['fechaAprovacion'];
 		$estado = $_POST['estado'];
-		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado);
+		$director = $_POST['director'];
+		crear_director($director);
+		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director);
 		header("Location: /pgt/index.php/Proyectos");
 	}
+	$profesores = profesores();
 	require "plantillas/ProyectosNuevo.php";
 }
 
 function SalirAction(){
+	cerrar_secion();
 	require "plantillas/index.php";
 }
 

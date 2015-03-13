@@ -1,69 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Unicundi</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <script type="text/javascript" src="/Smart-Solutions/engine1/jquery.js"></script>
-  <link rel="stylesheet" href="/Smart-Solutions/css/bootstrap.css">
+  <meta charset="UTF-8">
+  <title>UNICUNDI</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+  <link rel="stylesheet" href="/pgt/css/bootstrap.css">
+  <link rel="stylesheet" href="/pgt/css/estilos.css">
+  <link rel="stylesheet" href="/pgt/css/font.css">
+  <link rel="stylesheet" href="/pgt/css/estil.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
-
 <body>
-  
-    <nav class="navbar navbar-default" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">PGP</a>
-      </div>
-    
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="">Estudiantes</a></li>
-          <li><a href="">Proyectos</a></li>
-          <li><a href="#">Consultas</a></li>
-        </ul>
-        
-      </div><!-- /.navbar-collapse -->
-    </nav>
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <?php echo $contenido; ?>
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-          <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
-          </div>
-          <div class="panel-body">
-            <form action="login" method="POST" role="form">
-              <div class="form-group">
-                <label for="">Usuario</label>
-                <input type="text" class="form-control" id="usuario" name="usuario">
+ <header >
+  <div class="tabbable">
+   <nav id="header" class="navbar navbar-default navbar-fixed-top" role="navigation"><span id="raya"></span>
+    <div  class="container">
 
-                <label>Contraseña</label>
-                <input type="password" name="contrasena" id="input" class="form-control" required="required" title="">
-              </div>
-              <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
-            </form>
-          </div>
-        </div>
-        </div>
+      <div id="menu-header" class="navbar-header">
+        <button type="button"  class="navbar-toggle collapsed margen" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon icon-list2" ></span>
+        </button>
+        <a class="navbar-brand margen_mithir" href="/pgt/index.php/Proyectos" >Proyectos de Grado</a>
+      </div>
+      
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul id="menu-body" class="nav navbar-nav navbar-right">
+          <li class="active"><a href="inicio">Inicio<span class="sr-only">(current)</span></a></li>
+          <li><a href="Aboutus">Acerca de</a></li>
+          <li><a href="contacto">Contacto</a></li>
+
+          <li><a href="/pgt/index.php/login">Sign in</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </div>
+</nav>
+</header> 
+<section>
+  <div class="container">
+    <div class="row">
+
+    </div>
+  </div>
+</section>
+<div id="social-bar">
+  <ul>
+    <li><a href="https://www.facebook.com/pages/UNIVERSIDAD-DE-CUNDINAMARCA/442228652502115" target="_blank"  class="icon-facebook"><span></span></a></li>
+    <li><a href="https://twitter.com/Ucundinamarca" target="_blank"  class="icon-twitter"><span></span></a></li>
+    <li><a href="https://plus.google.com/u/0/photos/101990631920094915928/albums" target="_blank"  class="icon-googleplus"><span></span></a></li>
+    <li><a href="#" target="_blank"  class="icon-instagram"><span></span></a></li>
+    <li><a href="#"  target="_blank" class="icon-pinterest"><span></span></a></li>
+  </ul>
+</div>
+
+
+<article  color="Black">
+  <section id="container">
+    <div class="row">
+      <?php echo $contenido; ?>
+    </div>
+  </section>
+</article>
+
+<footer class="panel-footer color1"> 
+
+  <div class="container text-left">
+    <div class="row"> 
+      <h4>Universidad de Cundinamarca</h4>
+      <hr>
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <h4 class="text-left">FOLLOW ME</h4>
+        <a href="http://www.youtube.com/"class="btn btn-circle btn-circle-facebook "><i class="icon icon-facebook "></i></a>
+        <a class="btn btn-circle btn-circle-twitter"><i class="icon icon-twitter"></i></a>
+        <a class="btn btn-circle btn-circle-googleplus"><i class="icon icon-googleplus"></i></a> 
+        <a class="btn btn-circle btn-circle-pinterest"><i class="icon icon-pinterest"></i></a> 
+        <p class="color1">Copyright &copy 2014 pgt</p>
+      </div>      
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <a href="">About us</a> |
+        <a href="">Contacto</a>|
+        <a href="">Noticias</a>|
+        <a href="">Ayuda</a>
       </div>  
     </div>
+  </div>
 
-    <script language="javascript" type="text/javascript" src="/Smart-Solutions/js/jquery.js"></script>
-    <script language="javascript" type="text/javascript" src="/Smart-Solutions/js/jquery.validate.js"></script>
-    <script src="/Smart-Solutions/js/bootstrap.min.js"></script>
-    <script src="/Smart-Solutions/js/jquery-ui.js"></script>
-  </body>   
-  </html>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="/pgt/js/jquery.slides.js"></script>  
+<script type="text/javascript" src="/pgt/js/bootstrap.min.js"></script>
+
+</body>
+</html>
