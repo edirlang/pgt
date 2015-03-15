@@ -3,9 +3,10 @@ require_once "modelos.php";
 require_once "controladores.php";
 session_start();
 
-$uri = $_SERVER['REQUEST_URI'];
+$url = $_SERVER['REQUEST_URI'];
+$uri = explode("?", $url);
 
-	switch ($uri) {
+	switch ($uri[0]) {
 		case "/pgt/index.php/": case "/pgt/index.php":
 			indexAction();
 		break;

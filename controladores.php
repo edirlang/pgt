@@ -28,6 +28,8 @@ function EstudianteAction(){
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$codigo= $_GET['id'];
 		$estudiante = consultar_Estudiante($codigo);
+		$telefonos = consultar_Telefono_Estudiante($codigo);
+		$correos = consultar_correos_Estudiante($codigo);
 		require "plantillas/Estudiante.php";
 	}else{
 		require "plantillas/Estudiantes.php";

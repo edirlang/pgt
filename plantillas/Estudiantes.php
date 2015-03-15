@@ -12,7 +12,7 @@
           <th>Nombre</th>
           <th>Apellido</th>
           <th></th>
-          <th></th>
+         
         </tr>
       </thead>
       <tbody id="Fila">
@@ -22,7 +22,7 @@
           <td id="2"><?php echo $row['nom_estudiante']; ?></td>
           <td id="3"><?php echo $row['ape_estudiante']; ?></td>
           <td>
-          <a class="btn btn-success" id="<?php echo $row['cod_estudiante']; ?>" href="/pgt/index.php/Estudiante?<?php echo $row['cod_estudiante']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles</a>
+          <a class="btn btn-success" id="<?php echo $row['cod_estudiante']; ?>" href="/pgt/index.php/Estudiante?id=<?php echo $row['cod_estudiante']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles</a>
           </td>
         </tr>
       <?php } ?>

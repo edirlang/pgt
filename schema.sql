@@ -5,10 +5,19 @@ create table profesor(
 	ape_profesor varchar(20) 
 );
 
-create table director(
-	cod_profesor  varchar(15) primary key ,
-	CONSTRAINT profesor_director
-	FOREIGN KEY (cod_profesor) REFERENCES   profesor(cedula) 
+create table profesor_telefono(
+	cod_profesor varchar(15) ,
+	num_telefono varchar(13),
+	primary key (cod_profesor ,num_telefono ),
+	CONSTRAINT profesor_telefono
+	FOREIGN KEY (cod_profesor ) REFERENCES profesor(cedula) 
+);
+create table pofesor_correo(
+	cod_profesor varchar(15) ,
+	nom_correo varchar(30),
+	primary key (cod_profesor ,nom_correo),
+	CONSTRAINT profesor_correo
+	FOREIGN KEY (cod_profesor ) REFERENCES   profesor(cedula) 
 );
 
 create table proyecto(
@@ -18,9 +27,17 @@ create table proyecto(
 	estado varchar(10) ,
 	fecha_inicio date,
 	fecha_aprovacion date,
-	director varchar(15) not null,
-	primary key(cod_proyecto),
-	FOREIGN key(director) references director(cod_profesor)
+	primary key(cod_proyecto)
+);
+
+create table profesor_proyecto(
+	cod_proyecto varchar(10),
+	cod_profesor varchar(15),
+	rol varchar(8),
+	calificacion varchar(8),
+	primary key(cod_proyecto,cod_profesor),
+	FOREIGN key(cod_profesor) REFERENCES profesor(cedula),
+	FOREIGN key(cod_proyecto) REFERENCES proyecto(cod_proyecto)	
 );
 
 create table estudiante(
@@ -60,33 +77,4 @@ create table proyecto_programa(
 	FOREIGN KEY (cod_proyecto ) REFERENCES   proyecto(cod_proyecto ) ,
 	CONSTRAINT programa_linea
 	FOREIGN KEY (cod_programa ) REFERENCES   programa(cod_programa ) 
-);
-create table profesor_telefono(
-	cod_profesor varchar(15) ,
-	num_telefono varchar(13),
-	primary key (cod_profesor ,num_telefono ),
-	CONSTRAINT profesor_telefono
-	FOREIGN KEY (cod_profesor ) REFERENCES profesor(cedula) 
-);
-create table pofesor_correo(
-	cod_profesor varchar(15) ,
-	nom_correo varchar(30),
-	primary key (cod_profesor ,nom_correo),
-	CONSTRAINT profesor_correo
-	FOREIGN KEY (cod_profesor ) REFERENCES   profesor(cedula) 
-);
-create table jurado(
-	cod_profesor varchar(15) primary key  ,
-	calificacion varchar(10) ,
-	CONSTRAINT cod_profesor
-	FOREIGN KEY (cod_profesor ) REFERENCES   profesor(cedula) 
-);
-create table proyecto_jurado(
-	cod_profesor varchar(15) ,
-	cod_proyecto varchar(10) ,
-	primary key (cod_profesor ,cod_proyecto ),
-	CONSTRAINT proyecto_jurad
-	FOREIGN KEY (cod_proyecto ) REFERENCES   proyecto(cod_proyecto ),
-	CONSTRAINT proyecto_jurado
-	FOREIGN KEY (cod_profesor ) REFERENCES   jurado(cod_profesor) 
 );

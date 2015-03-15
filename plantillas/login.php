@@ -22,6 +22,11 @@
 		</div>
 	</div>  
 </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <?php $contenido = ob_get_clean(); ?>
 <?php include "plantilla_base2.php"; ?>

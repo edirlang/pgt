@@ -12,7 +12,6 @@
           <th>Nombre</th>
           <th>Apellido</th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody id="Fila">

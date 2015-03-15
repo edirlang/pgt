@@ -55,15 +55,15 @@ function crear_Estudiante($codigo, $cedula, $nombre, $apellido, $proyecto){
 
 function consultar_Estudiante($codigo){
 	$conexion = conectar_base_datos();
-	$consulta  = "SELECT *  from estudiante where codigo ='$codigo')";
-	pg_query($conexion,$consulta);
+	$consulta  = "SELECT *  from estudiante where cod_estudiante ='$codigo'";
+	$resultado = pg_query($conexion,$consulta);
 	$estudiante = array();
 
 	while ($fila = pg_fetch_assoc($resultado)) {
 		$estudiante = $fila;
 	}
 
-	echo mysqli_error($conexion);
+	echo pg_last_error($conexion);
 	cerrar_conexion_db($conexion);
 	return $estudiante;
 }
@@ -84,6 +84,32 @@ function crear_Email_Estudiante($codigo, $telefono){
 	cerrar_conexion_db($conexion);
 }
 
+function consultar_Telefono_Estudiante($codigo){
+	$conexion = conectar_base_datos();
+	$consulta  = "SELECT * FROM estudiante_telefono WHERE cod_estudiante='$codigo'";
+	$resultado = pg_query($conexion,$consulta);
+	$telefonos = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		$telefonos[] = $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $telefonos;
+}
+
+function consultar_correos_Estudiante($codigo){
+	$conexion = conectar_base_datos();
+	$consulta  = "SELECT * FROM estudiante_correo WHERE cod_estudiante='$codigo'";
+	$resultado = pg_query($conexion,$consulta);
+	$correos = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		$correos[] = $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $correos;
+}
+
 function proyectos(){
 	$conexion = conectar_base_datos();
 	$consulta = "SELECT * FROM proyecto";
@@ -100,7 +126,16 @@ function proyectos(){
 
 function crear_Proyecto($codigo, $titulo, $resumen, $fechainicio, $fechaaprovacion, $estado,$director){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','$fechaaprovacion','$director')";
+	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','$fechaaprovacion')";
+	echo pg_last_error($conexion);
+	pg_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
+	crear_director($director, $codigo);	
+}
+
+function crear_director($cedula, $cod_proyecto){
+	$conexion = conectar_base_datos();
+	$consulta  = "INSERT INTO profesor_proyecto values('$cod_proyecto','$cedula','director','')";
 	echo pg_last_error($conexion);
 	pg_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
@@ -155,14 +190,6 @@ function crear_Email_Profesor($codigo, $telefono){
 	$conexion = conectar_base_datos();
 	$consulta  = "INSERT INTO profesor_correo values('$cedula', '$telefono')";
 	echo mysqli_error($conexion);
-	pg_query($conexion,$consulta);
-	cerrar_conexion_db($conexion);
-}
-
-function crear_director($cedula){
-	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO director values('$cedula')";
-	echo pg_last_error($conexion);
 	pg_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
 }

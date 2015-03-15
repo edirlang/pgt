@@ -2,7 +2,7 @@
 	/**
 	* 
 	*/
-	include "./modelo/Estudiante.php";
+	require_once "/pgt/modelo/Estudiante.php";
 
 	class EstudainteController
 	{

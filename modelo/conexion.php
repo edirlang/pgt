@@ -4,19 +4,15 @@
 	*/
 	class conexion
 	{
-		public function conectar_base_datos(){
-			$conexion = mysqli_connect("localhost","root","1994edi","pgt");
+		function conectar_base_datos (){
+			$conexion=pg_connect("  host=localhost port=5432 dbname=pgt user=postgres password=1234 ");
 			if(!$conexion){
-				die("Error no se logro conectar con la base de datos".mysqli_connect_error());
+				echo 'No se pudo conectar con la jodida BD';
 			}
-			$conexion->query("SET NAMES 'utf8'");
-			$conexion->query("SET CHARACTER SET utf8");
-
 			return $conexion;
 		}
-
-		public function cerrar_conexion_db($conexion){
-			mysqli_close($conexion);
+		function cerrar_conexion_db($conexion){
+			pg_close($conexion);
 		}
 	}
-?>
+	?>
