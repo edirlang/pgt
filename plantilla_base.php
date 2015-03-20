@@ -72,7 +72,7 @@
           </li>
 
           <li>
-            <a href="#" class="active-menu"><i class="fa fa-qrcode"></i>Estudiantes<span class="fa arrow"></span></a>
+            <a href="#" ><i class="fa fa-qrcode"></i>Estudiantes<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
                 <a href="/pgt/index.php/Estudiantes">Listado de Estudiantes</a>
@@ -83,7 +83,18 @@
 
             </ul>
           </li>
-            
+           <li>
+            <a href="#" ><i class="fa fa-qrcode"></i>Programa<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+              <li>
+                <a href="/pgt/index.php/programa">Listado de Programa</a>
+              </li>
+              <li>
+                <a href="/pgt/index.php/programa">Ingresar Programa</a>
+              </li>
+
+            </ul>
+          </li>
         </ul>
 
       </div>

@@ -39,10 +39,19 @@ $uri = explode("?", $url);
 		case "/pgt/index.php/Profesores":
 			ProfesoresAction();
 		break;
+
+		case "/pgt/index.php/profesor":
+			profesor_Action();
+		break;
+
 		
 		case "/pgt/index.php/salir":
 			SalirAction();
 		break;
+			case "/pgt/index.php/programa":
+			programa_Action();
+		break;
+
 	}
 
 ?>

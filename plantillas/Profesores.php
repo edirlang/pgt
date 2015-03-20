@@ -21,7 +21,7 @@
           <td id="2"><?php echo $row['nom_profesor']; ?></td>
           <td id="3"><?php echo $row['ape_profesor']; ?></td>
           <td>
-          <a class="btn btn-success" id="<?php echo $row['cedula']; ?>" href="/pgt/index.php/Profesor?<?php echo $row['cedula']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles</a>
+          <a class="btn btn-success" id="<?php echo $row['cedula']; ?>" href="/pgt/index.php/profesor?id=<?php echo $row['cedula']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles</a>
           </td>
         </tr>
       <?php } ?>

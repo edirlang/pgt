@@ -36,6 +36,20 @@ function EstudianteAction(){
 	}
 }
 
+function profesor_Action(){
+
+
+		if($_SERVER['REQUEST_METHOD']=='GET'){
+		$codigo= $_GET['id'];
+        $profesor=consultar_Profesor($codigo);
+		$telefonos = consultar_Telefono_profesor($codigo);
+		$correos = consultar_correos_profesor($codigo);
+		require "plantillas/Profesor.php";
+	}else{
+		require "plantillas/Profesores.php";
+	}
+}
+
 function Estudiante_nuevo_Action(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$cedula= $_POST['Cedula'];
@@ -105,7 +119,7 @@ function ProyectosNuevoAction(){
 		$fechaAprovado = $_POST['fechaAprovacion'];
 		$estado = $_POST['estado'];
 		$director = $_POST['director'];
-		crear_director($director);
+		//crear_director($director);
 		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director);
 		header("Location: /pgt/index.php/Proyectos");
 	}
@@ -118,4 +132,9 @@ function SalirAction(){
 	require "plantillas/index.php";
 }
 
+
+function programa_Action(){
+    $programas=programa();
+	require "plantillas/programa.php";
+}
 ?>

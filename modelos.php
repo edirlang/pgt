@@ -164,18 +164,16 @@ function crear_Profesor($cedula, $nombre, $apellido, $cargo){
 }
 
 function consultar_Profesor($codigo){
-	$conexion = conectar_base_datos();
-	$consulta  = "SELECT *  from profesor where cedula ='$codigo')";
-	pg_query($conexion,$consulta);
-	$estudiante = array();
+		$conexion = conectar_base_datos();
+	$consulta  = "SELECT * FROM profesor WHERE cedula='$codigo'";
+	$resultado = pg_query($conexion,$consulta);
+	$correos = array();
 
 	while ($fila = pg_fetch_assoc($resultado)) {
-		$estudiante = $fila;
+		$correos= $fila;
 	}
-
-	echo pg_last_error($conexion);
 	cerrar_conexion_db($conexion);
-	return $estudiante;
+	return $correos;
 }
 
 function crear_Telefono_Profesor($cedula, $telefono){
@@ -186,10 +184,52 @@ function crear_Telefono_Profesor($cedula, $telefono){
 	cerrar_conexion_db($conexion);
 }
 
-function crear_Email_Profesor($codigo, $telefono){
+function crear_Email_Profesor($cedula, $emails){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO profesor_correo values('$cedula', '$telefono')";
+	$consulta  = "INSERT INTO profesor_correo values('$cedula', '$emails')";
 	echo mysqli_error($conexion);
 	pg_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
+}
+function programa(){
+
+    $conexion = conectar_base_datos();
+	$consulta = "SELECT * FROM programa";
+	$resultado = pg_query($conexion,$consulta);
+
+	$programa = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		array_push($programa, $fila);
+	}
+	cerrar_conexion_db($conexion);
+	return $programa;	
+}
+
+
+
+function consultar_Telefono_profesor($codigo){
+	$conexion = conectar_base_datos();
+	$consulta  = "SELECT * FROM profesor_telefono WHERE cod_profesor='$codigo'";
+	$resultado = pg_query($conexion,$consulta);
+	$telefonos = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		$telefonos[] = $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $telefonos;
+}
+
+function consultar_correos_profesor($codigo){
+	$conexion = conectar_base_datos();
+	$consulta  = "SELECT * FROM profesor_correo WHERE cod_profesor='$codigo'";
+	$resultado = pg_query($conexion,$consulta);
+	$correos = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		$correos[] = $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $correos;
 }
