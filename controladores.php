@@ -137,4 +137,33 @@ function programa_Action(){
     $programas=programa();
 	require "plantillas/programa.php";
 }
+
+function eliminar_profesor_action(){
+
+if($_SERVER['REQUEST_METHOD']=='GET'){
+	      $codigo=$_GET['id'];
+		eliminar_profesor($codigo);
+	header("Location: /pgt/index.php/Profesores");
+	}else{
+		header("Location: /pgt/index.php/Profesores");
+	}
+}
+
+
+function consultar_prpgrama_action(){
+	if ($_SERVER['REQUEST_METHOD']=="POST") {
+	$id=$_POST['id'];
+	$json=json_encode(consultar_tabla($id,"programa","cod_programa"));
+	echo $json;
+}
+}
+function programa_ingreso_action() {
+
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$codigo= $_POST['cod_programa'];
+		$nom = $_POST['nom_programa'];
+		programa_ingreso($codigo, $nom);
+		header("Location: /pgt/index.php/programa");
+	}
+}
 ?>

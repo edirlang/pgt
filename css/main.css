@@ -49,7 +49,10 @@ body {
     padding:10px;
     min-height:1200px;
 }
-
+#h2 nav {
+    background-color: 555;
+    height: 100%;
+}
 .color2{
     color: #000000;
 }

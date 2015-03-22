@@ -1,13 +1,13 @@
 <?php 
 function conectar_base_datos (){
-    $conexion=pg_connect("  host=localhost port=5432 dbname=pgt user=postgres password=1234 ");
-    if(!$conexion){
-        echo 'No se pudo conectar con la jodida BD';
-    }
-    return $conexion;
+	$conexion=pg_connect("  host=localhost port=5432 dbname=pgt user=postgres password=1234 ");
+	if(!$conexion){
+		echo 'No se pudo conectar con la jodida BD';
+	}
+	return $conexion;
 }
 function cerrar_conexion_db($conexion){
-    pg_close($conexion);
+	pg_close($conexion);
 }
 
 function cerrar_secion(){
@@ -164,7 +164,7 @@ function crear_Profesor($cedula, $nombre, $apellido, $cargo){
 }
 
 function consultar_Profesor($codigo){
-		$conexion = conectar_base_datos();
+	$conexion = conectar_base_datos();
 	$consulta  = "SELECT * FROM profesor WHERE cedula='$codigo'";
 	$resultado = pg_query($conexion,$consulta);
 	$correos = array();
@@ -193,7 +193,7 @@ function crear_Email_Profesor($cedula, $emails){
 }
 function programa(){
 
-    $conexion = conectar_base_datos();
+	$conexion = conectar_base_datos();
 	$consulta = "SELECT * FROM programa";
 	$resultado = pg_query($conexion,$consulta);
 
@@ -232,4 +232,48 @@ function consultar_correos_profesor($codigo){
 	}
 	cerrar_conexion_db($conexion);
 	return $correos;
+}
+
+function eliminar_profesor($codigo){
+	$conexion=conectar_base_datos();
+	$consulta="DELETE FROM  profesor_correo WHERE  cod_profesor='$codigo'";
+	$consulta1="DELETE FROM  profesor_telefono where cod_profesor='$codigo'";
+	$consulta2="DELETE FROM  profesor WHERE  cedula='$codigo'";
+	$resultado = pg_query($conexion,$consulta);
+	$resultado1 = pg_query($conexion,$consulta1);
+	$resultado2 = pg_query($conexion,$consulta2);
+	cerrar_conexion_db($conexion);
+}
+
+function consultar_tabla($id,$table,$id_table){
+	$conexion = conectar_base_datos();
+	$consulta = "SELECT * FROM $table WHERE $id_table='$id'";
+	$resultado = pg_query($conexion,$consulta);
+	$programa = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		$programa = $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $programa;
+}
+
+function modificar_programa(){
+	if ($_SERVER['REQUEST_METHOD']=="POST") {
+		$conexion = conectar_base_datos();
+		$cod_programa=$_POST['cod_programa'];
+		$nom_programa=$_POST['nom_programa'];
+		$consulta =  "UPDATE programa Set nom_programa='$nom_programa' where cod_programa='$cod_programa'"; 
+		pg_query($conexion,$consulta);
+		cerrar_conexion_db($conexion);
+	}
+}
+
+function programa_ingreso($codigo, $nom){
+
+	$conexion = conectar_base_datos();
+	$consulta  = "INSERT INTO programa values('$codigo', '$nom')";
+	echo pg_last_error($conexion);
+	pg_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
 }

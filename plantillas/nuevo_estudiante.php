@@ -12,11 +12,11 @@
         <label for="">Codigo</label>
         <input type="text" class="form-control" id="Codigo"  name="Codigo" placeholder="Cedula">
         <label for="">Cedula</label>
-        <input type="text" class="form-control" id="Cedula"  name="Cedula" placeholder="primer nombre">
+        <input type="text" class="form-control" id="Cedula"  name="Cedula" placeholder="Cedula">
         <label for="">Nombre</label>
-        <input type="text" class="form-control" id="Nombre"  name="Nombre" placeholder="primer nombre">
+        <input type="text" class="form-control" id="Nombre"  name="Nombre" placeholder="Nombre">
         <label for="">Apellido</label>
-        <input type="text" class="form-control" id="Apellido" name="Apellido" placeholder="primer apellido">
+        <input type="text" class="form-control" id="Apellido" name="Apellido" placeholder="Apellido">
         <label for="">Telefono 1</label>
         <input type="number" class="form-control" id="Telefono[1]" name="Telefono[1]">
 

@@ -38,7 +38,8 @@
       </nav>  
     </div> 
     <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
+  <div id="h2">                                
+    <nav class="  navbar-default navbar-side" role="navigation" >
       <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
           <li class="text-center">
@@ -90,7 +91,7 @@
                 <a href="/pgt/index.php/programa">Listado de Programa</a>
               </li>
               <li>
-                <a href="/pgt/index.php/programa">Ingresar Programa</a>
+                <a href="/pgt/index.php/programa_ingreso">Ingresar Programa</a>
               </li>
 
             </ul>
@@ -99,6 +100,7 @@
 
       </div>
     </nav>  
+    </div> 
   </header> 
   <div id="page-wrapper" >
     <div id="page-inner">

@@ -51,7 +51,22 @@ $uri = explode("?", $url);
 			case "/pgt/index.php/programa":
 			programa_Action();
 		break;
-
+       		case "/pgt/index.php/eliminar_profesor":
+			eliminar_profesor_action();
+		break;
+        	case "/pgt/index.php/consultar_programa":
+			consultar_prpgrama_action();
+		break;
+		case "/pgt/index.php/modificar_programa":
+			modificar_programa();
+		break;
+		case "/pgt/index.php/programa_ingreso":
+			require "plantillas/programa_ingreso.php";
+		break;
+		case "/pgt/index.php/Programa_guardar":
+			programa_ingreso_action();
+		break;
 	}
 
 ?>
+

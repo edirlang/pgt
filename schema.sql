@@ -12,7 +12,7 @@ create table profesor_telefono(
 	CONSTRAINT profesor_telefono
 	FOREIGN KEY (cod_profesor ) REFERENCES profesor(cedula) 
 );
-create table pofesor_correo(
+create table profesor_correo(
 	cod_profesor varchar(15) ,
 	nom_correo varchar(30),
 	primary key (cod_profesor ,nom_correo),
@@ -68,13 +68,23 @@ create table programa(
 	cod_programa varchar(6)  primary key ,
 	nom_programa varchar(30) 
 );
-create table proyecto_programa(
+
+create table linea(
+	cod_linea varchar(10),
 	nom_linea varchar(50) ,
-	cod_proyecto varchar(10),
-	cod_programa varchar(6),
-	primary key(cod_proyecto,cod_programa),
+	cod_programa varchar(10),
+	primary key(cod_linea,cod_programa),
 	CONSTRAINT proyecto_linea
-	FOREIGN KEY (cod_proyecto ) REFERENCES   proyecto(cod_proyecto ) ,
-	CONSTRAINT programa_linea
-	FOREIGN KEY (cod_programa ) REFERENCES   programa(cod_programa ) 
+	FOREIGN KEY (cod_proyecto ) REFERENCES   proyecto(cod_proyecto ) 
+);
+
+create table linea_proyecto(
+	cod_linea varchar(10),
+	cod_proyecto varchar(10),
+	cod_programa varchar(10),
+	primary key (cod_linea, cod_proyecto),
+	CONSTRAINT proyecto_linea 
+	FOREIGN KEY (cod_proyecto) REFERENCES proyecto(cod_proyecto),
+	CONSTRAINT linea_proyecto
+	FOREIGN KEY (cod_linea,cod_programa) REFERENCES linea(cod_linea, cod_programa)
 );

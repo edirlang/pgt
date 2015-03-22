@@ -1,11 +1,11 @@
 <?php ob_start(); ?>
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
   <div class="panel panel-danger">
     <div class="panel-heading">
-      <h3 class="panel-title">Proyectos</h3>
+      <h3 class="panel-title">Proyecto</h3>
     </div>
-    <div class="panel-body" color="Black">
-      <table class="table table-condensed table-hover">
+    <div class="panel-body">
+      <table id="hola" class="table table-striped table-bordered table-condensed table-hover display color2 " cellspacing="0" width="100%">
         <thead>
          <tr>
           <th>Codigo</th>
@@ -24,17 +24,18 @@
          <td id="2"><?php echo $row['fecha_aprovacion']; ?></td>
          <td id="2"><?php echo $row['estado']; ?></td>
          <td>
-          <a class="btn btn-success" data-toggle="modal" data-target="#ventana" id="<?php echo $row['cod_proyecto']; ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a>  
+          <a class="btn btn-success" data-toggle="modal" data-target="#ventana" id="<?php echo $row['cod_proyecto']; ?>"><span class="glyphicon glyphicon-edit"></span>Detalles</a>  
         </td>
         
       </tr>
       <?php } ?>
     </tbody>
   </table>
+  </table>
 </div>
 </div>
 </div>
-
+<script type="text/javascript" src="/pgt/js/usuario.js"></script>
 <?php $contenido = ob_get_clean(); ?>
 <?php 
 
@@ -44,3 +45,4 @@ if (isset($_SESSION['usuario'])) {
   include "plantilla_base2.php"; 
 }
  ?>
+

@@ -13,13 +13,13 @@
           <label for="">Codigo</label>
           <input type="text" class="form-control" id="cod_proyecto"  name="cod_proyecto" placeholder="Cedula">
           <label for="">Titulo</label>
-          <input type="text" class="form-control" id="titulo"  name="titulo" placeholder="primer nombre">
+          <input type="text" class="form-control" id="titulo"  name="titulo" placeholder="Titulo">
           <label for="">Resumen</label>
-          <textarea class="form-control" id="resumen"  name="resumen" placeholder="primer nombre"></textarea>
+          <textarea class="form-control" id="resumen"  name="resumen" placeholder="Resumen"></textarea>
           <label for="">Fecha de Inicio</label>
-          <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" placeholder="primer apellido">
+          <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" placeholder="Fecha Inicio">
           <label for="">Fecha de aprovacion</label>
-          <input type="date" class="form-control" id="fechaAprovacion" name="fechaAprovacion" placeholder="telefono">
+          <input type="date" class="form-control" id="fechaAprovacion" name="fechaAprovacion" placeholder="Fecha Aprovado">
           <label for="">Estado</label>
           <select class="form-control" id="estado" name="estado">
             <option value="Aprovado">Aprovado</option>
