@@ -32,6 +32,13 @@
               <option value="<?php echo $profesor['cedula'] ?>"><?php echo $profesor['nom_profesor']." ".$profesor['ape_profesor'] ; ?></option>    
            <?php } ?>
           </select>
+          
+          <label for="">Seleccione Programa</label>
+          <select class="form-control" id="programa" name="programa">
+            <?php foreach ($programas as $programa) { ?>
+              <option value="<?php echo $programa['cod_programa'] ?>"><?php echo $programa['nom_programa']; ?></option>    
+           <?php } ?>
+          </select>
         </div>
         <button id="Enviar" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
       </form>  

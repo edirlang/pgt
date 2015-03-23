@@ -75,7 +75,7 @@ create table linea(
 	cod_programa varchar(10),
 	primary key(cod_linea,cod_programa),
 	CONSTRAINT proyecto_linea
-	FOREIGN KEY (cod_proyecto ) REFERENCES   proyecto(cod_proyecto ) 
+	FOREIGN KEY (cod_programa ) REFERENCES   programa(cod_programa ) 
 );
 
 create table linea_proyecto(

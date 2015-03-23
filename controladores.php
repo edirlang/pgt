@@ -123,6 +123,7 @@ function ProyectosNuevoAction(){
 		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director);
 		header("Location: /pgt/index.php/Proyectos");
 	}
+	$programas = programa();
 	$profesores = profesores();
 	require "plantillas/ProyectosNuevo.php";
 }
@@ -166,4 +167,22 @@ function programa_ingreso_action() {
 		header("Location: /pgt/index.php/programa");
 	}
 }
+
+function ingresar_linea_action() {
+	$programas = programa();
+	require "plantillas/linea_ingreso.php";
+}
+
+function crear_linea_action() {
+
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$codigo= $_POST['cod_linea'];
+		$nombre = $_POST['nom_linea'];
+		$programa = $_POST['programa'];
+		programa_ingreso($codigo, $nom);
+		crear_linea($codigo, $nombre, $programa);
+		header("Location: /pgt/index.php/programa");
+	}
+}
+
 ?>

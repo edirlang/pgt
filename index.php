@@ -66,6 +66,14 @@ $uri = explode("?", $url);
 		case "/pgt/index.php/Programa_guardar":
 			programa_ingreso_action();
 		break;
+
+		case "/pgt/index.php/linea_ingresar":
+			ingresar_linea_action();
+		break;
+
+		case "/pgt/index.php/linea_guardar":
+			crear_linea_action();
+		break;
 	}
 
 ?>

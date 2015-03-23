@@ -277,3 +277,12 @@ function programa_ingreso($codigo, $nom){
 	pg_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
 }
+
+function crear_linea($codigo, $nombre, $programa){
+
+	$conexion = conectar_base_datos();
+	$consulta  = "INSERT INTO linea values('$codigo', '$nombre','$programa')";
+	echo pg_last_error($conexion);
+	pg_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
+}
