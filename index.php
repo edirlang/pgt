@@ -74,6 +74,10 @@ $uri = explode("?", $url);
 		case "/pgt/index.php/linea_guardar":
 			crear_linea_action();
 		break;
+
+		case "/pgt/index.php/buscar_lineas_programa":
+			consultar_lineas_programa_action();
+		break;
 	}
 
 ?>

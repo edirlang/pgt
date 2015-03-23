@@ -141,6 +141,14 @@ function crear_director($cedula, $cod_proyecto){
 	cerrar_conexion_db($conexion);
 }
 
+function crear_linea_proyecto($linea, $programa, $cod_proyecto){
+	$conexion = conectar_base_datos();
+	$consulta  = "INSERT INTO linea_proyecto values('$linea','$cod_proyecto','$programa')";
+	echo pg_last_error($conexion);
+	pg_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
+}
+
 function profesores(){
 	$conexion = conectar_base_datos();
 	$consulta = "SELECT * FROM profesor";
@@ -256,6 +264,19 @@ function consultar_tabla($id,$table,$id_table){
 	}
 	cerrar_conexion_db($conexion);
 	return $programa;
+}
+
+function consultar_tabla2($table,$id_table, $id){
+	$conexion = conectar_base_datos();
+	$consulta = "SELECT * FROM $table WHERE $id_table='$id'";
+	$resultado = pg_query($conexion,$consulta);
+	$valores = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		array_push($valores, $fila);
+	}
+	cerrar_conexion_db($conexion);
+	return $valores;
 }
 
 function modificar_programa(){

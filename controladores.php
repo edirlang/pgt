@@ -119,8 +119,11 @@ function ProyectosNuevoAction(){
 		$fechaAprovado = $_POST['fechaAprovacion'];
 		$estado = $_POST['estado'];
 		$director = $_POST['director'];
+		$programa = $_POST['programa'];
+		$linea = $_POST['linea'];
 		//crear_director($director);
 		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director);
+		crear_linea_proyecto($linea, $programa, $codigo);
 		header("Location: /pgt/index.php/Proyectos");
 	}
 	$programas = programa();
@@ -185,4 +188,11 @@ function crear_linea_action() {
 	}
 }
 
+function consultar_lineas_programa_action(){
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$cod_programa= $_POST['cod_programa'];
+		$lineas = consultar_tabla2('linea','cod_programa',$cod_programa);
+		echo json_encode($lineas);
+	}	
+}
 ?>

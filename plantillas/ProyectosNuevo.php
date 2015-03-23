@@ -39,12 +39,16 @@
               <option value="<?php echo $programa['cod_programa'] ?>"><?php echo $programa['nom_programa']; ?></option>    
            <?php } ?>
           </select>
+          <label for="">Selecione Linea de Investigacion</label>
+          <select class="form-control" id="linea" name="linea">
+            
+          </select>
         </div>
         <button id="Enviar" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
       </form>  
     </div>
   </div>
 </div> 
-
+<script type="text/javascript" src="/pgt/js/lineas.js"></script>
 <?php $contenido = ob_get_clean(); ?>
 <?php include "plantilla_base.php"; ?>
