@@ -307,3 +307,38 @@ function crear_linea($codigo, $nombre, $programa){
 	pg_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
 }
+
+
+
+
+function all_date_table($table){
+ $conexion = conectar_base_datos();
+$consulta="SELECT * FROM $table";
+$resultado=pg_query($conexion,$consulta);
+$date=array();
+while ($file=pg_fetch_assoc($resultado)) {
+  $date[]=$file;
+}
+return $date;
+	cerrar_conexion_db($conexion);
+}
+function modificar_linea(){
+if ($_SERVER['REQUEST_METHOD']=="POST") {
+		$conexion = conectar_base_datos();
+		$cod_linea=$_POST['cod_linea'];
+		$nom_linea=$_POST['nom_linea'];
+	    $cod_programa=$_POST['cod_programa'];
+		$consulta =  "UPDATE linea Set nom_linea='$nom_linea', cod_programa='$cod_programa' where cod_linea='$cod_linea'"; 
+		pg_query($conexion,$consulta);
+		cerrar_conexion_db($conexion);
+	}
+
+}
+
+
+function eliminar_linea($codigo){
+	$conexion=conectar_base_datos();
+	$consulta="DELETE FROM  linea WHERE  cod_linea='$codigo'";
+	$resultado = pg_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
+}

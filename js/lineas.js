@@ -1,20 +1,24 @@
-$(document).ready(inicializarEventos);
+var  x=$(document).ready(inicializarEventos);
 
 function inicializarEventos() {
-  $("#programa").change(Buscar_lineas);
-  
+  $("#modificar_linea").click(modificar_linea);
+  $("#hola").dataTable();
 }
 
-function Buscar_lineas(){
-  var programa = $("#programa").val();
-  var codigos=[];
-  $.post("/pgt/index.php/buscar_lineas_programa",{
-    cod_programa: programa
-  },function(dato){
-    datos=$.parseJSON(dato);
-      for(var i in datos){
-        $('#linea').append('<option value="'+datos[i]['cod_linea']+'" selected="selected">'+datos[i]['nom_linea']+'</option>');
-      }
-    
-  });
+
+
+
+function modificar_linea(){
+
+     $.post('modificar_linea',{
+               cod_linea: $("#cod_linea").val(),
+               nom_linea: $("#nom_linea").val(),
+               cod_programa: $("#cod_programa").val(),
+  
+              },function(datos){   
+                 $("#"+$("#cod_linea").val()+" #1").text($("#nom_linea").val()),
+                 $("#"+$("#cod_linea").val()+" #2").text($("#cod_programa").val())
+                   alert("Modificacion Correcta");
+              }
+              );
 }

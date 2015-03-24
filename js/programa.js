@@ -14,7 +14,7 @@ function modificar_programa(){
                director: $("#director_programa").val(),
   
               },function(datos){   
-                 $("#"+$("#cod_programa").val()+" #1").text($("#od_programa").val()),
+                 $("#"+$("#cod_programa").val()+" #1").text($("#cod_programa").val()),
                  $("#"+$("#cod_programa").val()+" #2").text($("#nom_programa").val()),
                  $("#"+$("#cod_programa").val()+" #3").text($("#director_programa").val())
                    alert("Modificacion Correcta");

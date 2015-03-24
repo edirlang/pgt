@@ -101,7 +101,7 @@
             <a href="#" ><i class="fa fa-qrcode"></i>Lineas de Investigacion<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-                <a href="/pgt/index.php/lineas">Listado de lineas</a>
+                <a href="/pgt/index.php/Lineas">Listado de lineas</a>
               </li>
               <li>
                 <a href="/pgt/index.php/linea_ingresar">Nueva Linea</a>

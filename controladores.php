@@ -39,9 +39,9 @@ function EstudianteAction(){
 function profesor_Action(){
 
 
-		if($_SERVER['REQUEST_METHOD']=='GET'){
+	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$codigo= $_GET['id'];
-        $profesor=consultar_Profesor($codigo);
+		$profesor=consultar_Profesor($codigo);
 		$telefonos = consultar_Telefono_profesor($codigo);
 		$correos = consultar_correos_profesor($codigo);
 		require "plantillas/Profesor.php";
@@ -119,11 +119,16 @@ function ProyectosNuevoAction(){
 		$fechaAprovado = $_POST['fechaAprovacion'];
 		$estado = $_POST['estado'];
 		$director = $_POST['director'];
-		$programa = $_POST['programa'];
-		$linea = $_POST['linea'];
+		$programas = $_POST['programa'];
+
 		//crear_director($director);
 		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director);
-		crear_linea_proyecto($linea, $programa, $codigo);
+		
+		foreach ($programas as $programa) {
+			$linea = explode(".", $programa);
+			crear_linea_proyecto($linea[1] , $linea[0], $codigo);
+		}
+		
 		header("Location: /pgt/index.php/Proyectos");
 	}
 	$programas = programa();
@@ -138,16 +143,16 @@ function SalirAction(){
 
 
 function programa_Action(){
-    $programas=programa();
+	$programas=programa();
 	require "plantillas/programa.php";
 }
 
 function eliminar_profesor_action(){
 
-if($_SERVER['REQUEST_METHOD']=='GET'){
-	      $codigo=$_GET['id'];
+	if($_SERVER['REQUEST_METHOD']=='GET'){
+		$codigo=$_GET['id'];
 		eliminar_profesor($codigo);
-	header("Location: /pgt/index.php/Profesores");
+		header("Location: /pgt/index.php/Profesores");
 	}else{
 		header("Location: /pgt/index.php/Profesores");
 	}
@@ -156,11 +161,12 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
 
 function consultar_prpgrama_action(){
 	if ($_SERVER['REQUEST_METHOD']=="POST") {
-	$id=$_POST['id'];
-	$json=json_encode(consultar_tabla($id,"programa","cod_programa"));
-	echo $json;
+		$id=$_POST['id'];
+		$json=json_encode(consultar_tabla($id,"programa","cod_programa"));
+		echo $json;
+	}
 }
-}
+
 function programa_ingreso_action() {
 
 	if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -182,9 +188,8 @@ function crear_linea_action() {
 		$codigo= $_POST['cod_linea'];
 		$nombre = $_POST['nom_linea'];
 		$programa = $_POST['programa'];
-		programa_ingreso($codigo, $nom);
 		crear_linea($codigo, $nombre, $programa);
-		header("Location: /pgt/index.php/programa");
+		header("Location: /pgt/index.php/Lineas");
 	}
 }
 
@@ -194,5 +199,41 @@ function consultar_lineas_programa_action(){
 		$lineas = consultar_tabla2('linea','cod_programa',$cod_programa);
 		echo json_encode($lineas);
 	}	
+}
+function consultar_lineas_action(){
+	$lineas = all_date_table('linea');
+	require "plantillas/lineas.php";
+
+}
+function consultar_linea_action(){
+	if ($_SERVER['REQUEST_METHOD']=="POST") {
+		$id=$_POST['id'];
+		$json=json_encode(consultar_tabla($id,"linea","cod_linea"));
+		echo $json;
+	}
+
+}
+function eliminar_linea_action(){
+	if($_SERVER['REQUEST_METHOD']=='GET'){
+		$codigo=$_GET['id'];
+		eliminar_linea($codigo);
+		header("Location: /pgt/index.php/Lineas");
+	}else{
+		header("Location: /pgt/index.php/Lineas");
+	}
+
+}
+function detalle_proyecto_action(){
+
+	if($_SERVER['REQUEST_METHOD']=='GET'){
+		$id=$_GET['id'];
+		$proyecto_d=consultar_tabla($id,"proyecto","cod_proyecto");
+		$programa_proyecto_d=consultar_tabla($id,"linea_proyecto","cod_proyecto");
+		$linea_d=consultar_tabla($programa_proyecto_d['cod_linea'],"linea","cod_linea");
+		$programa_d=consultar_tabla($programa_proyecto_d['cod_programa'],"programa","cod_programa");
+
+		require "plantillas/detalles_proyecto.php";
+	}
+
 }
 ?>

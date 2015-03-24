@@ -23,10 +23,9 @@
          <td id="1"><?php echo $row['titulo']; ?></td>
          <td id="2"><?php echo $row['fecha_aprovacion']; ?></td>
          <td id="2"><?php echo $row['estado']; ?></td>
-         <td>
-          <a class="btn btn-success" data-toggle="modal" data-target="#ventana" id="<?php echo $row['cod_proyecto']; ?>"><span class="glyphicon glyphicon-edit"></span>Detalles</a>  
-        </td>
-        
+           <td>
+          <a class="btn btn-success" id="<?php echo $row['cod_proyecto']; ?>" href="/pgt/index.php/detalle_proyecto?id=<?php echo $row['cod_proyecto']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles   </a>
+          </td>
       </tr>
       <?php } ?>
     </tbody>
