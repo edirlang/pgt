@@ -22,7 +22,7 @@
         <input type="date" class="form-control" id="fechaAprovacion" name="fechaAprovacion" placeholder="Fecha Aprovado">
         <label for="">Estado</label>
         <select class="form-control" id="estado" name="estado">
-          <option value="Aprovado">Aprovado</option>
+          <option value="Aprovado">Aprobado</option>
           <option value="Rechazado">Rechazado</option>
           <option value="Aplazado">Aplazado</option>
         </select>
