@@ -121,8 +121,10 @@ function ProyectosNuevoAction(){
 		$director = $_POST['director'];
 		$programas = $_POST['programa'];
 
-		//crear_director($director);
+		
 		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director);
+
+		crear_director($director,$codigo);
 		
 		foreach ($programas as $programa) {
 			$linea = explode(".", $programa);
