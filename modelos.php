@@ -124,6 +124,20 @@ function proyectos(){
 	return $usuarios;
 }
 
+function ultima_fila($tabla, $campo){
+	$conexion = conectar_base_datos();
+	$consulta = "SELECT * FROM $tabla order by $campo desc limit 1";
+	$resultado = pg_query($conexion,$consulta);
+
+	$proyecto = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		$proyecto = $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $proyecto;
+}
+
 function crear_Proyecto($codigo, $titulo, $resumen, $fechainicio, $fechaaprovacion, $estado,$director){
 	$conexion = conectar_base_datos();
 	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','$fechaaprovacion')";

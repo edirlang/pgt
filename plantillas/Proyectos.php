@@ -36,12 +36,5 @@
 </div>
 <script type="text/javascript" src="/pgt/js/usuario.js"></script>
 <?php $contenido = ob_get_clean(); ?>
-<?php 
-
-if (isset($_SESSION['usuario'])) {
-  include "plantilla_base.php";  
-}else{
-  include "plantilla_base2.php"; 
-}
- ?>
+<?php include "plantilla_base.php"; ?>
 

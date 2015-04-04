@@ -112,7 +112,7 @@ function ProyectosAction(){
 
 function ProyectosNuevoAction(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){
-		$codigo= $_POST['cod_proyecto'];
+		
 		$titulo = $_POST['titulo'];
 		$resumen = $_POST['resumen'];
 		$fechaInicio = $_POST['fechaInicio'];
@@ -121,7 +121,33 @@ function ProyectosNuevoAction(){
 		$director = $_POST['director'];
 		$programas = $_POST['programa'];
 
-		
+		$codigo = 0;
+		$proyecto = ultima_fila("proyecto","cod_proyecto");
+		if(isset($proyecto['cod_proyecto'])){
+			
+			$cod_actual = explode(".", $proyecto['cod_proyecto']);
+			$codigo = '';
+			if(date('m') < '06' ){
+				$codigo = date('Y')."1";
+			}else{
+				$codigo = date('Y')."2";
+			}
+
+			if($cod_actual[0] == $codigo){
+				$codigo = $codigo.".".($cod_actual[1]+1);
+			}else{
+				$codigo = $codigo."."."1";
+			}
+			echo $codigo;
+		}else{
+			if(date('m') < '06' ){
+				$codigo = date('Y')."1";
+			}else{
+				$codigo = date('Y')."2";
+			}
+			$codigo = $codigo."."."1";
+		}
+
 		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director);
 
 		crear_director($director,$codigo);

@@ -10,8 +10,6 @@
 
     <form id="formulario" name="formulario" role="form" method="post" action="/pgt/index.php/Proyectos/nuevo">
       <div class="form-group">
-        <label for="">Codigo</label>
-        <input type="text" class="form-control" id="cod_proyecto"  name="cod_proyecto" placeholder="Cedula">
         <label for="">Titulo</label>
         <input type="text" class="form-control" id="titulo"  name="titulo" placeholder="Titulo">
         <label for="">Resumen</label>
