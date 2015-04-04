@@ -93,6 +93,14 @@ $uri = explode("?", $url);
 		case "/pgt/index.php/detalle_proyecto":
 			detalle_proyecto_action();
 		break;
+
+		case "/pgt/index.php/AgregarJurado":
+			calificar_proyecto_action();
+		break;
+
+		case "/pgt/index.php/buscar_jurado":
+			buscar_jurado_action();
+		break;
 	}
 
 ?>

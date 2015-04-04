@@ -18,12 +18,6 @@
         <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" placeholder="Fecha Inicio">
         <label for="">Fecha de aprovacion</label>
         <input type="date" class="form-control" id="fechaAprovacion" name="fechaAprovacion" placeholder="Fecha Aprovado">
-        <label for="">Estado</label>
-        <select class="form-control" id="estado" name="estado">
-          <option value="Aprovado">Aprobado</option>
-          <option value="Rechazado">Rechazado</option>
-          <option value="Aplazado">Aplazado</option>
-        </select>
         <label for="">Seleccione Director</label>
         <select class="form-control" id="director" name="director">
           <?php foreach ($profesores as $profesor) { ?>

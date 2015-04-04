@@ -112,12 +112,11 @@ function ProyectosAction(){
 
 function ProyectosNuevoAction(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){
-		
 		$titulo = $_POST['titulo'];
 		$resumen = $_POST['resumen'];
 		$fechaInicio = $_POST['fechaInicio'];
 		$fechaAprovado = $_POST['fechaAprovacion'];
-		$estado = $_POST['estado'];
+		$estado = "En Proceso";
 		$director = $_POST['director'];
 		$programas = $_POST['programa'];
 
@@ -156,12 +155,46 @@ function ProyectosNuevoAction(){
 			$linea = explode(".", $programa);
 			crear_linea_proyecto($linea[1] , $linea[0], $codigo);
 		}
-		
+		$_SERVER['REQUEST_METHOD']=='GET';
 		header("Location: /pgt/index.php/Proyectos");
 	}
 	$programas = programa();
 	$profesores = profesores();
 	require "plantillas/ProyectosNuevo.php";
+}
+
+function calificar_proyecto_action(){
+	if ($_SERVER['REQUEST_METHOD']=='POST') {
+		$jurado1 = $_POST['jurado1'];
+		$jurado2 = $_POST['jurado2'];
+		$calificacion1 = $_POST['calificacion1'];
+		$calificacion2 = $_POST['calificacion2'];
+		$cod_proyecto = $_POST['proyecto'];
+
+		crear_jurado($jurado1, $cod_proyecto, $calificacion1);
+		crear_jurado($jurado2, $cod_proyecto, $calificacion2);
+		$estado;
+		if($calificacion1 == $calificacion2 && $calificacion1 == "Aprovado"){
+			calificar_proyecto($cod_proyecto, "Aprovado");
+			$estado="Aprovado";
+		}else{
+			calificar_proyecto($cod_proyecto, "Rechazado");
+			$estado = "Rechazado";
+		}
+		echo "<script> alert('Proyecto a sido evaliado, nuevo estado '".$estado."); </script>";
+		header("Location: /pgt/index.php/Proyectos");
+	}
+	$proyectos = consultar_tabla2("proyecto","estado","Finalizado") ;
+	require "plantillas/AgregarJurado.php";
+}
+
+function buscar_jurado_action(){
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$id = $_POST['id'];
+		$director = consultar_tabla($id,"profesor_proyecto","cod_proyecto");
+		$profesores = consultar_exepto("profesor","cedula",$director['cod_profesor']);
+		echo json_encode($profesores);
+	}
 }
 
 function SalirAction(){

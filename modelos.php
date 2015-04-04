@@ -155,6 +155,21 @@ function crear_director($cedula, $cod_proyecto){
 	cerrar_conexion_db($conexion);
 }
 
+function calificar_proyecto($codigo, $calificaion){
+	$conexion = conectar_base_datos();
+	$consulta  = "UPDATE proyecto set estado = '$calificaion' where cod_proyecto = '$codigo'";
+	echo pg_last_error($conexion);
+	pg_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
+}
+
+function crear_jurado($cedula, $cod_proyecto, $calificacion){
+	$conexion = conectar_base_datos();
+	$consulta  = "INSERT INTO profesor_proyecto values('$cod_proyecto','$cedula','jurado','$calificacion')";
+	echo pg_last_error($conexion);
+	pg_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
+}
 function crear_linea_proyecto($linea, $programa, $cod_proyecto){
 	$conexion = conectar_base_datos();
 	$consulta  = "INSERT INTO linea_proyecto values('$linea','$cod_proyecto','$programa')";
@@ -283,6 +298,19 @@ function consultar_tabla($id,$table,$id_table){
 function consultar_tabla2($table,$id_table, $id){
 	$conexion = conectar_base_datos();
 	$consulta = "SELECT * FROM $table WHERE $id_table='$id'";
+	$resultado = pg_query($conexion,$consulta);
+	$valores = array();
+
+	while ($fila = pg_fetch_assoc($resultado)) {
+		array_push($valores, $fila);
+	}
+	cerrar_conexion_db($conexion);
+	return $valores;
+}
+
+function consultar_exepto($tabla,$campo,$valor){
+	$conexion = conectar_base_datos();
+	$consulta = "SELECT * FROM $tabla WHERE $campo !='$valor'";
 	$resultado = pg_query($conexion,$consulta);
 	$valores = array();
 

@@ -68,6 +68,9 @@
               <li>
                 <a href="/pgt/index.php/Proyectos/nuevo">Nuevo Proyecto</a>
               </li>
+              <li>
+                <a href="/pgt/index.php/AgregarJurado">Calificar proyecto</a>
+              </li>
 
             </ul>
           </li>
