@@ -175,11 +175,13 @@ function calificar_proyecto_action(){
 
 		crear_jurado($jurado1, $cod_proyecto, $calificacion1);
 		crear_jurado($jurado2, $cod_proyecto, $calificacion2);
+		llamar_procedimiento("call CalificarProyecto('$cod_proyecto','$calificacion1','$calificacion2')");
 		$estado;
 		if($calificacion1 == $calificacion2 && $calificacion1 == "Aprovado"){
 			calificar_proyecto($cod_proyecto, "Aprovado");
 			$estado="Aprovado";
 		}else{
+
 			calificar_proyecto($cod_proyecto, "Rechazado");
 			$estado = "Rechazado";
 		}
