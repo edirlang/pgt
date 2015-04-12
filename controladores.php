@@ -7,10 +7,12 @@ function loginAction(){
 		$usuario= $_POST['usuario'];
 		$contrasena = $_POST['contrasena'];
 		$usuario = ConsultarUsuario($usuario, $contrasena);
-		session_start();
-		$_SESSION['usuario']=$usuario['cedula'];
+		
 		if (isset($usuario['cedula'])) {
 			header("Location: /pgt/index.php/Estudiantes");
+			session_start();
+			$_SESSION['usuario']=$usuario['cedula'];
+			session_write_close();
 		}
 		else{
 			header("Location: /pgt/index.php/");
