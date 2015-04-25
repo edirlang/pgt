@@ -10,8 +10,6 @@
         <div class="form-group">
           <label for="">Cedula</label>
           <input type="text" class="form-control" id="cedula"  name="cedula" placeholder="Cedula">
-          <label for="">Cargo</label>
-          <input type="text" class="form-control" id="cargo"  name="cargo" placeholder="Cargo">
           <label for="">Nombre</label>
           <input type="text" class="form-control" id="nombre"  name="nombre" placeholder="Nombre">
           <label for="">Apellido</label>

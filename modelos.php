@@ -185,9 +185,9 @@ function profesores(){
 	return $usuarios;
 }
 
-function crear_Profesor($cedula, $nombre, $apellido, $cargo){
+function crear_Profesor($cedula, $nombre, $apellido){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO profesor values('$cedula','$cargo','$nombre','$apellido')";
+	$consulta  = "INSERT INTO profesor values('$cedula','$nombre','$apellido')";
 	mysqli_query($conexion,$consulta);
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);

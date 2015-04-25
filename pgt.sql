@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-04-2015 a las 05:21:12
+-- Tiempo de generación: 25-04-2015 a las 06:07:26
 -- Versión del servidor: 5.6.20
 -- Versión de PHP: 5.5.15
 
@@ -19,6 +19,33 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pgt`
 --
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `addAutomovil`(IN nombre VARCHAR(50),IN plazas INT)
+BEGIN
+ IF plazas < 6 THEN
+   INSERT INTO coche VALUES(nombre,plazas);
+ ELSE
+    INSERT INTO monovolumen VALUES(nombre,plazas);
+  END IF;
+ END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CalificarProyecto`( IN codigo varchar(10), IN calificacion1 varchar(8), IN calificacion2 varchar(8))
+BEGIN
+
+	IF calificacion1 = "Aprovado" && calificacion2 = "Aprovado" then
+    	UPDATE proyecto SET estado = "Aprovado" WHERE cod_proyecto = codigo;
+    else
+    	UPDATE proyecto SET estado="Rechazado" WHERE cod_proyecto=codigo ;
+    end IF;
+    
+    
+end$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -39,7 +66,11 @@ CREATE TABLE IF NOT EXISTS `estudiante` (
 --
 
 INSERT INTO `estudiante` (`cod_estudiante`, `cedula`, `ape_estudiante`, `nom_estudiante`, `cod_proyecto`) VALUES
-('123', '123', '123', '123', '20151.1');
+('123', '123', 'Hernandez', 'Edixon', '20151.1'),
+('1264', '444', 'Lizeth', 'Contreras', '1511'),
+('1612', '111', 'Borja', 'Martinez', '1501'),
+('1784', '222', 'Carlos', 'Gutierrez', '1511'),
+('6254', '333', 'Daniela', 'Guzman', '1512');
 
 -- --------------------------------------------------------
 
@@ -124,7 +155,6 @@ INSERT INTO `linea_proyecto` (`cod_linea`, `cod_proyecto`, `cod_programa`) VALUE
 
 CREATE TABLE IF NOT EXISTS `profesor` (
   `cedula` varchar(15) NOT NULL,
-  `cargo` varchar(10) DEFAULT NULL,
   `nom_profesor` varchar(20) DEFAULT NULL,
   `ape_profesor` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -133,8 +163,12 @@ CREATE TABLE IF NOT EXISTS `profesor` (
 -- Volcado de datos para la tabla `profesor`
 --
 
-INSERT INTO `profesor` (`cedula`, `cargo`, `nom_profesor`, `ape_profesor`) VALUES
-('123', 'Docente', 'Fernando', 'Sotelo');
+INSERT INTO `profesor` (`cedula`, `nom_profesor`, `ape_profesor`) VALUES
+('3245', 'Fernando', 'Sotelo'),
+('6245', 'Andres', 'Novoa'),
+('7845', 'Juan', 'Botero'),
+('9546', 'Miguel', 'Ojeda'),
+('9856', 'Esperanza', 'Merchan');
 
 -- --------------------------------------------------------
 
@@ -152,7 +186,11 @@ CREATE TABLE IF NOT EXISTS `profesor_correo` (
 --
 
 INSERT INTO `profesor_correo` (`cod_profesor`, `nom_correo`) VALUES
-('123', '123@123');
+('3245', 'sotelo@hotmail.com'),
+('6245', 'novoa@hotmail.com'),
+('7845', 'botero@hotmail.com'),
+('9546', 'ojeda@hotmail.com'),
+('9856', 'merchan@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -172,7 +210,10 @@ CREATE TABLE IF NOT EXISTS `profesor_proyecto` (
 --
 
 INSERT INTO `profesor_proyecto` (`cod_proyecto`, `cod_profesor`, `rol`, `calificacion`) VALUES
-('20151.1', '123', 'director', '');
+('1501', '7845', 'director', 'activo'),
+('1502', '9856', 'jurado', 'inactivo'),
+('1512', '9546', 'jurado', 'activo'),
+('20151.1', '3245', 'director', 'activo');
 
 -- --------------------------------------------------------
 
@@ -184,13 +225,6 @@ CREATE TABLE IF NOT EXISTS `profesor_telefono` (
   `cod_profesor` varchar(15) NOT NULL DEFAULT '',
   `num_telefono` varchar(13) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `profesor_telefono`
---
-
-INSERT INTO `profesor_telefono` (`cod_profesor`, `num_telefono`) VALUES
-('123', '123');
 
 -- --------------------------------------------------------
 
@@ -231,7 +265,11 @@ CREATE TABLE IF NOT EXISTS `proyecto` (
 --
 
 INSERT INTO `proyecto` (`cod_proyecto`, `titulo`, `resumen`, `estado`, `fecha_inicio`, `fecha_aprovacion`) VALUES
-('20151.1', 'lal', 'es un lal', 'En Proceso', '2015-12-31', '2014-12-31');
+('1501', 'titulo1_proy', 'resumen1_proy', '1/1/2015', '0000-00-00', '0000-00-00'),
+('1502', 'titulo2_proy', 'resumen2_proy', '1/6/2015', '0000-00-00', '0000-00-00'),
+('1511', 'titulo3_proy', 'resumen3_proy', '1/1/2016', '0000-00-00', '0000-00-00'),
+('1512', 'titulo4_proy', 'resumen4_proy', '1/6/2016', '0000-00-00', '0000-00-00'),
+('20151.1', 'lal', 'es un lal', 'Aprovado', '2015-12-31', '2014-12-31');
 
 -- --------------------------------------------------------
 

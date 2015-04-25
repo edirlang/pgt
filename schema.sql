@@ -1,6 +1,5 @@
 create table profesor(
 	cedula varchar(15) primary key ,
-	cargo  varchar(10) ,
 	nom_profesor varchar(20) ,
 	ape_profesor varchar(20) 
 );
@@ -88,3 +87,44 @@ create table linea_proyecto(
 	CONSTRAINT linea_proyecto
 	FOREIGN KEY (cod_linea,cod_programa) REFERENCES linea(cod_linea, cod_programa)
 );
+
+INSERT INTO profesor VALUES
+('6245','Andres','Novoa'),
+('7845','Juan','Botero'),
+('9856','Esperanza','Merchan'),
+('3245','Fernando','Sotelo'),
+('9546','Miguel','Ojeda');
+
+INSERT INTO proyecto VALUES
+('1501','titulo1_proy','resumen1_proy','1/1/2015','30/5/2015','aprobado'),
+('1502','titulo2_proy','resumen2_proy','1/6/2015','30/12/2015','aprobado'),
+('1511','titulo3_proy','resumen3_proy','1/1/2016','30/5/2016','aprobado'),
+('1512','titulo4_proy','resumen4_proy','1/6/2016','30/12/2016','aprobado');
+
+INSERT INTO programa VALUES
+('1','Ingenieria de Sistemas');
+
+INSERT INTO linea VALUES
+('1','Software','1');
+
+
+INSERT INTO estudiante VALUES
+('1612','111','Borja','Martinez','1501'),
+('1784','222','Carlos','Gutierrez','1511'),
+("1264","444","Lizeth","Contreras","1511"),
+('6254','333','Daniela','Guzman','1512');
+
+
+INSERT INTO profesor_correo VALUES
+('6245','novoa@hotmail.com'),
+('7845','botero@hotmail.com'),
+('9856','merchan@hotmail.com'),
+('3245','sotelo@hotmail.com'),
+('9546','ojeda@hotmail.com');
+
+
+INSERT INTO profesor_proyecto VALUES
+('1501','7845','director','activo'),
+('1502','9856','jurado','inactivo'),
+('1511','3245','director','activo'),
+('1512','9546','jurado','activo');

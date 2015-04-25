@@ -83,12 +83,11 @@ function Profesor_nuevo_Action(){
 		$cedula= $_POST['cedula'];
 		$nombre = $_POST['nombre'];
 		$apellido = $_POST['apellido'];
-		$cargo = $_POST['cargo'];
 		
 		$telefonos = $_POST['Telefono'];
 		$emails = $_POST['Email'];
 
-		crear_Profesor($cedula, $nombre, $apellido, $cargo);
+		crear_Profesor($cedula, $nombre, $apellido);
 		foreach ($telefonos as $telefono) {
 			crear_Telefono_Profesor($cedula, $telefono);
 		}
