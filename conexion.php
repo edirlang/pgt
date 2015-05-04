@@ -1,5 +1,5 @@
 <?php 
-	$cn = mysqli_connect("localhost","root","1234","pgt");
+	$cn = mysqli_connect("localhost","root","","pgt");
 	if(!$cn){
 		die("Error no se logro conectar con la base de datos".mysqli_connect_error());
 	}
