@@ -6,7 +6,6 @@
   </div>
   <div class="panel-body">
     <p>Nombre: <?php echo $profesor['nom_profesor']." ".$profesor['ape_profesor'] ?></p>
-    <p>Codigo: <?php echo $profesor['cargo']; ?></p>
     <p>Cedula: <?php echo $profesor['cedula']; ?></p>
     <p><strong>Telefonos</strong></p>
       <?php 

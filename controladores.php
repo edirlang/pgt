@@ -111,6 +111,10 @@ function ProyectosAction(){
 	require "plantillas/Proyectos.php";
 }
 
+
+
+
+
 function ProyectosNuevoAction(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$titulo = $_POST['titulo'];
@@ -120,6 +124,10 @@ function ProyectosNuevoAction(){
 		$estado = "En Proceso";
 		$director = $_POST['director'];
 		$programas = $_POST['programa'];
+        $nombre_a=$_FILES['archivo']['name'];
+        $destino="archivo/".$nombre_a;
+        $ubicacion_temp=$_FILES['archivo']['tmp_name']; 
+        move_uploaded_file($ubicacion_temp,$destino);
 
 		$codigo = 0;
 		$proyecto = ultima_fila("proyecto","cod_proyecto");
@@ -148,7 +156,7 @@ function ProyectosNuevoAction(){
 			$codigo = $codigo."."."1";
 		}
 
-		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director);
+		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director, $destino);
 
 		crear_director($director,$codigo);
 		
@@ -295,9 +303,14 @@ function detalle_proyecto_action(){
 		$programa_proyecto_d=consultar_tabla($id,"linea_proyecto","cod_proyecto");
 		$linea_d=consultar_tabla($programa_proyecto_d['cod_linea'],"linea","cod_linea");
 		$programa_d=consultar_tabla($programa_proyecto_d['cod_programa'],"programa","cod_programa");
-
+        $detalles_proyecto_director=buscar_proyecto_directo_nombre($id);
 		require "plantillas/detalles_proyecto.php";
 	}
 
+}
+function buscar_proyecto_profesor(){
+	$id=$_GET['id'];
+	$director_proyecto=buscar_proyecto_directo($id);
+	require "plantillas/proyecto_profesor.php";
 }
 ?>

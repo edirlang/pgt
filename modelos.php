@@ -131,9 +131,9 @@ function ultima_fila($tabla, $campo){
 	return $proyecto;
 }
 
-function crear_Proyecto($codigo, $titulo, $resumen, $fechainicio, $fechaaprovacion, $estado,$director){
+function crear_Proyecto($codigo, $titulo, $resumen, $fechainicio, $fechaaprovacion, $estado,$director , $destino){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','$fechaaprovacion')";
+	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','$fechaaprovacion','$destino')";
 	echo mysqli_error($conexion);
 	mysqli_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
@@ -377,3 +377,32 @@ function eliminar_linea($codigo){
 	$resultado = mysqli_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
 }
+
+
+function buscar_proyecto_directo($id){
+
+   	$conexion = conectar_base_datos();
+	$consulta = "SELECT * from profesor_proyecto,proyecto where profesor_proyecto.cod_proyecto=proyecto.cod_proyecto AND cod_profesor='$id'";
+	$resultado = mysqli_query($conexion,$consulta);
+	$programa = array();
+	while ($fila = mysqli_fetch_assoc($resultado)) {
+		$programa[] = $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $programa;
+}
+function  buscar_proyecto_directo_nombre($id){
+
+
+   	$conexion = conectar_base_datos();
+	$consulta = "SELECT nom_profesor,ape_profesor from profesor_proyecto,profesor where profesor_proyecto.cod_profesor=profesor.cedula AND cod_proyecto='$id'";
+	$resultado = mysqli_query($conexion,$consulta);
+	$programa = array();
+	while ($fila = mysqli_fetch_assoc($resultado)) {
+		$programa= $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $programa;
+
+}
+//$consulta = "SELECT titulo from profesor_proyecto,proyecto where profesor_proyecto.cod_proyecto=proyecto.cod_proyecto AND cod_proyecto='$id'";

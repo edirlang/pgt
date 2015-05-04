@@ -20,14 +20,14 @@
 		<p>Fecha Aprobacion: <?php echo $proyecto_d['fecha_aprovacion']; ?></p>
 		<p>Programa:  <?php echo  $programa_d['nom_programa']; ?></p>
 		<p>Linea:  <?php echo  $linea_d['nom_linea']; ?></p>
-
-
-  
+		
+        <p>Director :  <?php echo  $detalles_proyecto_director['nom_profesor']." ".$detalles_proyecto_director['ape_profesor'];; ?></p>
+        <p>Descargar Proyecto</p>
+         <a target="_blank" href="<?php echo  "/pgt/".$proyecto_d['archivo']; ?>"><?php echo $proyecto_d['titulo']; ?> </a>
 
 </div>
 
 </div>
-
 
 <?php $contenido = ob_get_clean(); ?>
 <?php 
@@ -35,6 +35,6 @@
 if (isset($_SESSION['usuario'])) {
   include "plantilla_base.php";  
 }else{
-  include "plantilla_base2.php"; 
+  include "plantilla_base.php"; 
 }
  ?>

@@ -8,7 +8,7 @@
    </div>
    <div class="panel-body">
 
-    <form id="formulario" name="formulario" role="form" method="post" action="/pgt/index.php/Proyectos/nuevo">
+    <form id="formulario" name="formulario" role="form" method="post" action="/pgt/index.php/Proyectos/nuevo" enctype="multipart/form-data">
       <div class="form-group">
         <label for="">Titulo</label>
         <input type="text" class="form-control" id="titulo"  name="titulo" placeholder="Titulo">
@@ -45,7 +45,8 @@
         </select>
         ">
       </div>
-
+     <label for="">Archivo Proyecto</label>
+        <input type="file" class="form-control" id="archivo" name="archivo" >
     </div>
     <button id="Enviar" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
   </form>  

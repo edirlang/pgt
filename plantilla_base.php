@@ -55,7 +55,7 @@
               <li>
                 <a href="/pgt/index.php/Profesor/nuevo">Nuevo Docente</a>
               </li>
-
+           
             </ul>
           </li>
           

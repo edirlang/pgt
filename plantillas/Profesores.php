@@ -12,6 +12,7 @@
           <th>Nombre</th>
           <th>Apellido</th>
           <th></th>
+            <th></th>
            <th></th>
         </tr>
       </thead>
@@ -23,6 +24,9 @@
           <td id="3"><?php echo $row['ape_profesor']; ?></td>
           <td>
           <a class="btn btn-success" id="<?php echo $row['cedula']; ?>" href="/pgt/index.php/profesor?id=<?php echo $row['cedula']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles   </a>
+          </td>
+          <td>
+          <a class="btn btn-primary" id="<?php echo $row['cedula']; ?>" href="/pgt/index.php/profesor_proyectos?id=<?php echo $row['cedula']; ?> "><span class="glyphicon glyphicon-search"></span> Director de</a>
           </td>
           <td>
          <a class="btn btn-primary" id="<?php echo $row['cedula']; ?>" href="/pgt/index.php/eliminar_profesor?id=<?php echo $row['cedula']; ?> "><span class="glyphicon glyphicon-remove"></span></a>
