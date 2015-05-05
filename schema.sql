@@ -142,3 +142,9 @@ select concat(profesor.nom_profesor," ",profesor.ape_profesor) as director, prof
 create view proyectos as
 select proyecto.cod_proyecto, proyecto.titulo, concat(estudiante.nom_estudiante," ",estudiante.ape_estudiante) as estudiante, jurados.jurado, directores.director 
 from estudiante, proyecto, jurados, directores where proyecto.cod_proyecto = estudiante.cod_proyecto and (proyecto.cod_proyecto= jurados.cod_proyecto or proyecto.cod_proyecto= directores.cod_proyecto) order by proyecto.cod_proyecto;
+
+
+CREATE PROCEDURE profesor_proyecto(IN id VARCHAR(10), IN rol varchar(8))
+BEGIN
+SELECT nom_profesor,ape_profesor from profesor_proyecto,profesor where profesor_proyecto.cod_profesor=profesor.cedula AND profesor_proyecto.cod_proyecto=id and profesor_proyecto.rol=rol;
+END

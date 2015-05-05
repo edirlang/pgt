@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-04-2015 a las 06:07:26
+-- Tiempo de generación: 05-05-2015 a las 07:24:56
 -- Versión del servidor: 5.6.20
 -- Versión de PHP: 5.5.15
 
@@ -24,15 +24,6 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addAutomovil`(IN nombre VARCHAR(50),IN plazas INT)
-BEGIN
- IF plazas < 6 THEN
-   INSERT INTO coche VALUES(nombre,plazas);
- ELSE
-    INSERT INTO monovolumen VALUES(nombre,plazas);
-  END IF;
- END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `CalificarProyecto`( IN codigo varchar(10), IN calificacion1 varchar(8), IN calificacion2 varchar(8))
 BEGIN
 
@@ -45,8 +36,20 @@ BEGIN
     
 end$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `profesor_proyecto`(IN id VARCHAR(10), IN rol varchar(8))
+SELECT nom_profesor,ape_profesor from profesor_proyecto,profesor where profesor_proyecto.cod_profesor=profesor.cedula AND profesor_proyecto.cod_proyecto=id and profesor_proyecto.rol=rol$$
+
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `directores`
+--
+CREATE TABLE IF NOT EXISTS `directores` (
+`director` varchar(41)
+,`cod_proyecto` varchar(10)
+);
 -- --------------------------------------------------------
 
 --
@@ -111,6 +114,15 @@ INSERT INTO `estudiante_telefono` (`cod_estudiante`, `num_telefono`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura Stand-in para la vista `jurados`
+--
+CREATE TABLE IF NOT EXISTS `jurados` (
+`jurado` varchar(41)
+,`cod_proyecto` varchar(10)
+);
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `linea`
 --
 
@@ -145,7 +157,9 @@ CREATE TABLE IF NOT EXISTS `linea_proyecto` (
 --
 
 INSERT INTO `linea_proyecto` (`cod_linea`, `cod_proyecto`, `cod_programa`) VALUES
-('1', '20151.1', '1');
+('1', '20151.1', '1'),
+('1', '20151.2', '1'),
+('2', '20151.2', '2');
 
 -- --------------------------------------------------------
 
@@ -164,6 +178,7 @@ CREATE TABLE IF NOT EXISTS `profesor` (
 --
 
 INSERT INTO `profesor` (`cedula`, `nom_profesor`, `ape_profesor`) VALUES
+('124376', 'Duvan', 'Ordiñez'),
 ('3245', 'Fernando', 'Sotelo'),
 ('6245', 'Andres', 'Novoa'),
 ('7845', 'Juan', 'Botero'),
@@ -186,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `profesor_correo` (
 --
 
 INSERT INTO `profesor_correo` (`cod_profesor`, `nom_correo`) VALUES
+('124376', 'duvan@gmail.com'),
 ('3245', 'sotelo@hotmail.com'),
 ('6245', 'novoa@hotmail.com'),
 ('7845', 'botero@hotmail.com'),
@@ -202,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `profesor_proyecto` (
   `cod_proyecto` varchar(10) NOT NULL DEFAULT '',
   `cod_profesor` varchar(15) NOT NULL DEFAULT '',
   `rol` varchar(8) DEFAULT NULL,
-  `calificacion` varchar(8) DEFAULT NULL
+  `calificacion` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -213,7 +229,8 @@ INSERT INTO `profesor_proyecto` (`cod_proyecto`, `cod_profesor`, `rol`, `calific
 ('1501', '7845', 'director', 'activo'),
 ('1502', '9856', 'jurado', 'inactivo'),
 ('1512', '9546', 'jurado', 'activo'),
-('20151.1', '3245', 'director', 'activo');
+('20151.1', '3245', 'director', 'activo'),
+('20151.2', '124376', 'director', 'En Proceso');
 
 -- --------------------------------------------------------
 
@@ -225,6 +242,13 @@ CREATE TABLE IF NOT EXISTS `profesor_telefono` (
   `cod_profesor` varchar(15) NOT NULL DEFAULT '',
   `num_telefono` varchar(13) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `profesor_telefono`
+--
+
+INSERT INTO `profesor_telefono` (`cod_profesor`, `num_telefono`) VALUES
+('124376', '312321');
 
 -- --------------------------------------------------------
 
@@ -269,8 +293,21 @@ INSERT INTO `proyecto` (`cod_proyecto`, `titulo`, `resumen`, `estado`, `fecha_in
 ('1502', 'titulo2_proy', 'resumen2_proy', '1/6/2015', '0000-00-00', '0000-00-00'),
 ('1511', 'titulo3_proy', 'resumen3_proy', '1/1/2016', '0000-00-00', '0000-00-00'),
 ('1512', 'titulo4_proy', 'resumen4_proy', '1/6/2016', '0000-00-00', '0000-00-00'),
-('20151.1', 'lal', 'es un lal', 'Aprovado', '2015-12-31', '2014-12-31');
+('20151.1', 'lal', 'es un lal', 'Aprovado', '2015-12-31', '2014-12-31'),
+('20151.2', 'Scrum Educado', 'Resumen', 'En Proceso', '2014-07-27', '2015-02-02');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `proyectos`
+--
+CREATE TABLE IF NOT EXISTS `proyectos` (
+`cod_proyecto` varchar(10)
+,`titulo` varchar(20)
+,`estudiante` varchar(21)
+,`jurado` varchar(41)
+,`director` varchar(41)
+);
 -- --------------------------------------------------------
 
 --
@@ -289,6 +326,33 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`cedula`, `nombre`, `contrasena`) VALUES
 ('1', '1', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `directores`
+--
+DROP TABLE IF EXISTS `directores`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `directores` AS select concat(`profesor`.`nom_profesor`,' ',`profesor`.`ape_profesor`) AS `director`,`profesor_proyecto`.`cod_proyecto` AS `cod_proyecto` from (`profesor` join `profesor_proyecto`) where ((`profesor`.`cedula` = `profesor_proyecto`.`cod_profesor`) and (`profesor_proyecto`.`rol` = 'director'));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `jurados`
+--
+DROP TABLE IF EXISTS `jurados`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `jurados` AS select concat(`profesor`.`nom_profesor`,' ',`profesor`.`ape_profesor`) AS `jurado`,`profesor_proyecto`.`cod_proyecto` AS `cod_proyecto` from (`profesor` join `profesor_proyecto`) where ((`profesor`.`cedula` = `profesor_proyecto`.`cod_profesor`) and (`profesor_proyecto`.`rol` = 'jurado'));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `proyectos`
+--
+DROP TABLE IF EXISTS `proyectos`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `proyectos` AS select `proyecto`.`cod_proyecto` AS `cod_proyecto`,`proyecto`.`titulo` AS `titulo`,concat(`estudiante`.`nom_estudiante`,' ',`estudiante`.`ape_estudiante`) AS `estudiante`,`jurados`.`jurado` AS `jurado`,`directores`.`director` AS `director` from (((`estudiante` join `proyecto`) join `jurados`) join `directores`) where ((`proyecto`.`cod_proyecto` = `estudiante`.`cod_proyecto`) and ((`proyecto`.`cod_proyecto` = `jurados`.`cod_proyecto`) or (`proyecto`.`cod_proyecto` = `directores`.`cod_proyecto`))) order by `proyecto`.`cod_proyecto`;
 
 --
 -- Índices para tablas volcadas
