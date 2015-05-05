@@ -107,13 +107,26 @@ function ProfesoresAction(){
 }
 
 function ProyectosAction(){
-	$proyectos = proyectos();
+	$proyectosOriginal = proyectosView();
+	$proyectos = array();
+	$cod_anterior = 0;
+	
+	foreach($proyectosOriginal as $row){
+		$cod_actual = $row['cod_proyecto'];
+		if($cod_anterior == $cod_actual){
+			foreach($proyectos as $fila){
+				if($cod_actual == $fila['cod_proyecto']){
+					$fila['jurado']+= "-".$row['jurado'];
+				}
+			}
+		}else{
+				array_push($proyectos, $row);
+		}
+		$cod_anterior = $cod_actual;
+		echo $cod_anterior." - ".$row['titulo']." ";
+    }
 	require "plantillas/Proyectos.php";
 }
-
-
-
-
 
 function ProyectosNuevoAction(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){

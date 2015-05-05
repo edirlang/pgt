@@ -128,3 +128,17 @@ INSERT INTO profesor_proyecto VALUES
 ('1502','9856','jurado','inactivo'),
 ('1511','3245','director','activo'),
 ('1512','9546','jurado','activo');
+
+select proyecto.titulo, concat(estudiante.nom_estudiante," ",estudiante.ape_estudiante) as estudiante, concat(profesor.nom_profesor," ",profesor.ape_profesor) as profesor, profesor_proyecto.rol as Cargo from estudiante, proyecto, profesor, profesor_proyecto where proyecto.cod_proyecto = estudiante.cod_proyecto and proyecto.cod_proyecto = profesor_proyecto.cod_proyecto and profesor_proyecto.cod_profesor = profesor.cedula;
+
+create view jurados as
+select concat(profesor.nom_profesor," ",profesor.ape_profesor) as jurado, profesor_proyecto.cod_proyecto from profesor,profesor_proyecto where profesor.cedula = profesor_proyecto.cod_profesor and profesor_proyecto.rol = "jurado"
+
+
+create view directores as
+select concat(profesor.nom_profesor," ",profesor.ape_profesor) as director, profesor_proyecto.cod_proyecto from profesor,profesor_proyecto where profesor.cedula = profesor_proyecto.cod_profesor and profesor_proyecto.rol = "director"
+
+
+create view proyectos as
+select proyecto.cod_proyecto, proyecto.titulo, concat(estudiante.nom_estudiante," ",estudiante.ape_estudiante) as estudiante, jurados.jurado, directores.director 
+from estudiante, proyecto, jurados, directores where proyecto.cod_proyecto = estudiante.cod_proyecto and (proyecto.cod_proyecto= jurados.cod_proyecto or proyecto.cod_proyecto= directores.cod_proyecto) order by proyecto.cod_proyecto;

@@ -8,10 +8,10 @@
       <table id="hola" class="table table-striped table-bordered table-condensed table-hover display color2 " cellspacing="0" width="100%">
         <thead>
          <tr>
-          <th>Codigo</th>
           <th>Titulo</th>
-          <th>Fecha Aprovacion</th>
-          <th>Estado</th>
+          <th>Estudiantes</th>
+          <th>Jurados</th>
+          <th>Director</th>
           <th></th>
           
         </tr>
@@ -19,10 +19,10 @@
       <tbody id="Filas">
        <?php foreach($proyectos as $row){ ?>
        <tr id='<?php echo $row['cod_proyecto']; ?>'>
-         <td><?php echo $row['cod_proyecto']; ?></td>
-         <td id="1"><?php echo $row['titulo']; ?></td>
-         <td id="2"><?php echo $row['fecha_aprovacion']; ?></td>
-         <td id="2"><?php echo $row['estado']; ?></td>
+         <td><?php echo $row['titulo']; ?></td>
+         <td id="1"><?php echo $row['estudiante']; ?></td>
+         <td id="2"><?php echo $row['jurado']; ?></td>
+         <td id="2"><?php echo $row['director']; ?></td>
            <td>
           <a class="btn btn-success" id="<?php echo $row['cod_proyecto']; ?>" href="/pgt/index.php/detalle_proyecto?id=<?php echo $row['cod_proyecto']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles   </a>
           </td>

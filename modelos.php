@@ -117,6 +117,22 @@ function proyectos(){
 	return $usuarios;
 }
 
+function proyectosView(){
+	$conexion = conectar_base_datos();
+	$consulta = "SELECT * FROM proyectos";
+	$resultado = mysqli_query($conexion,$consulta);
+
+	$usuarios = array();
+
+	while ($fila = mysqli_fetch_assoc($resultado)) {
+		array_push($usuarios, $fila);
+	}
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+	return $usuarios;
+}
+
+
 function ultima_fila($tabla, $campo){
 	$conexion = conectar_base_datos();
 	$consulta = "SELECT * FROM $tabla order by $campo desc limit 1";

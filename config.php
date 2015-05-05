@@ -1,6 +1,6 @@
 <?php 
 function conectar_base_datos(){
-	$conexion = mysqli_connect("localhost","root","","pgt");
+	$conexion = mysqli_connect("localhost","root","1994edi","pgt");
 	if(!$conexion){
 		die("Error no se logro conectar con la base de datos".mysqli_connect_error());
 	}
