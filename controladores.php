@@ -114,18 +114,22 @@ function ProyectosAction(){
 	foreach($proyectosOriginal as $row){
 		$cod_actual = $row['cod_proyecto'];
 		if($cod_anterior == $cod_actual){
-			foreach($proyectos as $fila){
-				if($cod_actual == $fila['cod_proyecto']){
-					$fila['jurado']+= "-".$row['jurado'];
+			
+			for($i = 0 ; $i< count($proyectos) ;$i++){
+				if($cod_actual == $proyectos[$i]['cod_proyecto']){
+					
+					$proyectos[$i]['jurado'] = $proyectos[$i]["jurado"]." - ".$row["jurado"];
+					if($proyectos[$i]['estudiante'] != $row['estudiante']){
+						$proyectos[$i]['estudiante'] = $proyectos[$i]['estudiante']." - ".$row['estudiante'];
+					}
 				}
 			}
 		}else{
 				array_push($proyectos, $row);
 		}
 		$cod_anterior = $cod_actual;
-		echo $cod_anterior." - ".$row['titulo']." ";
     }
-	require "plantillas/Proyectos.php";
+    require "plantillas/Proyectos.php";
 }
 
 function ProyectosNuevoAction(){
