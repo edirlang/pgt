@@ -20,8 +20,8 @@
        <?php foreach($profesores as $row){ ?>
        <tr id='<?php echo $row['cedula']; ?>'>
           <td id="1"><?php echo $row['cedula']; ?></td>
-          <td id="2"><?php echo $row['nom_profesor']; ?></td>
-          <td id="3"><?php echo $row['ape_profesor']; ?></td>
+          <td id="2"><?php echo $row['nom_persona']; ?></td>
+          <td id="3"><?php echo $row['ape_persona']; ?></td>
           <td>
           <a class="btn btn-success" id="<?php echo $row['cedula']; ?>" href="/pgt/index.php/profesor?id=<?php echo $row['cedula']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles   </a>
           </td>

@@ -26,7 +26,7 @@ function ConsultarUsuario($cedula, $contrasena){
 
 function estudiantes(){
 	$conexion = conectar_base_datos();
-	$consulta = "SELECT * FROM estudiante";
+	$consulta = "SELECT * FROM persona where cod_persona != 'doc'";
 	$resultado = mysqli_query($conexion,$consulta);
 
 	$usuarios = array();
@@ -40,68 +40,14 @@ function estudiantes(){
 
 function crear_Estudiante($codigo, $cedula, $nombre, $apellido, $proyecto){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO estudiante values('$codigo', '$cedula','$apellido','$nombre','$proyecto')";
+	$consulta  = "INSERT INTO persona values('$codigo', '$cedula','$nombre','$apellido')";
+	mysqli_query($conexion,$consulta);
+	$consulta  = "INSERT INTO persona_proyecto values('$proyecto', '$cedula','estudiante','')";
 	mysqli_query($conexion,$consulta);
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 }
 
-function consultar_Estudiante($codigo){
-	$conexion = conectar_base_datos();
-	$consulta  = "SELECT *  from estudiante where cod_estudiante ='$codigo'";
-	$resultado = mysqli_query($conexion,$consulta);
-	$estudiante = array();
-
-	while ($fila = mysqli_fetch_assoc($resultado)) {
-		$estudiante = $fila;
-	}
-
-	echo mysqli_error($conexion);
-	cerrar_conexion_db($conexion);
-	return $estudiante;
-}
-
-function crear_Telefono_Estudiante($codigo, $telefono){
-	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO estudiante_telefono values('$codigo', '$telefono')";
-	echo mysqli_error($conexion);
-	mysqli_query($conexion,$consulta);
-	cerrar_conexion_db($conexion);
-}
-
-function crear_Email_Estudiante($codigo, $telefono){
-	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO estudiante_correo values('$codigo', '$telefono')";
-	echo mysqli_error($conexion);
-	mysqli_query($conexion,$consulta);
-	cerrar_conexion_db($conexion);
-}
-
-function consultar_Telefono_Estudiante($codigo){
-	$conexion = conectar_base_datos();
-	$consulta  = "SELECT * FROM estudiante_telefono WHERE cod_estudiante='$codigo'";
-	$resultado = mysqli_query($conexion,$consulta);
-	$telefonos = array();
-
-	while ($fila = mysqli_fetch_assoc($resultado)) {
-		$telefonos[] = $fila;
-	}
-	cerrar_conexion_db($conexion);
-	return $telefonos;
-}
-
-function consultar_correos_Estudiante($codigo){
-	$conexion = conectar_base_datos();
-	$consulta  = "SELECT * FROM estudiante_correo WHERE cod_estudiante='$codigo'";
-	$resultado = mysqli_query($conexion,$consulta);
-	$correos = array();
-
-	while ($fila = mysqli_fetch_assoc($resultado)) {
-		$correos[] = $fila;
-	}
-	cerrar_conexion_db($conexion);
-	return $correos;
-}
 
 function proyectos(){
 	$conexion = conectar_base_datos();
@@ -174,7 +120,7 @@ function calificar_proyecto($codigo, $calificaion){
 
 function crear_jurado($cedula, $cod_proyecto, $calificacion){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO profesor_proyecto values('$cod_proyecto','$cedula','jurado','$calificacion')";
+	$consulta  = "INSERT INTO persona_proyecto values('$cod_proyecto','$cedula','jurado','$calificacion')";
 	echo mysqli_error($conexion);
 	mysqli_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
@@ -189,7 +135,7 @@ function crear_linea_proyecto($linea, $programa, $cod_proyecto){
 
 function profesores(){
 	$conexion = conectar_base_datos();
-	$consulta = "SELECT * FROM profesor";
+	$consulta = "SELECT * FROM `persona` WHERE cod_persona='doc';";
 	$resultado = mysqli_query($conexion,$consulta);
 
 	$usuarios = array();
@@ -203,15 +149,27 @@ function profesores(){
 
 function crear_Profesor($cedula, $nombre, $apellido){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO profesor values('$cedula','$nombre','$apellido')";
+	$consulta  = "INSERT INTO persona values('$cedula','doc','$nombre','$apellido')";
 	mysqli_query($conexion,$consulta);
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 }
 
-function consultar_Profesor($codigo){
+function AgregarRol($cedula, $proyecto, $rol, $calificacion){
 	$conexion = conectar_base_datos();
-	$consulta  = "SELECT * FROM profesor WHERE cedula='$codigo'";
+	$consulta  = "INSERT INTO persona_proyecto values('$proyecto',$cedula','$rol','$calificacion')";
+	mysqli_query($conexion,$consulta);
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+} 
+
+function buscar_jurado($proyecto){
+
+}
+
+function consultar_persona($codigo){
+	$conexion = conectar_base_datos();
+	$consulta  = "SELECT * FROM persona WHERE cedula='$codigo'";
 	$resultado = mysqli_query($conexion,$consulta);
 	$correos = array();
 
@@ -222,17 +180,18 @@ function consultar_Profesor($codigo){
 	return $correos;
 }
 
-function crear_Telefono_Profesor($cedula, $telefono){
+function crear_Telefono_persona($cedula, $telefono){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO profesor_telefono values('$cedula', '$telefono')";
+	$consulta  = "INSERT INTO persona_telefono values('$cedula', '$telefono')";
 	echo mysqli_error($conexion);
 	mysqli_query($conexion,$consulta);
+	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 }
 
-function crear_Email_Profesor($cedula, $emails){
+function crear_email_persona($cedula, $emails){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO profesor_correo values('$cedula', '$emails')";
+	$consulta  = "INSERT INTO persona_correo values('$cedula', '$emails')";
 	echo mysqli_error($conexion);
 	mysqli_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
@@ -254,9 +213,9 @@ function programa(){
 
 
 
-function consultar_Telefono_profesor($codigo){
+function consultar_Telefono_persona($codigo){
 	$conexion = conectar_base_datos();
-	$consulta  = "SELECT * FROM profesor_telefono WHERE cod_profesor='$codigo'";
+	$consulta  = "SELECT * FROM persona_telefono WHERE cod_persona='$codigo'";
 	$resultado = mysqli_query($conexion,$consulta);
 	$telefonos = array();
 
@@ -267,9 +226,9 @@ function consultar_Telefono_profesor($codigo){
 	return $telefonos;
 }
 
-function consultar_correos_profesor($codigo){
+function consultar_correos_persona($codigo){
 	$conexion = conectar_base_datos();
-	$consulta  = "SELECT * FROM profesor_correo WHERE cod_profesor='$codigo'";
+	$consulta  = "SELECT * FROM persona_correo WHERE cod_persona='$codigo'";
 	$resultado = mysqli_query($conexion,$consulta);
 	$correos = array();
 
@@ -282,12 +241,13 @@ function consultar_correos_profesor($codigo){
 
 function eliminar_profesor($codigo){
 	$conexion=conectar_base_datos();
-	$consulta="DELETE FROM  profesor_correo WHERE  cod_profesor='$codigo'";
-	$consulta1="DELETE FROM  profesor_telefono where cod_profesor='$codigo'";
-	$consulta2="DELETE FROM  profesor WHERE  cedula='$codigo'";
+	$consulta="DELETE FROM  persona_correo WHERE  cod_persona='$codigo'";
+	$consulta1="DELETE FROM  persona_telefono where cod_persona='$codigo'";
+	$consulta2="DELETE FROM  prersona WHERE  cedula='$codigo'";
 	$resultado = mysqli_query($conexion,$consulta);
 	$resultado1 = mysqli_query($conexion,$consulta1);
 	$resultado2 = mysqli_query($conexion,$consulta2);
+	mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 }
 
@@ -321,6 +281,20 @@ function consultar_exepto($tabla,$campo,$valor){
 	$conexion = conectar_base_datos();
 	$consulta = "SELECT * FROM $tabla WHERE $campo !='$valor'";
 	$resultado = mysqli_query($conexion,$consulta);
+	$valores = array();
+
+	while ($fila = mysqli_fetch_assoc($resultado)) {
+		array_push($valores, $fila);
+	}
+	cerrar_conexion_db($conexion);
+	return $valores;
+}
+
+function consultar_exepto2($tabla,$campo,$valor){
+	$conexion = conectar_base_datos();
+	$consulta = "SELECT * FROM $tabla WHERE $campo !='$valor' and cod_persona = 'doc'";
+	$resultado = mysqli_query($conexion,$consulta);
+	mysqli_error($conexion);
 	$valores = array();
 
 	while ($fila = mysqli_fetch_assoc($resultado)) {

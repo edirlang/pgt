@@ -29,9 +29,9 @@ function EstudiantesAction(){
 function EstudianteAction(){
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$codigo= $_GET['id'];
-		$estudiante = consultar_Estudiante($codigo);
-		$telefonos = consultar_Telefono_Estudiante($codigo);
-		$correos = consultar_correos_Estudiante($codigo);
+		$estudiante = consultar_persona($codigo);
+		$telefonos = consultar_telefono_persona($codigo);
+		$correos = consultar_correos_persona($codigo);
 		require "plantillas/Estudiante.php";
 	}else{
 		require "plantillas/Estudiantes.php";
@@ -43,9 +43,9 @@ function profesor_Action(){
 
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$codigo= $_GET['id'];
-		$profesor=consultar_Profesor($codigo);
-		$telefonos = consultar_Telefono_profesor($codigo);
-		$correos = consultar_correos_profesor($codigo);
+		$profesor = consultar_persona($codigo);
+		$telefonos = consultar_telefono_persona($codigo);
+		$correos = consultar_correos_persona($codigo);
 		require "plantillas/Profesor.php";
 	}else{
 		require "plantillas/Profesores.php";
@@ -65,10 +65,10 @@ function Estudiante_nuevo_Action(){
 
 		crear_Estudiante($codigo, $cedula, $nombre, $apellido, $cod_proyecto);
 		foreach ($telefonos as $telefono) {
-			crear_Telefono_Estudiante($codigo, $telefono);
+			crear_Telefono_persona($codigo, $telefono);
 		}
 		foreach ($emails as $email) {
-			crear_Email_Estudiante($codigo, $email);
+			crear_email_persona($codigo, $email);
 		}
 		header("Location: /pgt/index.php/Estudiantes");
 	}else{
@@ -89,10 +89,10 @@ function Profesor_nuevo_Action(){
 
 		crear_Profesor($cedula, $nombre, $apellido);
 		foreach ($telefonos as $telefono) {
-			crear_Telefono_Profesor($cedula, $telefono);
+			crear_Telefono_persona($cedula, $telefono);
 		}
 		foreach ($emails as $email) {
-			crear_Email_Profesor($cedula, $email);
+			crear_email_persona($cedula, $email);
 		}
 		header("Location: /pgt/index.php/Profesores");
 	}else{
@@ -107,29 +107,9 @@ function ProfesoresAction(){
 }
 
 function ProyectosAction(){
-	$proyectosOriginal = proyectosView();
-	$proyectos = array();
-	$cod_anterior = 0;
 	
-	foreach($proyectosOriginal as $row){
-		$cod_actual = $row['cod_proyecto'];
-		if($cod_anterior == $cod_actual){
-			
-			for($i = 0 ; $i< count($proyectos) ;$i++){
-				if($cod_actual == $proyectos[$i]['cod_proyecto']){
-					
-					$proyectos[$i]['jurado'] = $proyectos[$i]["jurado"]." - ".$row["jurado"];
-					if($proyectos[$i]['estudiante'] != $row['estudiante']){
-						$proyectos[$i]['estudiante'] = $proyectos[$i]['estudiante']." - ".$row['estudiante'];
-					}
-				}
-			}
-		}else{
-				array_push($proyectos, $row);
-		}
-		$cod_anterior = $cod_actual;
-    }
-    require "plantillas/Proyectos.php";
+	$proyectos = proyectosView();
+	require "plantillas/Proyectos.php";
 }
 
 function ProyectosNuevoAction(){
@@ -219,8 +199,8 @@ function calificar_proyecto_action(){
 function buscar_jurado_action(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$id = $_POST['id'];
-		$director = consultar_tabla($id,"profesor_proyecto","cod_proyecto");
-		$profesores = consultar_exepto("profesor","cedula",$director['cod_profesor']);
+		$director = consultar_tabla($id,"persona_proyecto","cod_proyecto");
+		$profesores = consultar_exepto2("persona","cedula",$director['cod_persona']);
 		echo json_encode($profesores);
 	}
 }
@@ -241,7 +221,7 @@ function eliminar_profesor_action(){
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$codigo=$_GET['id'];
 		eliminar_profesor($codigo);
-		header("Location: /pgt/index.php/Profesores");
+		//header("Location: /pgt/index.php/Profesores");
 	}else{
 		header("Location: /pgt/index.php/Profesores");
 	}

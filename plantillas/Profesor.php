@@ -5,7 +5,7 @@
     <h3 class="panel-title">Estudiante</h3>
   </div>
   <div class="panel-body">
-    <p>Nombre: <?php echo $profesor['nom_profesor']." ".$profesor['ape_profesor'] ?></p>
+    <p>Nombre: <?php echo $profesor['nom_persona']." ".$profesor['ape_persona'] ?></p>
     <p>Cedula: <?php echo $profesor['cedula']; ?></p>
     <p><strong>Telefonos</strong></p>
       <?php 

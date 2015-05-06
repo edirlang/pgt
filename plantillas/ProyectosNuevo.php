@@ -21,7 +21,7 @@
         <label for="">Seleccione Director</label>
         <select class="form-control" id="director" name="director">
           <?php foreach ($profesores as $profesor) { ?>
-          <option value="<?php echo $profesor['cedula'] ?>"><?php echo $profesor['nom_profesor']." ".$profesor['ape_profesor'] ; ?></option>    
+          <option value="<?php echo $profesor['cedula'] ?>"><?php echo $profesor['nom_persona']." ".$profesor['nom_persona'] ; ?></option>    
           <?php } ?>
         </select>
 

@@ -1,22 +1,27 @@
-create table profesor(
-	cedula varchar(15) primary key ,
-	nom_profesor varchar(20) ,
-	ape_profesor varchar(20) 
+create table persona(
+	cododigo varchar(9),
+	cedula varchar(12) not null,
+	nom_persona varchar(10),
+	ape_persona varchar(10),
+	primary key(cedula)
 );
 
-create table profesor_telefono(
-	cod_profesor varchar(15) ,
+
+create table persona_telefono(
+	cod_persona varchar(9) ,
 	num_telefono varchar(13),
-	primary key (cod_profesor ,num_telefono ),
-	CONSTRAINT profesor_telefono
-	FOREIGN KEY (cod_profesor ) REFERENCES profesor(cedula) 
+	primary key (cod_persona ,num_telefono ),
+	CONSTRAINT persona_telefono
+	FOREIGN KEY (cod_persona ) REFERENCES   persona(cedula) 
 );
-create table profesor_correo(
-	cod_profesor varchar(15) ,
+
+
+create table persona_correo(
+	cod_persona varchar(9) ,
 	nom_correo varchar(30),
-	primary key (cod_profesor ,nom_correo),
-	CONSTRAINT profesor_correo
-	FOREIGN KEY (cod_profesor ) REFERENCES   profesor(cedula) 
+	primary key (cod_persona ,nom_correo ),
+	CONSTRAINT correo_persona FOREIGN KEY (cod_persona) 
+	REFERENCES   persona(cedula) 
 );
 
 create table proyecto(
@@ -26,43 +31,20 @@ create table proyecto(
 	estado varchar(10) ,
 	fecha_inicio date,
 	fecha_aprovacion date,
+	archivo varchar(255);
 	primary key(cod_proyecto)
 );
 
-create table profesor_proyecto(
+create table persona_proyecto(
 	cod_proyecto varchar(10),
-	cod_profesor varchar(15),
-	rol varchar(8),
+	cod_persona varchar(15),
+	rol varchar(12),
 	calificacion varchar(8),
-	primary key(cod_proyecto,cod_profesor),
-	FOREIGN key(cod_profesor) REFERENCES profesor(cedula),
+	primary key(cod_proyecto,cod_persona),
+	FOREIGN key(cod_persona) REFERENCES persona(cedula),
 	FOREIGN key(cod_proyecto) REFERENCES proyecto(cod_proyecto)	
 );
 
-create table estudiante(
-	cod_estudiante varchar(9) not null,
-	cedula varchar(12),
-	ape_estudiante varchar(10),
-	nom_estudiante varchar(10),
-	cod_proyecto varchar(10) not null,
-	primary key(cod_estudiante),
-	CONSTRAINT estudiante_proyecto
-	FOREIGN KEY (cod_proyecto ) REFERENCES   proyecto(cod_proyecto ) 
-);
-create table estudiante_telefono(
-	cod_estudiante varchar(9) ,
-	num_telefono varchar(13),
-	primary key (cod_estudiante ,num_telefono ),
-	CONSTRAINT estudiante_telefono
-	FOREIGN KEY (cod_estudiante ) REFERENCES   estudiante(cod_estudiante ) 
-);
-create table estudiante_correo(
-	cod_estudiante varchar(9) ,
-	nom_correo varchar(30),
-	primary key (cod_estudiante ,nom_correo ),
-	CONSTRAINT correo_estudiante FOREIGN KEY (cod_estudiante ) 
-	REFERENCES   estudiante(cod_estudiante ) 
-);
 create table programa(
 	cod_programa varchar(6)  primary key ,
 	nom_programa varchar(30) 
@@ -88,7 +70,7 @@ create table linea_proyecto(
 	FOREIGN KEY (cod_linea,cod_programa) REFERENCES linea(cod_linea, cod_programa)
 );
 
-INSERT INTO profesor VALUES
+INSERT INTO persona VALUES
 ('6245','Andres','Novoa'),
 ('7845','Juan','Botero'),
 ('9856','Esperanza','Merchan'),
@@ -108,7 +90,7 @@ INSERT INTO linea VALUES
 ('1','Software','1');
 
 
-INSERT INTO estudiante VALUES
+INSERT INTO persona VALUES
 ('1612','111','Borja','Martinez','1501'),
 ('1784','222','Carlos','Gutierrez','1511'),
 ("1264","444","Lizeth","Contreras","1511"),
@@ -129,19 +111,29 @@ INSERT INTO profesor_proyecto VALUES
 ('1511','3245','director','activo'),
 ('1512','9546','jurado','activo');
 
-select proyecto.titulo, concat(estudiante.nom_estudiante," ",estudiante.ape_estudiante) as estudiante, concat(profesor.nom_profesor," ",profesor.ape_profesor) as profesor, profesor_proyecto.rol as Cargo from estudiante, proyecto, profesor, profesor_proyecto where proyecto.cod_proyecto = estudiante.cod_proyecto and proyecto.cod_proyecto = profesor_proyecto.cod_proyecto and profesor_proyecto.cod_profesor = profesor.cedula;
+select proyecto.titulo, concat(persona.nom_persona," ",persona.ape_persona) as persona, concat(profesor.nom_profesor," ",profesor.ape_profesor) as profesor, profesor_proyecto.rol as Cargo from persona, proyecto, profesor, profesor_proyecto where proyecto.cod_proyecto = persona.cod_proyecto and proyecto.cod_proyecto = profesor_proyecto.cod_proyecto and profesor_proyecto.cod_profesor = profesor.cedula;
 
 create view jurados as
-select concat(profesor.nom_profesor," ",profesor.ape_profesor) as jurado, profesor_proyecto.cod_proyecto from profesor,profesor_proyecto where profesor.cedula = profesor_proyecto.cod_profesor and profesor_proyecto.rol = "jurado"
-
+select persona.cedula, group_concat(persona.nom_persona," ",persona.ape_persona) as jurado, persona_proyecto.cod_proyecto 
+from persona,persona_proyecto 
+where persona.cedula = persona_proyecto.cod_persona and persona_proyecto.rol = "jurado";
 
 create view directores as
-select concat(profesor.nom_profesor," ",profesor.ape_profesor) as director, profesor_proyecto.cod_proyecto from profesor,profesor_proyecto where profesor.cedula = profesor_proyecto.cod_profesor and profesor_proyecto.rol = "director"
+
+select persona.cedula, concat(persona.nom_persona," ",persona.ape_persona) as director persona_proyecto.cod_proyecto from persona,persona_proyecto where persona.cedula = persona_proyecto.cod_persona and persona_proyecto.rol = "director";
+
+
+create view estudiantes as
+
+select persona.cedula, group_concat(persona.nom_persona," ",persona.ape_persona) as estudiante, persona_proyecto.cod_proyecto from persona,persona_proyecto where persona.cedula = persona_proyecto.cod_persona and persona_proyecto.rol = "estudiante";
+
 
 
 create view proyectos as
-select proyecto.cod_proyecto, proyecto.titulo, concat(estudiante.nom_estudiante," ",estudiante.ape_estudiante) as estudiante, jurados.jurado, directores.director 
-from estudiante, proyecto, jurados, directores where proyecto.cod_proyecto = estudiante.cod_proyecto and (proyecto.cod_proyecto= jurados.cod_proyecto or proyecto.cod_proyecto= directores.cod_proyecto) order by proyecto.cod_proyecto;
+select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directores.director, jurados.jurado 
+from proyecto, estudiantes, jurados, directores 
+where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = jurados.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto
+group by (proyecto.cod_proyecto);
 
 
 CREATE PROCEDURE profesor_proyecto(IN id VARCHAR(10), IN rol varchar(8))

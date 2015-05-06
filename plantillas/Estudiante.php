@@ -5,8 +5,8 @@
 		<h3 class="panel-title">Estudiante</h3>
 	</div>
 	<div class="panel-body">
-		<p>Nombre: <?php echo $estudiante['nom_estudiante']." ".$estudiante['ape_estudiante'] ?></p>
-		<p>Codigo: <?php echo $estudiante['cod_estudiante']; ?></p>
+		<p>Nombre: <?php echo $estudiante['nom_persona']." ".$estudiante['ape_persona'] ?></p>
+		<p>Codigo: <?php echo $estudiante['cod_persona']; ?></p>
 		<p>Cedula: <?php echo $estudiante['cedula']; ?></p>
 		<p><strong>Telefonos</strong></p>
 			<?php 
@@ -27,7 +27,7 @@
 
 </div>
 </div>
-    <a class="btn btn-success"  data-toggle="modal" data-target="#ventana"  id="<?php echo $estudiante['cod_estudiante'];?>"><span class="icon icon-pencil"></span> Editar</a></td>
+    <a class="btn btn-success"  data-toggle="modal" data-target="#ventana"  id="<?php echo $estudiante['cedula'];?>"><span class="icon icon-pencil"></span> Editar</a></td>
 
 </div>
 
