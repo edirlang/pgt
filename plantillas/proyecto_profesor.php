@@ -10,7 +10,9 @@
         <thead>
          <tr>
           <th>Codigo</th>
-          <th>Titulo</th>       
+          <th>Titulo</th>
+          <th>Fecha Inicio</th> 
+          <th>Fecha Aprovado</th>       
         </tr>
       </thead>
       <tbody id="Filas">
@@ -18,6 +20,8 @@
        <tr id='<?php echo $row['cod_proyecto']; ?>'>
          <td><?php echo $row['cod_proyecto']; ?></td>
          <td id="1"><?php echo $row['titulo']; ?></td>
+         <td><?php echo $row['fecha_inicio']; ?></td>
+         <td><?php echo $row['fecha_aprovacion']; ?></td>
       </tr>
       <?php } ?>
     </tbody>

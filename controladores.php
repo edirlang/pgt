@@ -143,7 +143,6 @@ function ProyectosNuevoAction(){
 			}else{
 				$codigo = $codigo."."."1";
 			}
-			echo $codigo;
 		}else{
 			if(date('m') < '06' ){
 				$codigo = date('Y')."1";
@@ -155,8 +154,6 @@ function ProyectosNuevoAction(){
 
 		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director, $destino);
 
-		crear_director($director,$codigo);
-		
 		foreach ($programas as $programa) {
 			$linea = explode(".", $programa);
 			crear_linea_proyecto($linea[1] , $linea[0], $codigo);

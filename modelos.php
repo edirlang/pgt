@@ -96,17 +96,17 @@ function ultima_fila($tabla, $campo){
 function crear_Proyecto($codigo, $titulo, $resumen, $fechainicio, $fechaaprovacion, $estado,$director , $destino){
 	$conexion = conectar_base_datos();
 	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','$fechaaprovacion','$destino')";
-	echo mysqli_error($conexion);
 	mysqli_query($conexion,$consulta);
+	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 	crear_director($director, $codigo);	
 }
 
 function crear_director($cedula, $cod_proyecto){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO profesor_proyecto values('$cod_proyecto','$cedula','director','')";
-	echo mysqli_error($conexion);
+	$consulta  = "INSERT INTO persona_proyecto values('$cod_proyecto','$cedula','director','')";
 	mysqli_query($conexion,$consulta);
+	mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 }
 
@@ -372,12 +372,13 @@ function eliminar_linea($codigo){
 function buscar_proyecto_directo($id){
 
    	$conexion = conectar_base_datos();
-	$consulta = "SELECT * from profesor_proyecto,proyecto where profesor_proyecto.cod_proyecto=proyecto.cod_proyecto AND cod_profesor='$id'";
+	$consulta = "SELECT * from persona_proyecto,proyecto where persona_proyecto.cod_proyecto=proyecto.cod_proyecto AND cod_persona='$id'";
 	$resultado = mysqli_query($conexion,$consulta);
 	$programa = array();
 	while ($fila = mysqli_fetch_assoc($resultado)) {
 		$programa[] = $fila;
 	}
+	mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 	return $programa;
 }
@@ -385,7 +386,7 @@ function  buscar_proyecto_directo_nombre($id){
 
 
    	$conexion = conectar_base_datos();
-	$consulta = "SELECT nom_profesor,ape_profesor from profesor_proyecto,profesor where profesor_proyecto.cod_profesor=profesor.cedula AND cod_proyecto='$id'";
+	$consulta = "SELECT nom_persona,ape_persona from persona_proyecto,persona where persona_proyecto.cod_persona=persona.cedula AND cod_proyecto ='$id'";
 	$resultado = mysqli_query($conexion,$consulta);
 	$programa = array();
 	while ($fila = mysqli_fetch_assoc($resultado)) {

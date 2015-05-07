@@ -133,10 +133,14 @@ create view proyectos as
 select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directores.director, jurados.jurado 
 from proyecto, estudiantes, jurados, directores 
 where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = jurados.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto
-group by (proyecto.cod_proyecto);
+
 
 
 CREATE PROCEDURE profesor_proyecto(IN id VARCHAR(10), IN rol varchar(8))
 BEGIN
-SELECT nom_profesor,ape_profesor from profesor_proyecto,profesor where profesor_proyecto.cod_profesor=profesor.cedula AND profesor_proyecto.cod_proyecto=id and profesor_proyecto.rol=rol;
+SELECT nom_persona,ape_persona from persona_proyecto,persona where persona_proyecto.cod_persona=persona.cedula AND persona_proyecto.cod_proyecto=id and persona_proyecto.rol=rol;
 END
+
+
+//proyectos
+select persona_proyecto.cod_proyecto, proyecto.titulo, persona.nom_persona ,persona_proyecto.rol from persona, persona_proyecto, proyecto where persona.cedula = persona_proyecto.cod_persona and proyecto.cod_proyecto = persona_proyecto.cod_proyecto group by persona_proyecto.cod_proyecto ,persona.nom_persona ,persona_proyecto.rol;
