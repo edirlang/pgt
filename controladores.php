@@ -307,4 +307,15 @@ function buscar_proyecto_profesor(){
 	$director_proyecto=buscar_proyecto_directo($id);
 	require "plantillas/proyecto_profesor.php";
 }
+
+function calificar_proyecto_direcctor_action(){
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$proyecto=$_POST['proyecto'];
+		$director  =$_POST['director'];
+		$calificacion = $_POST['calificacion'];
+		llamar_procedimiento("call calificar_proyecto_director('$proyecto','$director','$calificacion')");
+		echo "1";
+		
+	}	
+}
 ?>

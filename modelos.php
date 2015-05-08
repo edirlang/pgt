@@ -400,7 +400,7 @@ function  buscar_proyecto_directo_nombre($id){
 function llamar_procedimiento($procedimiento){
 	$conexion = conectar_base_datos();
 	$resultado = mysqli_query($conexion,$procedimiento);
-	
+	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 }
 //$consulta = "SELECT titulo from profesor_proyecto,proyecto where profesor_proyecto.cod_proyecto=proyecto.cod_proyecto AND cod_proyecto='$id'";

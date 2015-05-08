@@ -101,8 +101,13 @@ $uri = explode("?", $url);
 		case "/pgt/index.php/buscar_jurado":
 			buscar_jurado_action();
 		break;
-			case "/pgt/index.php/profesor_proyectos":
+		
+		case "/pgt/index.php/profesor_proyectos":
 			buscar_proyecto_profesor();
+		break;
+
+		case "/pgt/index.php/director/calificarproyecto";
+			calificar_proyecto_direcctor_action();
 		break;
 	}
 

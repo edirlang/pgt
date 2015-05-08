@@ -39,7 +39,7 @@ create table persona_proyecto(
 	cod_proyecto varchar(10),
 	cod_persona varchar(15),
 	rol varchar(12),
-	calificacion varchar(8),
+	calificacion varchar(12),
 	primary key(cod_proyecto,cod_persona),
 	FOREIGN key(cod_persona) REFERENCES persona(cedula),
 	FOREIGN key(cod_proyecto) REFERENCES proyecto(cod_proyecto)	
@@ -116,7 +116,9 @@ select proyecto.titulo, concat(persona.nom_persona," ",persona.ape_persona) as p
 create view jurados as
 select persona.cedula, group_concat(persona.nom_persona," ",persona.ape_persona) as jurado, persona_proyecto.cod_proyecto 
 from persona,persona_proyecto 
-where persona.cedula = persona_proyecto.cod_persona and persona_proyecto.rol = "jurado";
+where persona.cedula = persona_proyecto.cod_persona and persona_proyecto.rol = "jurado" group by persona_proyecto.cod_proyecto;
+
+
 
 create view directores as
 
@@ -124,8 +126,9 @@ select persona.cedula, concat(persona.nom_persona," ",persona.ape_persona) as di
 
 
 create view estudiantes as
-
-select persona.cedula, group_concat(persona.nom_persona," ",persona.ape_persona) as estudiante, persona_proyecto.cod_proyecto from persona,persona_proyecto where persona.cedula = persona_proyecto.cod_persona and persona_proyecto.rol = "estudiante";
+select persona.cedula, group_concat(persona.nom_persona," ",persona.ape_persona) as estudiante, persona_proyecto.cod_proyecto 
+from persona,persona_proyecto 
+where persona.cedula = persona_proyecto.cod_persona and persona_proyecto.rol = "estudiante" group by persona_proyecto.cod_proyecto;
 
 
 
@@ -144,3 +147,9 @@ END
 
 //proyectos
 select persona_proyecto.cod_proyecto, proyecto.titulo, persona.nom_persona ,persona_proyecto.rol from persona, persona_proyecto, proyecto where persona.cedula = persona_proyecto.cod_persona and proyecto.cod_proyecto = persona_proyecto.cod_proyecto group by persona_proyecto.cod_proyecto ,persona.nom_persona ,persona_proyecto.rol;
+
+create procedure calificar_proyecto_diretor( IN var1 VARCHAR(10), IN var2 varchar(15), IN var3 varchar(12))
+begin
+	UPDATE persona_proyecto SET calificacion = var3 WHERE cod_proyecto = var1 AND cod_persona = var2;
+    UPDATE proyecto SET estado = var3 WHERE cod_proyecto = var1;
+end
