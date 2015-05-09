@@ -124,6 +124,7 @@ function ProyectosNuevoAction(){
         $nombre_a=$_FILES['archivo']['name'];
         $destino="archivo/".$nombre_a;
         $ubicacion_temp=$_FILES['archivo']['tmp_name']; 
+        $estudiantes = $_POST['estudiantes'];
         move_uploaded_file($ubicacion_temp,$destino);
 
 		$codigo = 0;
@@ -158,11 +159,17 @@ function ProyectosNuevoAction(){
 			$linea = explode(".", $programa);
 			crear_linea_proyecto($linea[1] , $linea[0], $codigo);
 		}
+		foreach ($estudiantes as $estudiante) {
+			$cod_estudiante = explode(".", $estudiante);
+			CrearEstudianteProyecto($cod_estudiante[0], $codigo);
+		}
+
 		$_SERVER['REQUEST_METHOD']=='GET';
-		header("Location: /pgt/index.php/Proyectos");
+		//header("Location: /pgt/index.php/Proyectos");
 	}
 	$programas = programa();
 	$profesores = profesores();
+	$estudiantes = estudiantes();
 	require "plantillas/ProyectosNuevo.php";
 }
 

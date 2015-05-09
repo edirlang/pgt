@@ -127,13 +127,13 @@
       </div>
     </div>
   </div>
-
-  <script src="/pgt/js/bootstrap.min.js"></script>
-  <script src="/pgt/js/bootstrap-modal.js"></script> 
+  <script src="/pgt/js/jquery.js"></script>
+  <script src="/pgt/js/bootstrap.js"></script>
   <script type="text/javascript" src="/pgt/js/dataTables.min.js"></script>
   <script type="text/javascript" src="/pgt/js/dataTables.bootstrap.js"></script>
   <script src="/pgt/assets/js/jquery.metisMenu.js"></script>
   <script src="/pgt/assets/js/morris/morris.js"></script>
   <script src="/pgt/assets/js/custom.js"></script>
+  <script src="/pgt/js/bootstrap-modal.js"></script> 
 </body>   
 </html>

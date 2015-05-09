@@ -18,12 +18,25 @@
         <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" placeholder="Fecha Inicio">
         <label for="">Fecha de aprovacion</label>
         <input type="date" class="form-control" id="fechaAprovacion" name="fechaAprovacion" placeholder="Fecha Aprovado">
+        
         <label for="">Seleccione Director</label>
         <select class="form-control" id="director" name="director">
           <?php foreach ($profesores as $profesor) { ?>
-          <option value="<?php echo $profesor['cedula'] ?>"><?php echo $profesor['nom_persona']." ".$profesor['nom_persona'] ; ?></option>    
+          <option value="<?php echo $profesor['cedula'] ?>"><?php echo $profesor['nom_persona']." ".$profesor['ape_persona'] ; ?></option>    
           <?php } ?>
         </select>
+
+        <label for="">Estudidantes</label>
+        <select name="estidantes" id="estudiantes" class="form-control">
+            <?php foreach ($estudiantes as $estudiante) { ?>
+              <option value="<?php echo $estudiante['cedula'] ?>"><?php echo $estudiante['nom_persona']." ".$estudiante['ape_persona'] ; ?></option>    
+            <?php } ?>
+        </select>
+        <button type="button" class="btn btn-xs btn-success" id="agregar">Agregar Estudiante</button>
+        
+        <div id="estudiante">
+          
+        </div>
 
         <label for="">Seleccione lineas de investigacion</label>
         <select class="form-control" id="programa[1]" name="programa[1]">
@@ -126,5 +139,6 @@ function addTagForm($collectionHolder, $newLinkLi) {
           });
 
 </script>
+<script type="text/javascript" src="/pgt/js/proyecto.js"></script>
 <?php $contenido = ob_get_clean(); ?>
 <?php include "plantilla_base.php"; ?>

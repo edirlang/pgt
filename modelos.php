@@ -48,6 +48,13 @@ function crear_Estudiante($codigo, $cedula, $nombre, $apellido, $proyecto){
 	cerrar_conexion_db($conexion);
 }
 
+function CrearEstudianteProyecto($cod_persona, $cod_proyecto){
+	$conexion = conectar_base_datos();
+	$consulta  = "INSERT INTO persona_proyecto values('$cod_proyecto', '$cod_persona','estudiante','')";
+	mysqli_query($conexion,$consulta);
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+}
 
 function proyectos(){
 	$conexion = conectar_base_datos();
@@ -372,7 +379,7 @@ function eliminar_linea($codigo){
 function buscar_proyecto_directo($id){
 
    	$conexion = conectar_base_datos();
-	$consulta = "SELECT * from persona_proyecto,proyecto where persona_proyecto.cod_proyecto=proyecto.cod_proyecto AND cod_persona='$id'";
+	$consulta = "SELECT * from persona_proyecto,proyecto where persona_proyecto.cod_proyecto = proyecto.cod_proyecto AND cod_persona='$id' and rol='director'";
 	$resultado = mysqli_query($conexion,$consulta);
 	$programa = array();
 	while ($fila = mysqli_fetch_assoc($resultado)) {

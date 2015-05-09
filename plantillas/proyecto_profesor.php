@@ -32,7 +32,7 @@
               $("#cod_proyecto").text(<?php echo $row['cod_proyecto']; ?>);
               $("#director").text(<?php echo $row['cod_persona']; ?>);
               $("#modalcalificacion").modal();
-            })
+            });
           </script>
            
          <?php } ?>
