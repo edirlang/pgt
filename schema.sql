@@ -137,6 +137,11 @@ select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directore
 from proyecto, estudiantes, jurados, directores 
 where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = jurados.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto
 
+create view proyectos2 as
+select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directores.director
+from proyecto, estudiantes, directores 
+where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto
+
 
 
 CREATE PROCEDURE profesor_proyecto(IN id VARCHAR(10), IN rol varchar(8))
@@ -153,3 +158,10 @@ begin
 	UPDATE persona_proyecto SET calificacion = var3 WHERE cod_proyecto = var1 AND cod_persona = var2;
     UPDATE proyecto SET estado = var3 WHERE cod_proyecto = var1;
 end
+
+//Proyectos sin jurado
+SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where proyectos.cod_proyecto is null; 
+
+
+//proyectos con y sin jurado
+SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto; 

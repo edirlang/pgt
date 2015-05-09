@@ -72,7 +72,7 @@ function proyectos(){
 
 function proyectosView(){
 	$conexion = conectar_base_datos();
-	$consulta = "SELECT * FROM proyectos";
+	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto";
 	$resultado = mysqli_query($conexion,$consulta);
 
 	$usuarios = array();
