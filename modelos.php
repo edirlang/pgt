@@ -40,7 +40,7 @@ function estudiantes(){
 
 function crear_Estudiante($codigo, $cedula, $nombre, $apellido, $proyecto){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO persona values('$codigo', '$cedula','$nombre','$apellido')";
+	$consulta  = "INSERT INTO persona values( '$cedula','$codigo','$nombre','$apellido')";
 	mysqli_query($conexion,$consulta);
 	$consulta  = "INSERT INTO persona_proyecto values('$proyecto', '$cedula','estudiante','')";
 	mysqli_query($conexion,$consulta);
@@ -48,6 +48,14 @@ function crear_Estudiante($codigo, $cedula, $nombre, $apellido, $proyecto){
 	cerrar_conexion_db($conexion);
 }
 
+
+function crear_Estudiante2($codigo, $cedula, $nombre, $apellido){
+	$conexion = conectar_base_datos();
+	$consulta  = "INSERT INTO persona values('$cedula','$codigo','$nombre','$apellido')";
+	mysqli_query($conexion,$consulta);
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+}
 function CrearEstudianteProyecto($cod_persona, $cod_proyecto){
 	$conexion = conectar_base_datos();
 	$consulta  = "INSERT INTO persona_proyecto values('$cod_proyecto', '$cod_persona','estudiante','')";

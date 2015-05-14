@@ -28,14 +28,15 @@
 
         <label for="">Estudidantes</label>
         <select name="estidantes" id="estudiantes" class="form-control">
-            <?php foreach ($estudiantes as $estudiante) { ?>
-              <option value="<?php echo $estudiante['cedula'] ?>"><?php echo $estudiante['nom_persona']." ".$estudiante['ape_persona'] ; ?></option>    
-            <?php } ?>
+          <?php foreach ($estudiantes as $estudiante) { ?>
+          <option value="<?php echo $estudiante['cedula'] ?>"><?php echo $estudiante['nom_persona']." ".$estudiante['ape_persona'] ; ?></option>    
+          <?php } ?>
         </select>
         <button type="button" class="btn btn-xs btn-success" id="agregar">Agregar Estudiante</button>
+        <a class="btn btn-xs btn-info" data-toggle="modal" href='#nuevo'>Nuevo Estudiante</a>
         
         <div id="estudiante">
-          
+
         </div>
 
         <label for="">Seleccione lineas de investigacion</label>
@@ -58,14 +59,58 @@
         </select>
         ">
       </div>
-     <label for="">Archivo Proyecto</label>
-        <input type="file" class="form-control" id="archivo" name="archivo" >
+      <label for="">Archivo Proyecto</label>
+      <input type="file" class="form-control" id="archivo" name="archivo" >
     </div>
     <button id="Enviar" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
   </form>  
 </div>
 </div>
 </div> 
+
+<div class="modal fade" id="nuevo">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Nuevo Estudiante</h4>
+      </div>
+      <div class="modal-body">
+        <form id="formulario">
+          <div class="form-group">
+            <label for="">Codigo</label>
+            <input type="text" class="form-control" id="Codigo"  name="Codigo" placeholder="Cedula">
+            <label for="">Cedula</label>
+            <input type="text" class="form-control" id="Cedula"  name="Cedula" placeholder="Cedula">
+            <label for="">Nombre</label>
+            <input type="text" class="form-control" id="Nombre"  name="Nombre" placeholder="Nombre">
+            <label for="">Apellido</label>
+            <input type="text" class="form-control" id="Apellido" name="Apellido" placeholder="Apellido">
+            <label for="">Telefono 1</label>
+            <input type="number" class="form-control" id="Telefono[1]" name="Telefono[1]">
+
+            <div class="tags3" data-prototype="<label>Telefono __name__</label>
+              <input type='number' class='form-control' id='Telefono[__name__]' name='Telefono[__name__]'>">
+            </div>
+
+            <label for="">Email 1</label>
+            <input type="email" class="form-control" id="Email[1]" name="Email[1]">
+
+            <div class="tags2" data-prototype="<label>Email __name__</label>
+              <input type='email' class='form-control' id='Email[__name__]' name='Email[__name__]'>">
+            </div>
+
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button id="crear_estuciante" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script type="text/javascript" src="/pgt/js/lineas.js"></script>
 <script type="text/javascript">
 function addTagForm($collectionHolder, $newLinkLi) {
@@ -92,6 +137,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
 
       var $collectionHolder;
       var $collectionHolder2;
+      var $collectionHolder3;
 
     // setup an "add a tag" link
     var $addTagLink = $('<a href="#" class="add_tag_link">Agregar otra linea de investigacion</a>');
@@ -99,6 +145,9 @@ function addTagForm($collectionHolder, $newLinkLi) {
 
     var $addTagLink2 = $('<a href="#" class="add">Agregar Email</a>');
     var $newLinkLi2 = $('<div></div>').append($addTagLink2);
+
+    var $addTagLink3 = $('<a href="#" class="add3">Agregar Telefono</a>');
+    var $newLinkLi3 = $('<div></div>').append($addTagLink3);
 
     jQuery(document).ready(function() {
         // Get the ul that holds the collection of tags
@@ -136,6 +185,24 @@ function addTagForm($collectionHolder, $newLinkLi) {
             // add a new tag form (see next code block)
             addTagForm($collectionHolder2, $newLinkLi2);
           });
+
+            // Get the ul that holds the collection of tags
+            $collectionHolder3 = $('div.tags3');
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder3.append($newLinkLi3);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder3.data('index', $collectionHolder3.find(':input').length);
+
+        $addTagLink3.on('click', function(e) {
+            e.preventDefault();
+
+            // add a new tag form (see next code block)
+            addTagForm($collectionHolder3, $newLinkLi3);
+          });
+
           });
 
 </script>

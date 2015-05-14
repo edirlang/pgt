@@ -58,19 +58,29 @@ function Estudiante_nuevo_Action(){
 		$nombre = $_POST['Nombre'];
 		$apellido = $_POST['Apellido'];
 		$codigo = $_POST['Codigo'];
-		$cod_proyecto = $_POST['cod_proyecto'];
+		;
+		if (isset($_POST['cod_proyecto'])) {
+			$cod_proyecto = $_POST['cod_proyecto'];
+			crear_Estudiante($codigo, $cedula, $nombre, $apellido, $cod_proyecto);
+		}else{
+			crear_Estudiante2($codigo, $cedula, $nombre, $apellido);
+		}
+		
 
 		$telefonos = $_POST['Telefono'];
 		$emails = $_POST['Email'];
 
-		crear_Estudiante($codigo, $cedula, $nombre, $apellido, $cod_proyecto);
+		
 		foreach ($telefonos as $telefono) {
-			crear_Telefono_persona($codigo, $telefono);
+			crear_Telefono_persona($cedula, $telefono);
 		}
 		foreach ($emails as $email) {
-			crear_email_persona($codigo, $email);
+			crear_email_persona($cedula, $email);
 		}
-		header("Location: /pgt/index.php/Estudiantes");
+		if (isset($_POST['cod_proyecto'])) {
+			header("Location: /pgt/index.php/Estudiantes");
+		}
+		
 	}else{
 		$proyectos = proyectos();
 		require "plantillas/nuevo_estudiante.php";
@@ -165,7 +175,7 @@ function ProyectosNuevoAction(){
 		}
 
 		$_SERVER['REQUEST_METHOD']=='GET';
-		//header("Location: /pgt/index.php/Proyectos");
+		header("Location: /pgt/index.php/Proyectos");
 	}
 	$programas = programa();
 	$profesores = profesores();
