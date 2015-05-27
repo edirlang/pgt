@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-05-2015 a las 07:24:56
+-- Tiempo de generación: 27-05-2015 a las 06:18:15
 -- Versión del servidor: 5.6.20
 -- Versión de PHP: 5.5.15
 
@@ -36,8 +36,29 @@ BEGIN
     
 end$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calificar_proyecto_director`(IN `var1` VARCHAR(10), IN `var2` VARCHAR(15), IN `var3` VARCHAR(12))
+begin
+	UPDATE persona_proyecto SET calificacion = var3 WHERE cod_proyecto = var1 AND cod_persona = var2;
+    UPDATE proyecto SET estado = var3 WHERE cod_proyecto = var1;
+end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarProyectosEstado`()
+begin
+select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directores.director, proyecto.estado, linea.nom_linea as linea, programa.nom_programa as programa
+from proyecto, estudiantes, directores, linea_proyecto, linea, programa 
+where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto and linea_proyecto.cod_proyecto = proyecto.cod_proyecto and linea_proyecto.cod_linea = linea.cod_linea and linea_proyecto.cod_programa = programa.cod_programa;
+end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarProyectosLinea`(IN `codigo` VARCHAR(10))
+SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where proyectos2.linea=codigo$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarProyectosPrograma`(IN `codigo` VARCHAR(6))
+SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where proyectos2.programa=codigo$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `profesor_proyecto`(IN id VARCHAR(10), IN rol varchar(8))
-SELECT nom_profesor,ape_profesor from profesor_proyecto,profesor where profesor_proyecto.cod_profesor=profesor.cedula AND profesor_proyecto.cod_proyecto=id and profesor_proyecto.rol=rol$$
+BEGIN
+SELECT nom_persona,ape_persona from persona_proyecto,persona where persona_proyecto.cod_persona=persona.cedula AND persona_proyecto.cod_proyecto=id and persona_proyecto.rol=rol;
+END$$
 
 DELIMITER ;
 
@@ -47,77 +68,28 @@ DELIMITER ;
 -- Estructura Stand-in para la vista `directores`
 --
 CREATE TABLE IF NOT EXISTS `directores` (
-`director` varchar(41)
+`cedula` varchar(12)
+,`director` varchar(21)
 ,`cod_proyecto` varchar(10)
 );
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estudiante`
+-- Estructura Stand-in para la vista `estudiantes`
 --
-
-CREATE TABLE IF NOT EXISTS `estudiante` (
-  `cod_estudiante` varchar(9) NOT NULL,
-  `cedula` varchar(12) DEFAULT NULL,
-  `ape_estudiante` varchar(10) DEFAULT NULL,
-  `nom_estudiante` varchar(10) DEFAULT NULL,
-  `cod_proyecto` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `estudiante`
---
-
-INSERT INTO `estudiante` (`cod_estudiante`, `cedula`, `ape_estudiante`, `nom_estudiante`, `cod_proyecto`) VALUES
-('123', '123', 'Hernandez', 'Edixon', '20151.1'),
-('1264', '444', 'Lizeth', 'Contreras', '1511'),
-('1612', '111', 'Borja', 'Martinez', '1501'),
-('1784', '222', 'Carlos', 'Gutierrez', '1511'),
-('6254', '333', 'Daniela', 'Guzman', '1512');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estudiante_correo`
---
-
-CREATE TABLE IF NOT EXISTS `estudiante_correo` (
-  `cod_estudiante` varchar(9) NOT NULL DEFAULT '',
-  `nom_correo` varchar(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `estudiante_correo`
---
-
-INSERT INTO `estudiante_correo` (`cod_estudiante`, `nom_correo`) VALUES
-('123', '123@123');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estudiante_telefono`
---
-
-CREATE TABLE IF NOT EXISTS `estudiante_telefono` (
-  `cod_estudiante` varchar(9) NOT NULL DEFAULT '',
-  `num_telefono` varchar(13) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `estudiante_telefono`
---
-
-INSERT INTO `estudiante_telefono` (`cod_estudiante`, `num_telefono`) VALUES
-('123', '123');
-
+CREATE TABLE IF NOT EXISTS `estudiantes` (
+`cedula` varchar(12)
+,`estudiante` text
+,`cod_proyecto` varchar(10)
+);
 -- --------------------------------------------------------
 
 --
 -- Estructura Stand-in para la vista `jurados`
 --
 CREATE TABLE IF NOT EXISTS `jurados` (
-`jurado` varchar(41)
+`cedula` varchar(12)
+,`jurado` text
 ,`cod_proyecto` varchar(10)
 );
 -- --------------------------------------------------------
@@ -137,8 +109,8 @@ CREATE TABLE IF NOT EXISTS `linea` (
 --
 
 INSERT INTO `linea` (`cod_linea`, `nom_linea`, `cod_programa`) VALUES
-('1', 'Ingeniera de software', '1'),
-('2', 'Robotica', '2');
+('1', 'Bases de datos', '1'),
+('2', 'Ingenieria de Software', '1');
 
 -- --------------------------------------------------------
 
@@ -157,98 +129,128 @@ CREATE TABLE IF NOT EXISTS `linea_proyecto` (
 --
 
 INSERT INTO `linea_proyecto` (`cod_linea`, `cod_proyecto`, `cod_programa`) VALUES
+('1', '12', '1'),
 ('1', '20151.1', '1'),
 ('1', '20151.2', '1'),
-('2', '20151.2', '2');
+('1', '20151.3', '1'),
+('1', '20151.4', '1'),
+('1', '20151.5', '1'),
+('1', '20151.6', '1'),
+('2', '20151.7', '1');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `profesor`
+-- Estructura de tabla para la tabla `persona`
 --
 
-CREATE TABLE IF NOT EXISTS `profesor` (
-  `cedula` varchar(15) NOT NULL,
-  `nom_profesor` varchar(20) DEFAULT NULL,
-  `ape_profesor` varchar(20) DEFAULT NULL
+CREATE TABLE IF NOT EXISTS `persona` (
+  `cedula` varchar(12) NOT NULL DEFAULT 'not null',
+  `cod_persona` varchar(9) DEFAULT NULL,
+  `nom_persona` varchar(10) DEFAULT NULL,
+  `ape_persona` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `profesor`
+-- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `profesor` (`cedula`, `nom_profesor`, `ape_profesor`) VALUES
-('124376', 'Duvan', 'Ordiñez'),
-('3245', 'Fernando', 'Sotelo'),
-('6245', 'Andres', 'Novoa'),
-('7845', 'Juan', 'Botero'),
-('9546', 'Miguel', 'Ojeda'),
-('9856', 'Esperanza', 'Merchan');
+INSERT INTO `persona` (`cedula`, `cod_persona`, `nom_persona`, `ape_persona`) VALUES
+('09877', 'kjkjkj', 'kjkjkj', 'kjkjkj'),
+('12', 'doc', 'Fernando', 'Sotelo'),
+('13', '123', 'edixon', 'hernandez'),
+('161212', '161212', 'diego', 'franco'),
+('4344', '2131', 'fernado', 'ricaurte'),
+('7845', 'doc', 'Juan', 'Botero'),
+('898989', '89898', 'jkjkjk', 'jkjkj'),
+('9856', 'doc', 'Esperanza', 'Merchan'),
+('kjkjkjkj', '898978', 'kjjkj', 'kjkj');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `profesor_correo`
+-- Estructura de tabla para la tabla `persona_correo`
 --
 
-CREATE TABLE IF NOT EXISTS `profesor_correo` (
-  `cod_profesor` varchar(15) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `persona_correo` (
+  `cod_persona` varchar(9) NOT NULL DEFAULT '',
   `nom_correo` varchar(30) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `profesor_correo`
+-- Volcado de datos para la tabla `persona_correo`
 --
 
-INSERT INTO `profesor_correo` (`cod_profesor`, `nom_correo`) VALUES
-('124376', 'duvan@gmail.com'),
-('3245', 'sotelo@hotmail.com'),
-('6245', 'novoa@hotmail.com'),
-('7845', 'botero@hotmail.com'),
-('9546', 'ojeda@hotmail.com'),
-('9856', 'merchan@hotmail.com');
+INSERT INTO `persona_correo` (`cod_persona`, `nom_correo`) VALUES
+('161212', 'email@uni'),
+('4344', 'fernado@gmail.com'),
+('7845', 'botero@botero'),
+('9856', 'esperanza@gmail.com'),
+('kjkjkjkj', 'jkj@kkl');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `profesor_proyecto`
+-- Estructura de tabla para la tabla `persona_proyecto`
 --
 
-CREATE TABLE IF NOT EXISTS `profesor_proyecto` (
+CREATE TABLE IF NOT EXISTS `persona_proyecto` (
   `cod_proyecto` varchar(10) NOT NULL DEFAULT '',
-  `cod_profesor` varchar(15) NOT NULL DEFAULT '',
-  `rol` varchar(8) DEFAULT NULL,
-  `calificacion` varchar(10) DEFAULT NULL
+  `cod_persona` varchar(15) NOT NULL DEFAULT '',
+  `rol` varchar(12) DEFAULT NULL,
+  `calificacion` varchar(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `profesor_proyecto`
+-- Volcado de datos para la tabla `persona_proyecto`
 --
 
-INSERT INTO `profesor_proyecto` (`cod_proyecto`, `cod_profesor`, `rol`, `calificacion`) VALUES
-('1501', '7845', 'director', 'activo'),
-('1502', '9856', 'jurado', 'inactivo'),
-('1512', '9546', 'jurado', 'activo'),
-('20151.1', '3245', 'director', 'activo'),
-('20151.2', '124376', 'director', 'En Proceso');
+INSERT INTO `persona_proyecto` (`cod_proyecto`, `cod_persona`, `rol`, `calificacion`) VALUES
+('12', '12', 'jurado', 'finalizado'),
+('12', '13', 'estudiante', NULL),
+('12', '7845', 'director', 'rechazado'),
+('12', '9856', 'jurado', 'aprovado'),
+('20151.1', '12', 'jurado', 'Aprovado'),
+('20151.1', '161212', 'estudiante', ''),
+('20151.1', '4344', 'estudiante', NULL),
+('20151.1', '7845', 'director', 'rechazado'),
+('20151.1', 'kjkjkjkj', 'estudiante', ''),
+('20151.2', '12', 'jurado', 'finalizado'),
+('20151.2', '4344', 'estudiante', ''),
+('20151.2', '7845', 'jurado', 'Aprovado'),
+('20151.2', '9856', 'director', 'finalizado'),
+('20151.3', '13', 'estudiante', ''),
+('20151.3', '161212', 'estudiante', ''),
+('20151.3', '9856', 'director', 'en proceso'),
+('20151.4', '13', 'estudiante', ''),
+('20151.4', '7845', 'director', ''),
+('20151.5', '161212', 'estudiante', ''),
+('20151.5', '9856', 'director', ''),
+('20151.6', '898989', 'estudiante', ''),
+('20151.6', '9856', 'director', ''),
+('20151.7', '13', 'estudiante', ''),
+('20151.7', '4344', 'estudiante', ''),
+('20151.7', '7845', 'director', '');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `profesor_telefono`
+-- Estructura de tabla para la tabla `persona_telefono`
 --
 
-CREATE TABLE IF NOT EXISTS `profesor_telefono` (
-  `cod_profesor` varchar(15) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `persona_telefono` (
+  `cod_persona` varchar(9) NOT NULL DEFAULT '',
   `num_telefono` varchar(13) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `profesor_telefono`
+-- Volcado de datos para la tabla `persona_telefono`
 --
 
-INSERT INTO `profesor_telefono` (`cod_profesor`, `num_telefono`) VALUES
-('124376', '312321');
+INSERT INTO `persona_telefono` (`cod_persona`, `num_telefono`) VALUES
+('161212', '123'),
+('4344', '123'),
+('kjkjkjkj', '7878');
 
 -- --------------------------------------------------------
 
@@ -266,8 +268,7 @@ CREATE TABLE IF NOT EXISTS `programa` (
 --
 
 INSERT INTO `programa` (`cod_programa`, `nom_programa`) VALUES
-('1', 'Ingenieria de Sistemas'),
-('2', 'Ingeniería Electronica');
+('1', 'Ingenieria de sistemas');
 
 -- --------------------------------------------------------
 
@@ -279,22 +280,25 @@ CREATE TABLE IF NOT EXISTS `proyecto` (
   `cod_proyecto` varchar(10) NOT NULL,
   `titulo` varchar(20) DEFAULT NULL,
   `resumen` varchar(255) DEFAULT NULL,
-  `estado` varchar(10) DEFAULT NULL,
+  `estado` varchar(12) DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
-  `fecha_aprovacion` date DEFAULT NULL
+  `fecha_aprovacion` date DEFAULT NULL,
+  `archivo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `proyecto`
 --
 
-INSERT INTO `proyecto` (`cod_proyecto`, `titulo`, `resumen`, `estado`, `fecha_inicio`, `fecha_aprovacion`) VALUES
-('1501', 'titulo1_proy', 'resumen1_proy', '1/1/2015', '0000-00-00', '0000-00-00'),
-('1502', 'titulo2_proy', 'resumen2_proy', '1/6/2015', '0000-00-00', '0000-00-00'),
-('1511', 'titulo3_proy', 'resumen3_proy', '1/1/2016', '0000-00-00', '0000-00-00'),
-('1512', 'titulo4_proy', 'resumen4_proy', '1/6/2016', '0000-00-00', '0000-00-00'),
-('20151.1', 'lal', 'es un lal', 'Aprovado', '2015-12-31', '2014-12-31'),
-('20151.2', 'Scrum Educado', 'Resumen', 'En Proceso', '2014-07-27', '2015-02-02');
+INSERT INTO `proyecto` (`cod_proyecto`, `titulo`, `resumen`, `estado`, `fecha_inicio`, `fecha_aprovacion`, `archivo`) VALUES
+('12', 'xxx', 'yyy', 'Aprobado', '2015-05-03', '2015-05-06', ''),
+('20151.1', 'yyy', 'xxx', 'rechazado', '2015-01-31', '2015-01-01', 'archivo/ejercicios-shell.pdf'),
+('20151.2', 'zzz', 'yyy', 'Aprobado', '2013-02-03', '2014-03-03', 'archivo/ejercicios-shell.pdf'),
+('20151.3', 'aaa', 'bbb', 'Aprobado', '2013-11-30', '2014-01-01', 'archivo/ejercicios-shell.pdf.05_02_2015'),
+('20151.4', '9898989', 'kjkjkjk', 'En Proceso', '2013-10-30', '2014-03-04', 'archivo/menu.sh'),
+('20151.5', 'oioio', 'ioioi', 'En Proceso', '2013-01-01', '2015-01-01', 'archivo/script.sh'),
+('20151.6', '989898', 'kjkjk', 'En Proceso', '2015-01-28', '2015-01-01', 'archivo/script.sh'),
+('20151.7', 'Huella', 'carbono', 'En Proceso', '2013-07-28', '2014-07-04', 'archivo/');
 
 -- --------------------------------------------------------
 
@@ -304,9 +308,23 @@ INSERT INTO `proyecto` (`cod_proyecto`, `titulo`, `resumen`, `estado`, `fecha_in
 CREATE TABLE IF NOT EXISTS `proyectos` (
 `cod_proyecto` varchar(10)
 ,`titulo` varchar(20)
-,`estudiante` varchar(21)
-,`jurado` varchar(41)
-,`director` varchar(41)
+,`estudiante` text
+,`director` varchar(21)
+,`jurado` text
+);
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `proyectos2`
+--
+CREATE TABLE IF NOT EXISTS `proyectos2` (
+`cod_proyecto` varchar(10)
+,`titulo` varchar(20)
+,`estudiante` text
+,`director` varchar(21)
+,`estado` varchar(12)
+,`linea` varchar(10)
+,`programa` varchar(6)
 );
 -- --------------------------------------------------------
 
@@ -334,7 +352,16 @@ INSERT INTO `usuario` (`cedula`, `nombre`, `contrasena`) VALUES
 --
 DROP TABLE IF EXISTS `directores`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `directores` AS select concat(`profesor`.`nom_profesor`,' ',`profesor`.`ape_profesor`) AS `director`,`profesor_proyecto`.`cod_proyecto` AS `cod_proyecto` from (`profesor` join `profesor_proyecto`) where ((`profesor`.`cedula` = `profesor_proyecto`.`cod_profesor`) and (`profesor_proyecto`.`rol` = 'director'));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `directores` AS select `persona`.`cedula` AS `cedula`,concat(`persona`.`nom_persona`,' ',`persona`.`ape_persona`) AS `director`,`persona_proyecto`.`cod_proyecto` AS `cod_proyecto` from (`persona` join `persona_proyecto`) where ((`persona`.`cedula` = `persona_proyecto`.`cod_persona`) and (`persona_proyecto`.`rol` = 'director'));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `estudiantes`
+--
+DROP TABLE IF EXISTS `estudiantes`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `estudiantes` AS select `persona`.`cedula` AS `cedula`,group_concat(`persona`.`nom_persona`,' ',`persona`.`ape_persona` separator ',') AS `estudiante`,`persona_proyecto`.`cod_proyecto` AS `cod_proyecto` from (`persona` join `persona_proyecto`) where ((`persona`.`cedula` = `persona_proyecto`.`cod_persona`) and (`persona_proyecto`.`rol` = 'estudiante')) group by `persona_proyecto`.`cod_proyecto`;
 
 -- --------------------------------------------------------
 
@@ -343,7 +370,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `jurados`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `jurados` AS select concat(`profesor`.`nom_profesor`,' ',`profesor`.`ape_profesor`) AS `jurado`,`profesor_proyecto`.`cod_proyecto` AS `cod_proyecto` from (`profesor` join `profesor_proyecto`) where ((`profesor`.`cedula` = `profesor_proyecto`.`cod_profesor`) and (`profesor_proyecto`.`rol` = 'jurado'));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `jurados` AS select `persona`.`cedula` AS `cedula`,group_concat(`persona`.`nom_persona`,' ',`persona`.`ape_persona` separator ',') AS `jurado`,`persona_proyecto`.`cod_proyecto` AS `cod_proyecto` from (`persona` join `persona_proyecto`) where ((`persona`.`cedula` = `persona_proyecto`.`cod_persona`) and (`persona_proyecto`.`rol` = 'jurado')) group by `persona_proyecto`.`cod_proyecto`;
 
 -- --------------------------------------------------------
 
@@ -352,65 +379,56 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `proyectos`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `proyectos` AS select `proyecto`.`cod_proyecto` AS `cod_proyecto`,`proyecto`.`titulo` AS `titulo`,concat(`estudiante`.`nom_estudiante`,' ',`estudiante`.`ape_estudiante`) AS `estudiante`,`jurados`.`jurado` AS `jurado`,`directores`.`director` AS `director` from (((`estudiante` join `proyecto`) join `jurados`) join `directores`) where ((`proyecto`.`cod_proyecto` = `estudiante`.`cod_proyecto`) and ((`proyecto`.`cod_proyecto` = `jurados`.`cod_proyecto`) or (`proyecto`.`cod_proyecto` = `directores`.`cod_proyecto`))) order by `proyecto`.`cod_proyecto`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `proyectos` AS select `proyecto`.`cod_proyecto` AS `cod_proyecto`,`proyecto`.`titulo` AS `titulo`,`estudiantes`.`estudiante` AS `estudiante`,`directores`.`director` AS `director`,`jurados`.`jurado` AS `jurado` from (((`proyecto` join `estudiantes`) join `jurados`) join `directores`) where ((`proyecto`.`cod_proyecto` = `estudiantes`.`cod_proyecto`) and (`proyecto`.`cod_proyecto` = `jurados`.`cod_proyecto`) and (`proyecto`.`cod_proyecto` = `directores`.`cod_proyecto`)) group by `proyecto`.`cod_proyecto`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `proyectos2`
+--
+DROP TABLE IF EXISTS `proyectos2`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `proyectos2` AS select `proyecto`.`cod_proyecto` AS `cod_proyecto`,`proyecto`.`titulo` AS `titulo`,`estudiantes`.`estudiante` AS `estudiante`,`directores`.`director` AS `director`,`proyecto`.`estado` AS `estado`,`linea`.`cod_linea` AS `linea`,`programa`.`cod_programa` AS `programa` from (((((`proyecto` join `estudiantes`) join `directores`) join `linea_proyecto`) join `linea`) join `programa`) where ((`proyecto`.`cod_proyecto` = `estudiantes`.`cod_proyecto`) and (`proyecto`.`cod_proyecto` = `directores`.`cod_proyecto`) and (`linea_proyecto`.`cod_proyecto` = `proyecto`.`cod_proyecto`) and (`linea_proyecto`.`cod_linea` = `linea`.`cod_linea`) and (`linea_proyecto`.`cod_programa` = `programa`.`cod_programa`));
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `estudiante`
---
-ALTER TABLE `estudiante`
- ADD PRIMARY KEY (`cod_estudiante`), ADD KEY `estudiante_proyecto` (`cod_proyecto`);
-
---
--- Indices de la tabla `estudiante_correo`
---
-ALTER TABLE `estudiante_correo`
- ADD PRIMARY KEY (`cod_estudiante`,`nom_correo`);
-
---
--- Indices de la tabla `estudiante_telefono`
---
-ALTER TABLE `estudiante_telefono`
- ADD PRIMARY KEY (`cod_estudiante`,`num_telefono`);
-
---
 -- Indices de la tabla `linea`
 --
 ALTER TABLE `linea`
- ADD PRIMARY KEY (`cod_linea`,`cod_programa`), ADD KEY `proyecto_linea` (`cod_programa`);
+ ADD PRIMARY KEY (`cod_linea`,`cod_programa`), ADD KEY `programa_linea` (`cod_programa`);
 
 --
 -- Indices de la tabla `linea_proyecto`
 --
 ALTER TABLE `linea_proyecto`
- ADD PRIMARY KEY (`cod_linea`,`cod_proyecto`), ADD KEY `cod_proyecto` (`cod_proyecto`), ADD KEY `cod_linea` (`cod_linea`,`cod_programa`);
+ ADD PRIMARY KEY (`cod_linea`,`cod_proyecto`), ADD KEY `proyecto_linea` (`cod_proyecto`), ADD KEY `linea_proyecto` (`cod_linea`,`cod_programa`);
 
 --
--- Indices de la tabla `profesor`
+-- Indices de la tabla `persona`
 --
-ALTER TABLE `profesor`
+ALTER TABLE `persona`
  ADD PRIMARY KEY (`cedula`);
 
 --
--- Indices de la tabla `profesor_correo`
+-- Indices de la tabla `persona_correo`
 --
-ALTER TABLE `profesor_correo`
- ADD PRIMARY KEY (`cod_profesor`,`nom_correo`);
+ALTER TABLE `persona_correo`
+ ADD PRIMARY KEY (`cod_persona`,`nom_correo`);
 
 --
--- Indices de la tabla `profesor_proyecto`
+-- Indices de la tabla `persona_proyecto`
 --
-ALTER TABLE `profesor_proyecto`
- ADD PRIMARY KEY (`cod_proyecto`,`cod_profesor`), ADD KEY `cod_profesor` (`cod_profesor`);
+ALTER TABLE `persona_proyecto`
+ ADD PRIMARY KEY (`cod_proyecto`,`cod_persona`), ADD KEY `cod_persona` (`cod_persona`);
 
 --
--- Indices de la tabla `profesor_telefono`
+-- Indices de la tabla `persona_telefono`
 --
-ALTER TABLE `profesor_telefono`
- ADD PRIMARY KEY (`cod_profesor`,`num_telefono`);
+ALTER TABLE `persona_telefono`
+ ADD PRIMARY KEY (`cod_persona`,`num_telefono`);
 
 --
 -- Indices de la tabla `programa`
@@ -435,54 +453,36 @@ ALTER TABLE `usuario`
 --
 
 --
--- Filtros para la tabla `estudiante`
---
-ALTER TABLE `estudiante`
-ADD CONSTRAINT `estudiante_proyecto` FOREIGN KEY (`cod_proyecto`) REFERENCES `proyecto` (`cod_proyecto`);
-
---
--- Filtros para la tabla `estudiante_correo`
---
-ALTER TABLE `estudiante_correo`
-ADD CONSTRAINT `correo_estudiante` FOREIGN KEY (`cod_estudiante`) REFERENCES `estudiante` (`cod_estudiante`);
-
---
--- Filtros para la tabla `estudiante_telefono`
---
-ALTER TABLE `estudiante_telefono`
-ADD CONSTRAINT `estudiante_telefono` FOREIGN KEY (`cod_estudiante`) REFERENCES `estudiante` (`cod_estudiante`);
-
---
 -- Filtros para la tabla `linea`
 --
 ALTER TABLE `linea`
-ADD CONSTRAINT `proyecto_linea` FOREIGN KEY (`cod_programa`) REFERENCES `programa` (`cod_programa`);
+ADD CONSTRAINT `programa_linea` FOREIGN KEY (`cod_programa`) REFERENCES `programa` (`cod_programa`);
 
 --
 -- Filtros para la tabla `linea_proyecto`
 --
 ALTER TABLE `linea_proyecto`
-ADD CONSTRAINT `linea_proyecto_ibfk_1` FOREIGN KEY (`cod_proyecto`) REFERENCES `proyecto` (`cod_proyecto`),
-ADD CONSTRAINT `linea_proyecto_ibfk_2` FOREIGN KEY (`cod_linea`, `cod_programa`) REFERENCES `linea` (`cod_linea`, `cod_programa`);
+ADD CONSTRAINT `linea_proyecto` FOREIGN KEY (`cod_linea`, `cod_programa`) REFERENCES `linea` (`cod_linea`, `cod_programa`),
+ADD CONSTRAINT `proyecto_linea` FOREIGN KEY (`cod_proyecto`) REFERENCES `proyecto` (`cod_proyecto`);
 
 --
--- Filtros para la tabla `profesor_correo`
+-- Filtros para la tabla `persona_correo`
 --
-ALTER TABLE `profesor_correo`
-ADD CONSTRAINT `profesor_correo` FOREIGN KEY (`cod_profesor`) REFERENCES `profesor` (`cedula`);
+ALTER TABLE `persona_correo`
+ADD CONSTRAINT `correo_persona` FOREIGN KEY (`cod_persona`) REFERENCES `persona` (`cedula`);
 
 --
--- Filtros para la tabla `profesor_proyecto`
+-- Filtros para la tabla `persona_proyecto`
 --
-ALTER TABLE `profesor_proyecto`
-ADD CONSTRAINT `profesor_proyecto_ibfk_1` FOREIGN KEY (`cod_profesor`) REFERENCES `profesor` (`cedula`),
-ADD CONSTRAINT `profesor_proyecto_ibfk_2` FOREIGN KEY (`cod_proyecto`) REFERENCES `proyecto` (`cod_proyecto`);
+ALTER TABLE `persona_proyecto`
+ADD CONSTRAINT `persona_proyecto_ibfk_1` FOREIGN KEY (`cod_persona`) REFERENCES `persona` (`cedula`),
+ADD CONSTRAINT `persona_proyecto_ibfk_2` FOREIGN KEY (`cod_proyecto`) REFERENCES `proyecto` (`cod_proyecto`);
 
 --
--- Filtros para la tabla `profesor_telefono`
+-- Filtros para la tabla `persona_telefono`
 --
-ALTER TABLE `profesor_telefono`
-ADD CONSTRAINT `profesor_telefono` FOREIGN KEY (`cod_profesor`) REFERENCES `profesor` (`cedula`);
+ALTER TABLE `persona_telefono`
+ADD CONSTRAINT `persona_telefono` FOREIGN KEY (`cod_persona`) REFERENCES `persona` (`cedula`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
