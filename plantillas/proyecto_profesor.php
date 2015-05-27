@@ -60,6 +60,7 @@
             <select name="calificacion" id="calificacion" class="form-control">
               <option value="rechazado">Rechazado</option>
               <option value="finalizado">Finalizado</option>
+              <option value="en proceso">En proceso</option>
             </select>   
           </div>
          </form> 
