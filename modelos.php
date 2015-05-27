@@ -352,18 +352,19 @@ function crear_linea($codigo, $nombre, $programa){
 
 
 function all_date_table($table){
- $conexion = conectar_base_datos();
-$consulta="SELECT * FROM $table";
-$resultado=mysqli_query($conexion,$consulta);
-$date=array();
-while ($file=mysqli_fetch_assoc($resultado)) {
-  $date[]=$file;
-}
-return $date;
+	$conexion = conectar_base_datos();
+	$consulta="SELECT * FROM $table";
+	$resultado=mysqli_query($conexion,$consulta);
+	$date=array();
+	while ($file=mysqli_fetch_assoc($resultado)) {
+	  $date[]=$file;
+	}
 	cerrar_conexion_db($conexion);
+	return $date;
 }
+
 function modificar_linea(){
-if ($_SERVER['REQUEST_METHOD']=="POST") {
+	if ($_SERVER['REQUEST_METHOD']=="POST") {
 		$conexion = conectar_base_datos();
 		$cod_linea=$_POST['cod_linea'];
 		$nom_linea=$_POST['nom_linea'];
@@ -417,5 +418,32 @@ function llamar_procedimiento($procedimiento){
 	$resultado = mysqli_query($conexion,$procedimiento);
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
+}
+
+function llamar_procedimiento_consulta($procedimiento){
+	$conexion = conectar_base_datos();
+	$resultado = mysqli_query($conexion,$procedimiento);
+	$proyectos = array();
+	while ($fila = mysqli_fetch_assoc($resultado)) {
+		array_push($proyectos, $fila);
+	}
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+	return $proyectos;
+}
+
+function ConsultarProyectoEstado($estado){
+	$conexion = conectar_base_datos();
+	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where proyectos2.estado='$estado';";
+	$resultado = mysqli_query($conexion,$consulta);
+
+	$proyectos = array();
+
+	while ($fila = mysqli_fetch_assoc($resultado)) {
+		array_push($proyectos, $fila);
+	}
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+	return $proyectos;
 }
 //$consulta = "SELECT titulo from profesor_proyecto,proyecto where profesor_proyecto.cod_proyecto=proyecto.cod_proyecto AND cod_proyecto='$id'";

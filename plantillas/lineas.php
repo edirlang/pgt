@@ -12,6 +12,7 @@
           <th>Nombre Linea</th>
           <th>Programa</th>
           <th></th>
+          <th></th>
          <th></th> 
         </tr>
       </thead>
@@ -23,6 +24,7 @@
          <td id="2"><?php 
          $programa = consultar_tabla($row['cod_programa'],"programa","cod_programa");
          echo $programa['cod_programa'].". ".$programa['nom_programa']; ?></td>
+         <td><a href="/pgt/index.php/proyecto/consultar_linea?id=<?php echo $row['cod_linea']; ?>" class="btn btn-info">Proyectos</a></td>
          <td>
           <a class="btn btn-success" data-toggle="modal" data-target="#ventana" id="<?php echo $row['cod_linea']; ?>"><span class="glyphicon glyphicon-edit"></span>Editar</a>
           <script type="text/javascript">

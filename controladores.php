@@ -195,9 +195,9 @@ function calificar_proyecto_action(){
 		crear_jurado($jurado2, $cod_proyecto, $calificacion2);
 		llamar_procedimiento("call CalificarProyecto('$cod_proyecto','$calificacion1','$calificacion2')");
 		$estado;
-		if($calificacion1 == $calificacion2 && $calificacion1 == "Aprovado"){
-			calificar_proyecto($cod_proyecto, "Aprovado");
-			$estado="Aprovado";
+		if($calificacion1 == $calificacion2 && $calificacion1 == "Aprobado"){
+			calificar_proyecto($cod_proyecto, "Aprobado");
+			$estado="Aprobado";
 		}else{
 
 			calificar_proyecto($cod_proyecto, "Rechazado");
@@ -334,5 +334,32 @@ function calificar_proyecto_direcctor_action(){
 		echo "1";
 		
 	}	
+}
+
+function consultar_proyecto_estado_action()
+{
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$estado = $_POST['estado'];
+		$proyectos = ConsultarProyectoEstado($estado);
+		require "plantillas/Proyectos.php";
+	}
+}
+
+function consultar_proyecto_linea_action()
+{
+	if($_SERVER['REQUEST_METHOD']=='GET'){
+		$linea = $_GET['id'];
+		$proyectos = llamar_procedimiento_consulta("call ConsultarProyectosLinea('$linea')");
+		require "plantillas/Proyectos2.php";
+	}
+}
+
+function consultar_proyecto_programa_action()
+{
+	if($_SERVER['REQUEST_METHOD']=='GET'){
+		$linea = $_GET['id'];
+		$proyectos = llamar_procedimiento_consulta("call ConsultarProyectosPrograma('$linea')");
+		require "plantillas/Proyectos2.php";
+	}
 }
 ?>

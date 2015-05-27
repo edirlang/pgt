@@ -138,10 +138,9 @@ from proyecto, estudiantes, jurados, directores
 where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = jurados.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto
 
 create view proyectos2 as
-select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directores.director
-from proyecto, estudiantes, directores 
-where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto
-
+select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directores.director, proyecto.estado, linea.cod_linea as linea, programa.cod_programa as programa
+from proyecto, estudiantes, directores, linea_proyecto, linea, programa 
+where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto and linea_proyecto.cod_proyecto = proyecto.cod_proyecto and linea_proyecto.cod_linea = linea.cod_linea and linea_proyecto.cod_programa = programa.cod_programa;
 
 
 CREATE PROCEDURE profesor_proyecto(IN id VARCHAR(10), IN rol varchar(8))
@@ -164,4 +163,22 @@ SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyec
 
 
 //proyectos con y sin jurado
-SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto; 
+SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto;
+
+//Procedimiento Proyectos
+create procedure ConsultarProyectosEstado ()
+begin
+select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directores.director, proyecto.estado, linea.nom_linea as linea, programa.nom_programa as programa
+from proyecto, estudiantes, directores, linea_proyecto, linea, programa 
+where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto and linea_proyecto.cod_proyecto = proyecto.cod_proyecto and linea_proyecto.cod_linea = linea.cod_linea and linea_proyecto.cod_programa = programa.cod_programa;
+end//
+
+create procedure ConsultarProyectosLinea(in codigo varchar(10))
+begin
+SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where proyectos2.linea=codigo;
+end
+
+create procedure ConsultarProyectosPrograma(in codigo varchar(6))
+begin
+SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where proyectos2.programa=codigo;
+end//

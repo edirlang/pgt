@@ -11,6 +11,7 @@
           <th>Codigo Programa</th>
           <th>Nombre Programa</th>
           <th></th>
+          <th></th>
           
         </tr>
       </thead>
@@ -19,6 +20,7 @@
        <tr id='<?php echo $row['cod_programa']; ?>'>
         <td id="1"><?php echo $row['cod_programa']; ?></td>
         <td id="2"><?php echo $row['nom_programa']; ?></td>
+        <td> <a href="/pgt/index.php/proyecto/consultar_programa?id=<?php echo $row['cod_programa']; ?>" class="btn btn-info">Ver proyectos</a></td>
         <td>  <a class="btn btn-success"  data-toggle="modal" data-target="#ventana"  id="<?php echo $row['cod_programa'];?>"><span class="icon icon-pencil"></span> Editar</a></td>
         <script language="JavaScript" type="text/javascript">
         $("#<?php echo $row['cod_programa']; ?>").click(function(){

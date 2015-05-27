@@ -109,6 +109,18 @@ $uri = explode("?", $url);
 		case "/pgt/index.php/director/calificarproyecto";
 			calificar_proyecto_direcctor_action();
 		break;
+
+		case "/pgt/index.php/proyecto/consultar_estado";
+			consultar_proyecto_estado_action();
+		break;
+
+		case "/pgt/index.php/proyecto/consultar_linea";
+			consultar_proyecto_linea_action();
+		break;
+
+		case "/pgt/index.php/proyecto/consultar_programa";
+			consultar_proyecto_programa_action();
+		break;
 	}
 
 ?>

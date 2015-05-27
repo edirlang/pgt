@@ -1,9 +1,11 @@
 $(document).ready(inicializarEventos);
 var i=0;
+
 function inicializarEventos()
 {
 	$("#agregar").click(AgregarEstudiante);
   	$("#crear_estuciante").click(CrearEstudiante);
+  	
 }
 function AgregarEstudiante(){
   
