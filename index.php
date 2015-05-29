@@ -35,6 +35,9 @@ $uri = explode("?", $url);
 		case "/pgt/index.php/Profesor/nuevo":
 			Profesor_nuevo_Action();
 		break;
+			case "/pgt/index.php/modificar_proyecto":
+			Modificar_Proyecto();
+		break;
 
 		case "/pgt/index.php/Profesores":
 			ProfesoresAction();
@@ -59,6 +62,9 @@ $uri = explode("?", $url);
 		break;
 		case "/pgt/index.php/modificar_programa":
 			modificar_programa();
+		break;
+			case "/pgt/index.php/modificar_estudiante":
+		modificar_estudiante();
 		break;
 		case "/pgt/index.php/programa_ingreso":
 			require "plantillas/programa_ingreso.php";

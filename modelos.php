@@ -56,6 +56,69 @@ function crear_Estudiante2($codigo, $cedula, $nombre, $apellido){
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 }
+function registros_telefono($id){
+	$conexion = conectar_base_datos();
+	$consulta  = "SELECT * FROM persona_telefono  where cod_persona='$id'";
+    $resultado = mysqli_query($conexion,$consulta);
+    $reg = mysqli_num_rows(  $resultado); 
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+	return $reg;
+}
+function modificar_estudiante(){
+
+	if ($_SERVER['REQUEST_METHOD']=="POST") {
+		$conexion = conectar_base_datos();
+		$cod_persona=$_POST['cod_persona'];
+		$nom_persona=$_POST['nom_persona'];
+		$ape_persona=$_POST['ape_persona'];
+	    
+		$cedula=$_POST['cedula'];
+        $consulta =  "UPDATE persona Set nom_persona='$nom_persona', ape_persona='$ape_persona' where cod_persona='$cod_persona'"; 
+	    mysqli_query($conexion,$consulta);
+
+		if (isset($_POST['tel_persona'])) {
+			    $tel_persona=$_POST['tel_persona'];
+				$tel=$_POST['tel'];
+		        for ($i=1; $i <=count($tel_persona) ; $i++) { 
+				update_telefono($cod_persona,$tel_persona[$i],$tel[$i]);
+			   }
+		}
+	
+	   if(isset($_POST['correo_persona'])){
+			    $correo=$_POST['correo'];
+			    $correo_persona=$_POST['correo_persona'];	
+		for ($i=1; $i <=count($correo_persona) ; $i++) {
+		 echo $correo_persona[$i].$correo[$i]; 
+			update_correo($cod_persona,$correo_persona[$i],$correo[$i]);
+		}
+      }
+       if($cod_persona=$_POST['cod_persona']=='doc'){
+      header('Location: Profesores');
+
+       }else{
+       	 header('Location: Estudiantes');
+       }
+	  echo mysqli_error($conexion);
+	  cerrar_conexion_db($conexion);
+	 
+	}
+}
+
+function update_telefono($cod_estudiante,$tel_estudiante,$tel){
+    $conexion = conectar_base_datos();
+	$consulta2 =  "UPDATE persona_telefono Set num_telefono='$tel_estudiante'  where  num_telefono='$tel'"; 
+	mysqli_query($conexion,$consulta2);
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+}
+function update_correo($cod_estudiante,$correo_estudiante,$correo){
+    $conexion = conectar_base_datos();
+	$consulta2 =  "UPDATE persona_correo Set nom_correo='$correo_estudiante'  where  nom_correo='$correo'"; 
+	mysqli_query($conexion,$consulta2);
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+}
 function CrearEstudianteProyecto($cod_persona, $cod_proyecto){
 	$conexion = conectar_base_datos();
 	$consulta  = "INSERT INTO persona_proyecto values('$cod_proyecto', '$cod_persona','estudiante','')";
@@ -446,4 +509,40 @@ function ConsultarProyectoEstado($estado){
 	cerrar_conexion_db($conexion);
 	return $proyectos;
 }
-//$consulta = "SELECT titulo from profesor_proyecto,proyecto where profesor_proyecto.cod_proyecto=proyecto.cod_proyecto AND cod_proyecto='$id'";
+function consultar_tabla_jurado($id){
+   	$conexion = conectar_base_datos();
+	$consulta = "SELECT nom_persona,ape_persona from persona_proyecto,persona where persona_proyecto.cod_persona=persona.cedula AND persona_proyecto.cod_proyecto ='$id' and persona_proyecto.rol='jurado'";
+	$resultado = mysqli_query($conexion,$consulta);
+	$programa = array();
+	while ($fila = mysqli_fetch_assoc($resultado)) {
+		$programa[]= $fila;
+	}
+	cerrar_conexion_db($conexion);
+	return $programa;
+}
+function Modificar_Proyecto(){
+if ($_SERVER['REQUEST_METHOD']=="POST") {
+		$conexion = conectar_base_datos();
+	
+		$nombre_a=$_FILES['archivo']['name'];
+        $destino="archivo/".$nombre_a;
+        $ubicacion_temp=$_FILES['archivo']['tmp_name']; 
+        move_uploaded_file($ubicacion_temp,$destino);
+
+
+		$cod_proyecto=$_POST['cod_proyecto'];
+		$titulo=$_POST['titulo'];
+	    $resumen=$_POST['resumen'];	    
+ 	    $archivo_viejo=$_POST['archivo_v'];
+	    if(empty($nombre_a)){
+	    $destino=$archivo_viejo;
+	    }
+
+         $consulta2 =  "UPDATE proyecto Set titulo='$titulo', resumen='$resumen' , archivo='$destino' where cod_proyecto='$cod_proyecto'"; 
+		 mysqli_query($conexion,$consulta2);
+	    
+		cerrar_conexion_db($conexion);
+		header("Location: detalle_proyecto?id=$cod_proyecto");
+	}
+
+}

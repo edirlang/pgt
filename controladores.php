@@ -195,14 +195,7 @@ function calificar_proyecto_action(){
 		crear_jurado($jurado2, $cod_proyecto, $calificacion2);
 		llamar_procedimiento("call CalificarProyecto('$cod_proyecto','$calificacion1','$calificacion2')");
 		$estado;
-		if($calificacion1 == $calificacion2 && $calificacion1 == "Aprobado"){
-			calificar_proyecto($cod_proyecto, "Aprobado");
-			$estado="Aprobado";
-		}else{
-
-			calificar_proyecto($cod_proyecto, "Rechazado");
-			$estado = "Rechazado";
-		}
+		
 		echo "<script> alert('Proyecto a sido evaliado, nuevo estado '".$estado."); </script>";
 		header("Location: /pgt/index.php/Proyectos");
 	}
@@ -311,10 +304,12 @@ function detalle_proyecto_action(){
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$id=$_GET['id'];
 		$proyecto_d=consultar_tabla($id,"proyecto","cod_proyecto");
+
 		$programa_proyecto_d=consultar_tabla($id,"linea_proyecto","cod_proyecto");
 		$linea_d=consultar_tabla($programa_proyecto_d['cod_linea'],"linea","cod_linea");
 		$programa_d=consultar_tabla($programa_proyecto_d['cod_programa'],"programa","cod_programa");
         $detalles_proyecto_director=buscar_proyecto_directo_nombre($id);
+        $proyecto_d_jurado=consultar_tabla_jurado($id);
 		require "plantillas/detalles_proyecto.php";
 	}
 

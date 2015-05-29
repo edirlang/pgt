@@ -2,7 +2,7 @@
 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
    <div class="panel panel-success">
      <div class="panel-heading">
-       <h3 class="panel-title">Nuevo Profesor</h3>
+       <h3 class="panel-title">Nuevo Docente</h3>
      </div>
      <div class="panel-body">
 
@@ -13,7 +13,7 @@
           <label for="">Nombre</label>
           <input type="text" class="form-control" id="nombre"  name="nombre" placeholder="Nombre">
           <label for="">Apellido</label>
-          <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Aoellido">
+          <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
           <label for="">Telefono 1</label>
           <input type="number" class="form-control" id="Telefono[1]" name="Telefono[1]">
 
