@@ -512,7 +512,7 @@ function ConsultarProyectoEstado($estado){
 
 function ConsultarProyectoano($an_buscar){
 	$conexion = conectar_base_datos();
-	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where  proyectos2.cod_proyecto like '2015%' ";
+	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where  proyectos2.cod_proyecto like '".$an_buscar."%' ";
 	$resultado = mysqli_query($conexion,$consulta);
 
 	$proyectos = array();

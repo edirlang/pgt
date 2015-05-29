@@ -31,12 +31,13 @@
     
          <div class="form-group">
           <div class="col-sm-2">
-            <label for="input-id">Buscar por Año:</label>
+            <label for="input-id">Buscar por Periodo:</label>
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <select  name="an_buscar" id="input" class="form-control">
-              <option value="Aprobado">20151</option>
-              <option value="En Proceso">20152</option>
+              <?php foreach ($periodos as $row) { ?>
+                <option value="<?php echo $row; ?>"><?php echo $row; ?></option>
+              <?php } ?>
             </select>
           </div>
 

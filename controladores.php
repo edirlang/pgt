@@ -119,6 +119,7 @@ function ProfesoresAction(){
 function ProyectosAction(){
 	
 	$proyectos = proyectosView();
+	$periodos = peridos();
 	require "plantillas/Proyectos.php";
 }
 
@@ -337,6 +338,7 @@ function consultar_proyecto_estado_action()
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$estado = $_POST['estado'];
 		$proyectos = ConsultarProyectoEstado($estado);
+		$periodos = peridos();
 		require "plantillas/Proyectos.php";
 	}
 }
@@ -346,6 +348,8 @@ function consultar_proyecto_ano_action()
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$an_buscar = $_POST['an_buscar'];
 		$proyectos = ConsultarProyectoano($an_buscar);
+		$periodos = peridos();
+		
 		require "plantillas/Proyectos.php";
 	}
 }
@@ -366,5 +370,24 @@ function consultar_proyecto_programa_action()
 		$proyectos = llamar_procedimiento_consulta("call ConsultarProyectosPrograma('$linea')");
 		require "plantillas/Proyectos2.php";
 	}
+}
+
+function peridos(){
+	$proyectos = proyectosView();
+	$periodos = array();
+	foreach ($proyectos as $proyecto) {
+		$periodo = explode('.',$proyecto['cod_proyecto']);
+		$aux = true;
+
+		foreach ($periodos as $row) {
+			if($row == $periodo[0]){
+				$aux = false;		
+			}
+		}
+		if($aux){
+			array_push($periodos, $periodo[0]);	
+		}	
+	}
+	return $periodos;
 }
 ?>
