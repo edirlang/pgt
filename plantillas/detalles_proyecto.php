@@ -30,9 +30,10 @@
         <p>Director :  <?php echo  $detalles_proyecto_director['nom_persona']." ".$detalles_proyecto_director['ape_persona'];; ?></p>
         <p>Descargar Proyecto</p>
          <a target="_blank" href="<?php echo  "/pgt/".$proyecto_d['archivo']; ?>"><?php echo $proyecto_d['titulo']; ?> </a>
+         <br>
+    <a class="btn btn-success"  data-toggle="modal" data-target="#ventana2"  id="<?php echo $proyecto_d['cod_proyecto'];?>"><span class="icon icon-pencil"></span> Editar</a></td>
 
 </div>
-    <a class="btn btn-success"  data-toggle="modal" data-target="#ventana2"  id="<?php echo $proyecto_d['cod_proyecto'];?>"><span class="icon icon-pencil"></span> Editar</a></td>
 
 </div>
 
@@ -52,8 +53,21 @@
           <input type="text" class="form-control" name="titulo" value="<?php echo $proyecto_d['titulo'];?>"  id="cedula"   />
           <label for="">Resumen</label>
           <input type="text" name="resumen" class="form-control" value="<?php echo $proyecto_d['resumen'];?>" id="cod_estudiante"/>
+          <label for="">Director</label>
+          
+<?php /*
+          <input type="text" name="director_viejo" class="form-control" value="<?php  echo $detalles_proyecto_director['nom_persona'].' '.$detalles_proyecto_director['ape_persona'];?>" id="" READONLY/>
+          <input type="hidden" name="director_c" class="form-control" value="<?php  echo $detalles_proyecto_director['cedula'];?>" id="" />
+          <label for="">Cambiar Director</label>
+              <select class="form-control" id="director" name="director">
+          <?php foreach ($profesores_n as $profesor) { ?>
+          <option value="<?php echo $profesor['cedula'] ?>"><?php echo $profesor['nom_persona']." ".$profesor['ape_persona'] ; ?></option>    
+          <?php } ?>
+        </select>
+         
+*/ ?>
           <label for="">Archivo Proyecto</label>
-              <input type="text" name="archivo_v" class="form-control" value="<?php echo $proyecto_d['archivo'];?>" id="cod_estudiante" READONLY/>
+              <input type="text" name="archivo_v" class="form-control" value="<?php echo $proyecto_d['archivo'];?>" id="" READONLY/>
           <label for="">Cambiar Archivo Proyecto</label>
           <input type="file" class="form-control" id="archivo" name="archivo" >
 

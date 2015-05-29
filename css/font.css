@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('/fajasrosywar/fonts/icomoon.eot?-3vrsu7');
-	src:url('/fajasrosywar/fonts/icomoon.eot?#iefix-3vrsu7') format('embedded-opentype'),
-		url('/fajasrosywar/fonts/icomoon.woff?-3vrsu7') format('woff'),
-		url('/fajasrosywar/fonts/icomoon.ttf?-3vrsu7') format('truetype'),
-		url('/fajasrosywar/fonts/icomoon.svg?-3vrsu7#icomoon') format('svg');
+	src:url('/pgt/fonts/icomoon.eot?-3vrsu7');
+	src:url('/pgt/fonts/icomoon.eot?#iefix-3vrsu7') format('embedded-opentype'),
+		url('/pgt/fonts/icomoon.woff?-3vrsu7') format('woff'),
+		url('/pgt/fonts/icomoon.ttf?-3vrsu7') format('truetype'),
+		url('/pgt/fonts/icomoon.svg?-3vrsu7#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
