@@ -304,7 +304,8 @@ function detalle_proyecto_action(){
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$id=$_GET['id'];
 		$proyecto_d=consultar_tabla($id,"proyecto","cod_proyecto");
-
+		$director = consultar_tabla($id,"persona_proyecto","cod_proyecto");
+        $profesores_n=consultar_exepto2("persona","cedula",$director['cod_persona']);
 		$programa_proyecto_d=consultar_tabla($id,"linea_proyecto","cod_proyecto");
 		$linea_d=consultar_tabla($programa_proyecto_d['cod_linea'],"linea","cod_linea");
 		$programa_d=consultar_tabla($programa_proyecto_d['cod_programa'],"programa","cod_programa");
@@ -336,6 +337,15 @@ function consultar_proyecto_estado_action()
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$estado = $_POST['estado'];
 		$proyectos = ConsultarProyectoEstado($estado);
+		require "plantillas/Proyectos.php";
+	}
+}
+
+function consultar_proyecto_ano_action()
+{
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$an_buscar = $_POST['an_buscar'];
+		$proyectos = ConsultarProyectoano($an_buscar);
 		require "plantillas/Proyectos.php";
 	}
 }

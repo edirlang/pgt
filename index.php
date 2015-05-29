@@ -119,6 +119,9 @@ $uri = explode("?", $url);
 		case "/pgt/index.php/proyecto/consultar_estado";
 			consultar_proyecto_estado_action();
 		break;
+		case "/pgt/index.php/proyecto/consultar_an";
+			consultar_proyecto_ano_action();
+		break;
 
 		case "/pgt/index.php/proyecto/consultar_linea";
 			consultar_proyecto_linea_action();

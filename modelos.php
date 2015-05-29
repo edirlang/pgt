@@ -465,7 +465,7 @@ function  buscar_proyecto_directo_nombre($id){
 
 
    	$conexion = conectar_base_datos();
-	$consulta = "SELECT nom_persona,ape_persona from persona_proyecto,persona where persona_proyecto.cod_persona=persona.cedula AND cod_proyecto ='$id'";
+	$consulta = "SELECT nom_persona,ape_persona,cedula from persona_proyecto,persona where persona_proyecto.cod_persona=persona.cedula AND cod_proyecto ='$id'";
 	$resultado = mysqli_query($conexion,$consulta);
 	$programa = array();
 	while ($fila = mysqli_fetch_assoc($resultado)) {
@@ -509,6 +509,24 @@ function ConsultarProyectoEstado($estado){
 	cerrar_conexion_db($conexion);
 	return $proyectos;
 }
+
+function ConsultarProyectoano($an_buscar){
+	$conexion = conectar_base_datos();
+	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where  proyectos2.cod_proyecto like '2015%' ";
+	$resultado = mysqli_query($conexion,$consulta);
+
+	$proyectos = array();
+
+	while ($fila = mysqli_fetch_assoc($resultado)) {
+		array_push($proyectos, $fila);
+	}
+	echo mysqli_error($conexion);
+	cerrar_conexion_db($conexion);
+	return $proyectos;
+}
+
+
+
 function consultar_tabla_jurado($id){
    	$conexion = conectar_base_datos();
 	$consulta = "SELECT nom_persona,ape_persona from persona_proyecto,persona where persona_proyecto.cod_persona=persona.cedula AND persona_proyecto.cod_proyecto ='$id' and persona_proyecto.rol='jurado'";
@@ -534,13 +552,20 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 		$titulo=$_POST['titulo'];
 	    $resumen=$_POST['resumen'];	    
  	    $archivo_viejo=$_POST['archivo_v'];
+ 	    //$director=$_POST['director'];
+ 	    // $director_c=$_POST['director_c'];
+ 	    //echo $director."dsadas";
+ 	    //  echo $director_c;
 	    if(empty($nombre_a)){
 	    $destino=$archivo_viejo;
 	    }
 
          $consulta2 =  "UPDATE proyecto Set titulo='$titulo', resumen='$resumen' , archivo='$destino' where cod_proyecto='$cod_proyecto'"; 
 		 mysqli_query($conexion,$consulta2);
-	    
+	      
+	    // $consulta =  "UPDATE persona_proyecto Set cod_persona='$director' where cod_proyecto='$cod_proyecto' And cod_persona='$director_c' AND rol='director'"; 
+		 //mysqli_query($conexion,$consulta);
+
 		cerrar_conexion_db($conexion);
 		header("Location: detalle_proyecto?id=$cod_proyecto");
 	}

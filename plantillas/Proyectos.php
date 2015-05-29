@@ -22,9 +22,36 @@
 
           <button type="submit" class="btn btn-primary" id="buscar">Buscar</button>
         </div>
+         
+    </form>
+
+
+    <form class="form-horizontal" action="/pgt/index.php/proyecto/consultar_an" method="post">
+
+    
+         <div class="form-group">
+          <div class="col-sm-2">
+            <label for="input-id">Buscar por Año:</label>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <select  name="an_buscar" id="input" class="form-control">
+              <option value="Aprobado">20151</option>
+              <option value="En Proceso">20152</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="buscar_an">Buscar</button>
+        </div>
       </div>
     </form>
+
+
   </div>
+
+
+
+
+
   <div class="panel-body">
     <table id="hola" class="table table-striped table-bordered table-condensed table-hover display color2 " cellspacing="0" width="100%">
       <thead>
