@@ -128,7 +128,7 @@ function ProyectosNuevoAction(){
 		$titulo = $_POST['titulo'];
 		$resumen = $_POST['resumen'];
 		$fechaInicio = $_POST['fechaInicio'];
-		$fechaAprovado = $_POST['fechaAprovacion'];
+		
 		$estado = "En Proceso";
 		$director = $_POST['director'];
 		$programas = $_POST['programa'];
@@ -164,7 +164,7 @@ function ProyectosNuevoAction(){
 			$codigo = $codigo."."."1";
 		}
 
-		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $fechaAprovado, $estado, $director, $destino);
+		crear_Proyecto($codigo, $titulo, $resumen, $fechaInicio, $estado, $director, $destino);
 
 		foreach ($programas as $programa) {
 			$linea = explode(".", $programa);

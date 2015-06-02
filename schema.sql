@@ -3,6 +3,9 @@ create table persona(
 	cedula varchar(12) not null,
 	nom_persona varchar(10),
 	ape_persona varchar(10),
+	creditos varchar(3),
+	programa varchar(6),
+	FOREIGN key (programa) REFERENCES programa(cod_programa),
 	primary key(cedula)
 );
 
@@ -47,7 +50,10 @@ create table persona_proyecto(
 
 create table programa(
 	cod_programa varchar(6)  primary key ,
-	nom_programa varchar(30) 
+	nom_programa varchar(30),
+	creditos varchar(3),
+	faculta varchar(6),
+	FOREIGN key faculta REFERENCES faculta(cod_facultad)
 );
 
 create table linea(
@@ -68,6 +74,12 @@ create table linea_proyecto(
 	FOREIGN KEY (cod_proyecto) REFERENCES proyecto(cod_proyecto),
 	CONSTRAINT linea_proyecto
 	FOREIGN KEY (cod_linea,cod_programa) REFERENCES linea(cod_linea, cod_programa)
+);
+
+create table faculta(
+	cod_facultad varchar(6),
+	nom_facultad varchar(255),
+	primary key(cod_facultad)
 );
 
 INSERT INTO persona VALUES
@@ -141,6 +153,21 @@ create view proyectos2 as
 select proyecto.cod_proyecto, proyecto.titulo, estudiantes.estudiante, directores.director, proyecto.estado, linea.cod_linea as linea, programa.cod_programa as programa
 from proyecto, estudiantes, directores, linea_proyecto, linea, programa 
 where proyecto.cod_proyecto = estudiantes.cod_proyecto and proyecto.cod_proyecto = directores.cod_proyecto and linea_proyecto.cod_proyecto = proyecto.cod_proyecto and linea_proyecto.cod_linea = linea.cod_linea and linea_proyecto.cod_programa = programa.cod_programa;
+
+
+CREATE PROCEDURE CalificarProyecto(IN codigo varchar(10), In calificacion1 varchar(10), IN calificacion2 varchar(10))
+BEGIN
+	IF calificacion1 = "Aprobado" && calificacion2 = "Aprobado" then
+    	UPDATE proyecto 
+        SET estado = "Aprobado", fecha_aprovacion = CURDATE() 
+        WHERE cod_proyecto = codigo;
+    else
+    	UPDATE proyecto 
+        SET estado="Rechazado", fecha_aprovacion = CURDATE()  
+        WHERE cod_proyecto=codigo ;
+    end IF;
+    
+end//
 
 
 CREATE PROCEDURE profesor_proyecto(IN id VARCHAR(10), IN rol varchar(8))

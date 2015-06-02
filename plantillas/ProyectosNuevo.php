@@ -16,9 +16,6 @@
         <textarea class="form-control" id="resumen"  name="resumen" placeholder="Resumen"></textarea>
         <label for="">Fecha de Inicio</label>
         <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" placeholder="Fecha Inicio">
-        <label for="">Fecha de aprovacion</label>
-        <input type="date" class="form-control" id="fechaAprovacion" name="fechaAprovacion" placeholder="Fecha Aprovado">
-        
         <label for="">Seleccione Director</label>
         <select class="form-control" id="director" name="director">
           <?php foreach ($profesores as $profesor) { ?>

@@ -171,9 +171,9 @@ function ultima_fila($tabla, $campo){
 	return $proyecto;
 }
 
-function crear_Proyecto($codigo, $titulo, $resumen, $fechainicio, $fechaaprovacion, $estado,$director , $destino){
+function crear_Proyecto($codigo, $titulo, $resumen, $fechainicio, $estado,$director , $destino){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','$fechaaprovacion','$destino')";
+	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','','$destino')";
 	mysqli_query($conexion,$consulta);
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);

@@ -70,7 +70,7 @@
                 <a href="/pgt/index.php/Proyectos/nuevo">Nuevo Proyecto</a>
               </li>
               <li>
-                <a href="/pgt/index.php/AgregarJurado">Calificar proyecto</a>
+                <a href="/pgt/index.php/AgregarJurado">Asignar Jurado</a>
               </li>
 
             </ul>
