@@ -52,10 +52,11 @@
           <input type="hidden" class="form-control" name="cod_proyecto" value="<?php echo $proyecto_d['cod_proyecto'];?>"  id="cedula"   />
           <input type="text" class="form-control" name="titulo" value="<?php echo $proyecto_d['titulo'];?>"  id="cedula"   />
           <label for="">Resumen</label>
-          <input type="text" name="resumen" class="form-control" value="<?php echo $proyecto_d['resumen'];?>" id="cod_estudiante"/>
-          <label for="">Director</label>
+          <textarea name="resumen" id="inputResumen" class="form-control" rows="3" required="required"><?php echo $proyecto_d['resumen'];?></textarea>
+          
           
 <?php /*
+          <label for="">Director</label>
           <input type="text" name="director_viejo" class="form-control" value="<?php  echo $detalles_proyecto_director['nom_persona'].' '.$detalles_proyecto_director['ape_persona'];?>" id="" READONLY/>
           <input type="hidden" name="director_c" class="form-control" value="<?php  echo $detalles_proyecto_director['cedula'];?>" id="" />
           <label for="">Cambiar Director</label>
