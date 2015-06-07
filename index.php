@@ -64,13 +64,21 @@ $uri = explode("?", $url);
 			modificar_programa();
 		break;
 			case "/pgt/index.php/modificar_estudiante":
-		modificar_estudiante();
+			modificar_estudiante();
 		break;
+		case "/pgt/index.php/facultad":
+			facultades_action();
+		break;
+		case "/pgt/index.php/facultad/nuevo":
+			facultades_nuevo_action();
+		break;
+		
 		case "/pgt/index.php/programa_ingreso":
-			require "plantillas/programa_ingreso.php";
+			programa_nuevo_action();
+			
 		break;
 		case "/pgt/index.php/Programa_guardar":
-			programa_ingreso_action();
+			programa_nuevo_action();
 		break;
 
 		case "/pgt/index.php/linea_ingresar":
@@ -100,7 +108,7 @@ $uri = explode("?", $url);
 			detalle_proyecto_action();
 		break;
 
-		case "/pgt/index.php/AgregarJurado":
+		case "/pgt/index.php/CalificarJurado":
 			calificar_proyecto_action();
 		break;
 
@@ -129,6 +137,10 @@ $uri = explode("?", $url);
 
 		case "/pgt/index.php/proyecto/consultar_programa";
 			consultar_proyecto_programa_action();
+		break;
+
+		case "/pgt/index.php/AsignarJurado";
+			asignar_jurados_action();
 		break;
 	}
 

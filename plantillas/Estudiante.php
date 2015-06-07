@@ -24,7 +24,10 @@
 		<?php 
 		$i++;
 	} ?>
-
+	<p><strong>Creditos</strong> </p>
+	<?php echo $estudiante['creditos'] ?>
+	<p><strong>Programa</strong> </p>
+	<?php echo $estudiante['programa'].'-'.$programa['nom_programa']; ?>
 </div>
 </div>
     <a class="btn btn-success"  data-toggle="modal" data-target="#ventana2"  id="<?php echo $estudiante['cedula'];?>"><span class="icon icon-pencil"></span> Editar</a></td>

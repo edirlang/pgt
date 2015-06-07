@@ -11,6 +11,7 @@
           <th>Codigo</th>
           <th>Nombre</th>
           <th>Apellido</th>
+          <th>Creditos</th>
           <th></th>
          
         </tr>
@@ -21,6 +22,7 @@
           <td id="1"><?php echo $row['cod_persona']; ?></td>
           <td id="2"><?php echo $row['nom_persona']; ?></td>
           <td id="3"><?php echo $row['ape_persona']; ?></td>
+          <td id="3"><?php echo $row['creditos']; ?></td>
           <td>
           <a class="btn btn-success" id="<?php echo $row['cedula']; ?>" href="/pgt/index.php/Estudiante?id=<?php echo $row['cedula']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles</a>
           </td>

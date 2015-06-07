@@ -62,7 +62,7 @@
         <th>Jurados</th>
         <th>Director</th>
         <th></th>
-
+        <th></th>
       </tr>
     </thead>
     <tbody id="Filas">
@@ -74,7 +74,12 @@
        <td id="2"><?php echo $row['director']; ?></td>
        <td>
         <a class="btn btn-success" id="<?php echo $row['cod_proyecto']; ?>" href="/pgt/index.php/detalle_proyecto?id=<?php echo $row['cod_proyecto']; ?> "><span class="glyphicon glyphicon-edit"></span> Detalles   </a>
-      </td>
+        </td>
+        <td>
+          <?php if($row['estado'] == 'finalizado'){ ?>
+            <a class="btn btn-danger" id="<?php echo $row['cod_proyecto']; ?>" href="/pgt/index.php/CalificarJurado?id=<?php echo $row['cod_proyecto']; ?> "> Calificar   </a>
+          <?php } ?>
+        </td>
     </tr>
     <?php } ?>
   </tbody>

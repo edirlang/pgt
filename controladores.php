@@ -32,6 +32,7 @@ function EstudianteAction(){
 		$estudiante = consultar_persona($codigo);
 		$telefonos = consultar_telefono_persona($codigo);
 		$correos = consultar_correos_persona($codigo);
+		$programa = consultar_tabla2('programa','cod_programa', $estudiante['programa']);
 		require "plantillas/Estudiante.php";
 	}else{
 		require "plantillas/Estudiantes.php";
@@ -58,14 +59,11 @@ function Estudiante_nuevo_Action(){
 		$nombre = $_POST['Nombre'];
 		$apellido = $_POST['Apellido'];
 		$codigo = $_POST['Codigo'];
-		;
-		if (isset($_POST['cod_proyecto'])) {
-			$cod_proyecto = $_POST['cod_proyecto'];
-			crear_Estudiante($codigo, $cedula, $nombre, $apellido, $cod_proyecto);
-		}else{
-			crear_Estudiante2($codigo, $cedula, $nombre, $apellido);
-		}
-		
+		$creditos = $_POST['creditos'];
+		$programa = $_POST['programa'];
+
+		crear_Estudiante2($codigo, $cedula, $nombre, $apellido, $creditos, $programa);
+				
 
 		$telefonos = $_POST['Telefono'];
 		$emails = $_POST['Email'];
@@ -77,15 +75,17 @@ function Estudiante_nuevo_Action(){
 		foreach ($emails as $email) {
 			crear_email_persona($cedula, $email);
 		}
-		if (isset($_POST['cod_proyecto'])) {
+		
+		if(isset($_POST['js'])){
+			echo "1";
+		}else{
 			header("Location: /pgt/index.php/Estudiantes");
 		}
-		
+	
 	}else{
-		$proyectos = proyectos();
+		$programas = all_date_table('programa');
 		require "plantillas/nuevo_estudiante.php";
 	}
-
 }
 
 function Profesor_nuevo_Action(){
@@ -181,29 +181,43 @@ function ProyectosNuevoAction(){
 	$programas = programa();
 	$profesores = profesores();
 	$estudiantes = estudiantes();
+
 	require "plantillas/ProyectosNuevo.php";
 }
 
 function calificar_proyecto_action(){
 	if ($_SERVER['REQUEST_METHOD']=='POST') {
-		$jurado1 = $_POST['jurado1'];
-		$jurado2 = $_POST['jurado2'];
+		$jurado1 = explode(".", $_POST['jurado1']);
+		$jurado2 = explode(".", $_POST['jurado2']);
 		$calificacion1 = $_POST['calificacion1'];
 		$calificacion2 = $_POST['calificacion2'];
 		$cod_proyecto = $_POST['proyecto'];
 
+		llamar_procedimiento("call CalificarProyecto('$cod_proyecto','$calificacion1','$calificacion2','$jurado1[0]','$jurado2[0]')");
+		
+		header("Location: /pgt/index.php/Proyectos");
+	}
+	$proyecto = consultar_tabla2("proyecto","cod_proyecto",$_GET['id']) ;
+	$jurados = llamar_procedimiento_consulta("call BuscarPersonaProyecto(".$_GET['id'].");");
+	require "plantillas/AgregarJurado.php";
+}
+
+function asignar_jurados_action(){
+	if ($_SERVER['REQUEST_METHOD']=='POST') {
+		$jurado1 = $_POST['jurado1'];
+		$jurado2 = $_POST['jurado2'];
+		$fecha_sustentacion = $_POST['fecha'];
+		$cod_proyecto = $_POST['proyecto'];
+
 		crear_jurado($jurado1, $cod_proyecto, $calificacion1);
 		crear_jurado($jurado2, $cod_proyecto, $calificacion2);
-		llamar_procedimiento("call CalificarProyecto('$cod_proyecto','$calificacion1','$calificacion2')");
-		$estado;
-		
+		asignar_sustentacion_proyecto($cod_proyecto, $fecha_sustentacion);
 		echo "<script> alert('Proyecto a sido evaliado, nuevo estado '".$estado."); </script>";
 		header("Location: /pgt/index.php/Proyectos");
 	}
 	$proyectos = consultar_tabla2("proyecto","estado","Finalizado") ;
-	require "plantillas/AgregarJurado.php";
+	require "plantillas/AsignarJurado.php";
 }
-
 function buscar_jurado_action(){
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$id = $_POST['id'];
@@ -244,14 +258,35 @@ function consultar_prpgrama_action(){
 	}
 }
 
-function programa_ingreso_action() {
+function facultades_action(){
+	$facultades = all_date_table('faculta');
+	require "plantillas/Facultades.php";
+}
+
+function facultades_nuevo_action(){
+	if($_SERVER['REQUEST_METHOD']=='POST'){
+		$codigo= $_POST['cod_facultad'];
+		$nom = $_POST['nom_facultad'];
+		facultad_ingreso($codigo, $nom);
+		header("Location: /pgt/index.php/facultad");
+	}else{		
+		require "plantillas/Nueva_facultad.php";
+	}	
+}
+function programa_nuevo_action() {
 
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$codigo= $_POST['cod_programa'];
 		$nom = $_POST['nom_programa'];
-		programa_ingreso($codigo, $nom);
+		$creditos = $_POST['creditos'];
+		$faculta = $_POST['facultad'];
+		programa_ingreso($codigo, $nom, $creditos, $faculta);
 		header("Location: /pgt/index.php/programa");
+	}else{
+		$facultades = all_date_table('faculta');
+		require "plantillas/programa_ingreso.php";
 	}
+
 }
 
 function ingresar_linea_action() {

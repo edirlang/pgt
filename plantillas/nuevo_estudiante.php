@@ -31,10 +31,12 @@
           <input type='email' class='form-control' id='Email[__name__]' name='Email[__name__]'>">
         </div>
 
-        <label for="">Proyecto</label>
-        <select class="form-control" id="cod_proyecto" name="cod_proyecto">
-          <?php foreach ($proyectos as $Proyecto) { ?>
-          <option value="<?php echo $Proyecto['cod_proyecto'] ?>"><?php echo $Proyecto['titulo'] ?></option>
+        <label for="">Creditos</label>
+        <input type="text" class="form-control" id="creditos" name="creditos">
+        <label for="">Programa</label>
+        <select class="form-control" id="programa" name="programa">
+          <?php foreach ($programas as $programa) { ?>
+          <option value="<?php echo $programa['cod_programa'] ?>"><?php echo $programa['nom_programa'] ?></option>
           <?php } ?>
         </select>
       </div>

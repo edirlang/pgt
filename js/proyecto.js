@@ -14,15 +14,18 @@ function AgregarEstudiante(){
 }
 
 function CrearEstudiante(){
-	$("#nuevo").modal();
-	alert("s")
+	$("#nuevo").modal('hide');
+	
         $.post("/pgt/index.php/Estudiante/nuevo",{
 		    Codigo: $("#Codigo").val(),
 		    Cedula: $("#Cedula").val(),
 		    Nombre: $("#Nombre").val(),
 		    Apellido: $("#Apellido").val(),
 		    Telefono: $("#Telefono").val(),
-		    Email: $("#Email").val()
+		    Email: $("#Email").val(),
+		    creditos: $("#creditos").val(),
+		    programa: $("#programa").val(),
+		    js: 'si'
 		  },procesar); 
 }
 

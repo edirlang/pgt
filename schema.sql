@@ -169,6 +169,11 @@ BEGIN
     
 end//
 
+create procedure BuscarPersonaProyecto ( in cod_proyecto varchar(10) , in cod_persona varchar(15))
+
+select persona.nom_persona, persona.ape_persona, persona.cedula from persona, persona_proyecto where 
+persona_proyecto.cod_persona = persona.cedula and persona_proyecto.cod_proyecto = cod_proyecto and persona.cedula = cod_persona; 
+
 
 CREATE PROCEDURE profesor_proyecto(IN id VARCHAR(10), IN rol varchar(8))
 BEGIN

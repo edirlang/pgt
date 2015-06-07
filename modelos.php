@@ -49,9 +49,9 @@ function crear_Estudiante($codigo, $cedula, $nombre, $apellido, $proyecto){
 }
 
 
-function crear_Estudiante2($codigo, $cedula, $nombre, $apellido){
+function crear_Estudiante2($codigo, $cedula, $nombre, $apellido, $creditos, $programa){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO persona values('$cedula','$codigo','$nombre','$apellido')";
+	$consulta  = "INSERT INTO persona values('$cedula','$codigo','$nombre','$apellido', '$creditos', '$programa')";
 	mysqli_query($conexion,$consulta);
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
@@ -143,7 +143,7 @@ function proyectos(){
 
 function proyectosView(){
 	$conexion = conectar_base_datos();
-	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto";
+	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado, proyectos2.estado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto";
 	$resultado = mysqli_query($conexion,$consulta);
 
 	$usuarios = array();
@@ -173,7 +173,7 @@ function ultima_fila($tabla, $campo){
 
 function crear_Proyecto($codigo, $titulo, $resumen, $fechainicio, $estado,$director , $destino){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','','$destino')";
+	$consulta  = "INSERT INTO proyecto values('$codigo', '$titulo','$resumen','$estado','$fechainicio','0000-00-00','0000-00-00','$destino')";
 	mysqli_query($conexion,$consulta);
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
@@ -184,13 +184,21 @@ function crear_director($cedula, $cod_proyecto){
 	$conexion = conectar_base_datos();
 	$consulta  = "INSERT INTO persona_proyecto values('$cod_proyecto','$cedula','director','')";
 	mysqli_query($conexion,$consulta);
-	mysqli_error($conexion);
+	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
 }
 
 function calificar_proyecto($codigo, $calificaion){
 	$conexion = conectar_base_datos();
 	$consulta  = "UPDATE proyecto set estado = '$calificaion' where cod_proyecto = '$codigo'";
+	echo mysqli_error($conexion);
+	mysqli_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
+}
+
+function asignar_sustentacion_proyecto($codigo, $fecha){
+	$conexion = conectar_base_datos();
+	$consulta  = "UPDATE proyecto set fecha_sustentacion = '$fecha' where cod_proyecto = '$codigo'";
 	echo mysqli_error($conexion);
 	mysqli_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);
@@ -393,10 +401,18 @@ function modificar_programa(){
 	}
 }
 
-function programa_ingreso($codigo, $nom){
+function programa_ingreso($codigo, $nombre, $creditos, $facultad){
 
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO programa values('$codigo', '$nom')";
+	$consulta  = "INSERT INTO programa values('$codigo', '$nombre', '$creditos', '$facultad')";
+	echo mysqli_error($conexion);
+	mysqli_query($conexion,$consulta);
+	cerrar_conexion_db($conexion);
+}
+
+function facultad_ingreso($codigo, $nom){
+	$conexion = conectar_base_datos();
+	$consulta  = "INSERT INTO faculta values('$codigo', '$nom')";
 	echo mysqli_error($conexion);
 	mysqli_query($conexion,$consulta);
 	cerrar_conexion_db($conexion);

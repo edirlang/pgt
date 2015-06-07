@@ -70,9 +70,11 @@
                 <a href="/pgt/index.php/Proyectos/nuevo">Nuevo Proyecto</a>
               </li>
               <li>
-                <a href="/pgt/index.php/AgregarJurado">Asignar Jurado</a>
+                <a href="/pgt/index.php/AsignarJurado">Asignar Jurado</a>
               </li>
-
+              <li>
+                <a href="/pgt/index.php/CalificarJurado">Calificacion de Jurado</a>
+              </li>
             </ul>
           </li>
 
@@ -88,6 +90,20 @@
 
             </ul>
           </li>
+          
+          <li>
+            <a href="#" ><i class="fa fa-qrcode"></i>Facultad<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+              <li>
+                <a href="/pgt/index.php/facultad">Facultades</a>
+              </li>
+              <li>
+                <a href="/pgt/index.php/facultad/nuevo">Nueva Facultad</a>
+              </li>
+
+            </ul>
+          </li>
+
            <li>
             <a href="#" ><i class="fa fa-qrcode"></i>Programa<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
