@@ -233,9 +233,9 @@ function profesores(){
 	return $usuarios;
 }
 
-function crear_Profesor($cedula, $nombre, $apellido){
+function crear_Profesor($cedula, $nombre, $apellido,$programa){
 	$conexion = conectar_base_datos();
-	$consulta  = "INSERT INTO persona values('$cedula','doc','$nombre','$apellido')";
+	$consulta  = "INSERT INTO persona values('$cedula','doc','$nombre','$apellido','doc','$programa')";
 	mysqli_query($conexion,$consulta);
 	echo mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
@@ -328,10 +328,10 @@ function consultar_correos_persona($codigo){
 function eliminar_profesor($codigo){
 	$conexion=conectar_base_datos();
 	$consulta="DELETE FROM  persona_correo WHERE  cod_persona='$codigo'";
+    $resultado = mysqli_query($conexion,$consulta);
 	$consulta1="DELETE FROM  persona_telefono where cod_persona='$codigo'";
-	$consulta2="DELETE FROM  prersona WHERE  cedula='$codigo'";
-	$resultado = mysqli_query($conexion,$consulta);
 	$resultado1 = mysqli_query($conexion,$consulta1);
+	$consulta2="DELETE FROM  persona WHERE  cedula='$codigo'";
 	$resultado2 = mysqli_query($conexion,$consulta2);
 	mysqli_error($conexion);
 	cerrar_conexion_db($conexion);
@@ -513,7 +513,7 @@ function llamar_procedimiento_consulta($procedimiento){
 
 function ConsultarProyectoEstado($estado){
 	$conexion = conectar_base_datos();
-	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where proyectos2.estado='$estado';";
+	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado,proyectos2.estado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where proyectos2.estado='$estado';";
 	$resultado = mysqli_query($conexion,$consulta);
 
 	$proyectos = array();
@@ -528,7 +528,7 @@ function ConsultarProyectoEstado($estado){
 
 function ConsultarProyectoano($an_buscar){
 	$conexion = conectar_base_datos();
-	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where  proyectos2.cod_proyecto like '".$an_buscar."%' ";
+	$consulta = "SELECT proyectos2.cod_proyecto, proyectos2.titulo, proyectos2.estudiante, proyectos2.director, proyectos.jurado,proyectos2.estado FROM proyectos2 LEFT OUTER JOIN proyectos ON proyectos.cod_proyecto = proyectos2.cod_proyecto where  proyectos2.cod_proyecto like '".$an_buscar."%' ";
 	$resultado = mysqli_query($conexion,$consulta);
 
 	$proyectos = array();

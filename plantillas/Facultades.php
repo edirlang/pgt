@@ -15,7 +15,7 @@
       </thead>
       <tbody id="Fila">
        <?php foreach($facultades as $row){ ?>
-       <tr id='<?php echo $row['cedula']; ?>'>
+       <tr id=''>
           <td id="1"><?php echo $row['cod_facultad']; ?></td>
           <td id="2"><?php echo $row['nom_facultad']; ?></td>
         </tr>

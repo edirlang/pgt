@@ -72,9 +72,7 @@
               <li>
                 <a href="/pgt/index.php/AsignarJurado">Asignar Jurado</a>
               </li>
-              <li>
-                <a href="/pgt/index.php/CalificarJurado">Calificacion de Jurado</a>
-              </li>
+
             </ul>
           </li>
 

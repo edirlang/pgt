@@ -27,7 +27,12 @@
         <div class="tags2" data-prototype="<label>Email __name__</label>
           <input type='email' class='form-control' id='Email[__name__]' name='Email[__name__]'>">
         </div>
-
+        <label for="">Programa</label>
+        <select class="form-control" id="programa" name="programa">
+          <?php foreach ($programas as $programa) { ?>
+          <option value="<?php echo $programa['cod_programa'] ?>"><?php echo $programa['nom_programa'] ?></option>
+          <?php } ?>
+        </select>
       </div>
       <button id="Enviar" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
     </form>  

@@ -32,7 +32,8 @@ function EstudianteAction(){
 		$estudiante = consultar_persona($codigo);
 		$telefonos = consultar_telefono_persona($codigo);
 		$correos = consultar_correos_persona($codigo);
-		$programa = consultar_tabla2('programa','cod_programa', $estudiante['programa']);
+		$programa = consultar_tabla( $estudiante['programa'],'programa','cod_programa');
+
 		require "plantillas/Estudiante.php";
 	}else{
 		require "plantillas/Estudiantes.php";
@@ -93,11 +94,10 @@ function Profesor_nuevo_Action(){
 		$cedula= $_POST['cedula'];
 		$nombre = $_POST['nombre'];
 		$apellido = $_POST['apellido'];
-		
+		$programa = $_POST['programa'];
 		$telefonos = $_POST['Telefono'];
 		$emails = $_POST['Email'];
-
-		crear_Profesor($cedula, $nombre, $apellido);
+		crear_Profesor($cedula, $nombre, $apellido,$programa);
 		foreach ($telefonos as $telefono) {
 			crear_Telefono_persona($cedula, $telefono);
 		}
@@ -106,6 +106,7 @@ function Profesor_nuevo_Action(){
 		}
 		header("Location: /pgt/index.php/Profesores");
 	}else{
+		$programas = all_date_table('programa');
 		require "plantillas/CrearProfesor.php";
 	}
 
@@ -243,7 +244,7 @@ function eliminar_profesor_action(){
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		$codigo=$_GET['id'];
 		eliminar_profesor($codigo);
-		//header("Location: /pgt/index.php/Profesores");
+       header("Location: /pgt/index.php/Profesores");
 	}else{
 		header("Location: /pgt/index.php/Profesores");
 	}

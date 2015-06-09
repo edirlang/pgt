@@ -52,7 +52,7 @@
           <label for="">Codigo Estudiante</label>
           <input type="text" name="cod_persona" class="form-control" value="<?php echo $estudiante['cod_persona'];?>" id="cod_estudiante"/>
 
-          <label for="">Nombre Programa</label>
+          <label for="">Nombre Estidiante</label>
           <input type="text" class="form-control" name="nom_persona"  value="<?php echo $estudiante['nom_persona'];?>" id="nom_estudiante"  />
 
           <label for="">Apellido Estudiante</label>

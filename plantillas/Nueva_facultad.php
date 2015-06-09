@@ -10,7 +10,7 @@
     <form id="formulario" method="post" action="/pgt/index.php/facultad/nuevo">
       <div class="form-group">
         <label for="">Codigo Facultad</label>
-        <input type="text" class="form-control" id="cod_facultad"  name="cod_facultad" placeholder="Cod_programa">
+        <input type="text" class="form-control" id="cod_facultad"  name="cod_facultad" placeholder="Cod_facultad">
         <label for="">Nombre Facultad</label>
         <input type="text" class="form-control" id="nom_facultad"  name="nom_facultad" placeholder="Nombre de facultad">
         
